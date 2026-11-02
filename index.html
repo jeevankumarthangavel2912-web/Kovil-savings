@@ -2,224 +2,156 @@
 <html lang="ta">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</title>
 
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:"Noto Sans Tamil",Arial,sans-serif;
-  background:#fff8e8;
-  color:#34200c;
-}
-header{
-  background:linear-gradient(135deg,#7b210d,#d87919);
-  color:white;text-align:center;padding:24px 12px;
-}
-header h1{font-size:25px;margin:5px}
-header p{margin:7px}
+body{margin:0;font-family:Arial,"Noto Sans Tamil",sans-serif;background:#fff8e8;color:#321c0e}
+header{background:linear-gradient(135deg,#76230c,#d87919);color:white;text-align:center;padding:24px 12px}
+header h1{font-size:25px;margin:6px}
 .container{max-width:1100px;margin:auto;padding:15px}
-.summary{
-  background:#fff;border-radius:14px;padding:18px;
-  text-align:center;box-shadow:0 2px 8px #0001;margin-bottom:15px;
-}
-.summary h2{margin:5px;color:#a3450b}
-.search{
-  width:100%;padding:13px;border:1px solid #ddd;
-  border-radius:10px;font-size:16px;margin-bottom:15px;
-}
-button{
-  border:0;border-radius:8px;padding:11px 15px;
-  background:#a8440b;color:white;font-size:15px;cursor:pointer;
-}
+.summary{background:white;text-align:center;padding:20px;border-radius:15px;box-shadow:0 2px 8px #0001;margin-bottom:15px}
+.summary h2{color:#a8440b}
+button{border:0;border-radius:9px;padding:12px 16px;background:#a8440b;color:white;font-size:15px;cursor:pointer}
 button:hover{opacity:.9}
 .adminBtn{background:#45200e}
-.members{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:13px;
-}
-.member{
-  background:white;border-radius:12px;padding:16px;
-  box-shadow:0 2px 7px #0001;
-}
-.member h3{margin:0 0 8px;color:#8d3409}
-.status{font-weight:bold}
-.paid{color:green}
-.pending{color:#c0392b}
-.small{font-size:13px;color:#666}
-.modal{
-  display:none;position:fixed;inset:0;background:#0008;
-  z-index:9999;overflow:auto;padding:15px;
-}
-.modalBox{
-  background:white;max-width:600px;margin:30px auto;
-  padding:20px;border-radius:14px;
-}
-.modalBox h2{margin-top:0;color:#8d3409}
-input,select{
-  width:100%;padding:12px;margin:7px 0 13px;
-  border:1px solid #ccc;border-radius:8px;font-size:16px;
-}
-.row{display:flex;gap:10px}
-.row>*{flex:1}
+.search,input,select{width:100%;padding:12px;margin:7px 0 13px;border:1px solid #ccc;border-radius:9px;font-size:16px}
+.members{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.member{background:white;padding:18px;border-radius:13px;box-shadow:0 2px 8px #0001}
+.member h3{color:#a8440b;margin-top:0}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:9999;overflow:auto;padding:15px}
+.modalBox{background:white;max-width:650px;margin:25px auto;padding:20px;border-radius:14px}
 .close{float:right;background:#555}
-.history{
-  width:100%;border-collapse:collapse;margin-top:12px;
-  font-size:14px;
-}
-.history th,.history td{
-  border:1px solid #ddd;padding:8px;text-align:left;
-}
-.history th{background:#fff0d5}
-.section{border-top:1px solid #ddd;margin-top:18px;padding-top:12px}
+.section{border-top:1px solid #ddd;margin-top:18px;padding-top:15px}
+table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+th,td{border:1px solid #ddd;padding:8px;text-align:left}
+th{background:#fff0d5}
+.paid{color:green;font-weight:bold}
+.pending{color:#c0392b;font-weight:bold}
 footer{text-align:center;padding:25px;color:#777}
-@media(max-width:500px){
-  header h1{font-size:21px}
-  .row{display:block}
-  .history{font-size:12px}
-}
+@media(max-width:500px){header h1{font-size:21px}table{font-size:12px}}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</h1>
-  <p>வாய்க்கால் ரோடு, கோபிசெட்டிபாளையம்</p>
-  <h2>மாத சேமிப்பு திட்டம்</h2>
-  <p>மாதம் ₹500 | எந்த ஞாயிற்றுக்கிழமையும் செலுத்தலாம்</p>
+<h1>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</h1>
+<p>வாய்க்கால் ரோடு, கோபிசெட்டிபாளையம்</p>
+<h2>மாத சேமிப்பு திட்டம்</h2>
+<p>மாதம் ₹500 | எந்த ஞாயிற்றுக்கிழமையும் செலுத்தலாம்</p>
 </header>
 
 <div class="container">
 
-  <div class="summary">
-    <h2>மொத்த சேமிப்பு</h2>
-    <h1 id="total">₹0</h1>
-    <p id="memberCount">உறுப்பினர்கள்: 0</p>
-    <button class="adminBtn" onclick="openAdmin()">ADMIN LOGIN</button>
-  </div>
+<div class="summary">
+<h2>மொத்த சேமிப்பு</h2>
+<h1 id="total">₹0</h1>
+<p id="memberCount">உறுப்பினர்கள்: 0</p>
+<button class="adminBtn" onclick="openAdmin()">ADMIN LOGIN</button>
+</div>
 
-  <input class="search" id="search" placeholder="பெயர் அல்லது Member ID தேடவும்..." oninput="renderMembers()">
+<input class="search" id="search" placeholder="பெயர் அல்லது Member ID தேடவும்..." oninput="renderMembers()">
 
-  <div class="members" id="members">
-    Loading...
-  </div>
-
+<div class="members" id="members">Loading...</div>
 </div>
 
 <footer>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</footer>
 
-<!-- ADMIN LOGIN / PANEL -->
+<!-- ADMIN MODAL -->
 <div class="modal" id="adminModal">
-  <div class="modalBox">
-    <button class="close" onclick="closeAdmin()">Close ✕</button>
-    <h2>Admin Panel</h2>
+<div class="modalBox">
+<button class="close" onclick="closeAdmin()">Close ✕</button>
+<h2>Admin Panel</h2>
 
-    <label>Admin PIN</label>
-    <input type="password" id="pin" placeholder="Admin PIN">
+<label>Admin PIN</label>
+<input type="password" id="pin" placeholder="Admin PIN">
+<button onclick="adminLogin()">Login</button>
 
-    <button onclick="adminLogin()">Login</button>
+<div id="adminPanel" style="display:none">
 
-    <div id="adminPanel" style="display:none">
-
-      <div class="section">
-        <h3>புதிய உறுப்பினர் சேர்க்க</h3>
-
-        <input id="newId" placeholder="Member ID (உதா: M001)">
-        <input id="newName" placeholder="உறுப்பினர் பெயர்">
-        <input id="newPhone" placeholder="Phone (Optional)">
-
-        <button onclick="addMember()">Add Member</button>
-      </div>
-
-      <div class="section">
-        <h3>மாத சேமிப்பு Update</h3>
-
-        <label>Member</label>
-        <select id="paymentMember"></select>
-
-        <div class="row">
-          <div>
-            <label>Month</label>
-            <select id="paymentMonth">
-              <option>January</option>
-              <option>February</option>
-              <option>March</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>August</option>
-              <option>September</option>
-              <option>October</option>
-              <option>November</option>
-              <option>December</option>
-            </select>
-          </div>
-
-          <div>
-            <label>Year</label>
-            <select id="paymentYear"></select>
-          </div>
-        </div>
-
-        <label>Payment Status</label>
-        <select id="paymentStatus" onchange="statusChanged()">
-          <option value="PAID">Paid - பணம் கொடுத்தார்</option>
-          <option value="PENDING">Pending - பணம் கொடுக்கவில்லை</option>
-        </select>
-
-        <div id="paidFields">
-          <label>Amount</label>
-          <input type="number" id="paymentAmount" value="500">
-
-          <label>Paid Date (எந்த Sunday-யிலும்)</label>
-          <input type="date" id="paymentDate">
-        </div>
-
-        <button onclick="savePayment()">Save Payment</button>
-      </div>
-
-      <div class="section">
-        <h3>Payment History</h3>
-        <select id="historyMember" onchange="showAdminHistory()"></select>
-        <div id="adminHistory"></div>
-      </div>
-
-    </div>
-  </div>
+<div class="section">
+<h3>உறுப்பினர் சேர்க்க</h3>
+<input id="newId" placeholder="Member ID (M001)">
+<input id="newName" placeholder="உறுப்பினர் பெயர்">
+<input id="newPhone" placeholder="Phone (Optional)">
+<button onclick="addMember()">Add Member</button>
 </div>
 
-<!-- MEMBER HISTORY MODAL -->
+<div class="section">
+<h3>மாத சேமிப்பு Update</h3>
+
+<label>Member</label>
+<select id="paymentMember"></select>
+
+<label>Month</label>
+<select id="paymentMonth">
+<option>January</option><option>February</option>
+<option>March</option><option>April</option>
+<option>May</option><option>June</option>
+<option>July</option><option>August</option>
+<option>September</option><option>October</option>
+<option>November</option><option>December</option>
+</select>
+
+<label>Year</label>
+<select id="paymentYear"></select>
+
+<label>Status</label>
+<select id="paymentStatus" onchange="statusChanged()">
+<option value="PAID">PAID - பணம் கொடுத்தார்</option>
+<option value="PENDING">PENDING - பணம் கொடுக்கவில்லை</option>
+</select>
+
+<div id="paidFields">
+<label>Amount</label>
+<input type="number" id="paymentAmount" value="500">
+<label>Paid Date</label>
+<input type="date" id="paymentDate">
+</div>
+
+<button onclick="savePayment()">Save Payment</button>
+</div>
+
+<div class="section">
+<h3>Member Payment History</h3>
+<select id="historyMember" onchange="showAdminHistory()"></select>
+<div id="adminHistory"></div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- MEMBER HISTORY -->
 <div class="modal" id="historyModal">
-  <div class="modalBox">
-    <button class="close" onclick="closeHistory()">Close ✕</button>
-    <h2 id="historyTitle">Payment History</h2>
-    <div id="historyContent"></div>
-  </div>
+<div class="modalBox">
+<button class="close" onclick="closeHistory()">Close ✕</button>
+<h2 id="historyTitle">Payment History</h2>
+<div id="historyContent"></div>
+</div>
 </div>
 
 <script>
-const API_URL =
-"https://script.google.com/macros/s/AKfycbyzCU0XMNuB2w6gt3V0Du6Xxr9Su8Hztb-MUN-DA0MhF7cTvQaAe_LajvHXXJGe3DY/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyzCU0XMNuB2w6gt3V0Du6Xxr9Su8Hztb-MUN-DA0MhF7cTvQaAe_LajvHXXJGe3DY/exec";
 
 let members = [];
 let payments = [];
 let adminPin = "";
 
 const months = [
-  "January","February","March","April","May","June",
-  "July","August","September","October","November","December"
+"January","February","March","April","May","June",
+"July","August","September","October","November","December"
 ];
 
 async function loadData(){
   try{
-    const response = await fetch(API_URL);
-    const data = await response.json();
+    const res = await fetch(API_URL);
+    const data = await res.json();
 
-    if(!data.success) throw new Error(data.error || "API error");
+    if(!data.success) throw new Error(data.message || "API error");
 
     members = data.members || [];
     payments = data.payments || [];
@@ -231,86 +163,67 @@ async function loadData(){
       "உறுப்பினர்கள்: " + members.length;
 
     renderMembers();
-  }catch(error){
+  }catch(e){
     document.getElementById("members").innerHTML =
       "<p>Data load ஆகவில்லை. Apps Script deployment check செய்யவும்.</p>";
-    console.error(error);
+    console.error(e);
   }
 }
 
 function renderMembers(){
-  const search = document.getElementById("search").value.toLowerCase();
+  const q = document.getElementById("search").value.toLowerCase();
 
   const filtered = members.filter(m =>
-    String(m.name || "").toLowerCase().includes(search) ||
-    String(m.memberId || "").toLowerCase().includes(search)
+    String(m.name).toLowerCase().includes(q) ||
+    String(m.memberId).toLowerCase().includes(q)
   );
 
-  const container = document.getElementById("members");
+  const box = document.getElementById("members");
 
-  if(filtered.length === 0){
-    container.innerHTML = "<p>உறுப்பினர் கிடைக்கவில்லை</p>";
+  if(!filtered.length){
+    box.innerHTML = "<p>உறுப்பினர் கிடைக்கவில்லை</p>";
     return;
   }
 
-  container.innerHTML = filtered.map(m => {
-    const memberPayments = payments.filter(p =>
-      String(p.memberId) === String(m.memberId)
-    );
-
-    const paid = memberPayments.filter(p =>
-      String(p.status).toUpperCase() === "PAID"
-    );
-
-    const totalPaid = paid.reduce((sum,p) =>
-      sum + Number(p.amount || 0),0);
+  box.innerHTML = filtered.map(m => {
+    const list = payments.filter(p => String(p.memberId) === String(m.memberId));
+    const paid = list.filter(p => String(p.status).toUpperCase() === "PAID");
+    const sum = paid.reduce((s,p) => s + Number(p.amount || 0),0);
 
     return `
       <div class="member">
-        <h3>${escapeHtml(m.name)}</h3>
-        <p>Member ID: ${escapeHtml(m.memberId)}</p>
+        <h3>${esc(m.name)}</h3>
+        <p>Member ID: ${esc(m.memberId)}</p>
         <p>Paid Months: ${paid.length}</p>
-        <p>Total Paid: <b>₹${totalPaid.toLocaleString("en-IN")}</b></p>
-        <button onclick="openHistory('${escapeJs(m.memberId)}')">
-          Payment History
-        </button>
-      </div>
-    `;
+        <p>Total Paid: <b>₹${sum.toLocaleString("en-IN")}</b></p>
+        <button onclick="openHistory('${escJs(m.memberId)}')">Payment History</button>
+      </div>`;
   }).join("");
 }
 
-function openHistory(memberId){
-  const member = members.find(m =>
-    String(m.memberId) === String(memberId)
-  );
+function openHistory(id){
+  const m = members.find(x => String(x.memberId) === String(id));
+  if(!m) return;
 
-  if(!member) return;
+  document.getElementById("historyTitle").textContent = m.name + " - Payment History";
 
-  document.getElementById("historyTitle").textContent =
-    member.name + " - Payment History";
+  const list = payments.filter(p => String(p.memberId) === String(id));
 
-  const list = payments.filter(p =>
-    String(p.memberId) === String(memberId)
-  );
-
-  let html = `<table class="history">
-    <tr><th>Month</th><th>Amount</th><th>Status</th><th>Date</th></tr>`;
+  let html = `<table><tr><th>Month</th><th>Amount</th><th>Status</th><th>Date</th></tr>`;
 
   months.forEach(month => {
     const p = list.find(x => x.month === month);
+    const paid = p && String(p.status).toUpperCase() === "PAID";
 
     html += `<tr>
       <td>${month}</td>
-      <td>${p && p.status === "PAID" ? "₹"+p.amount : "₹0"}</td>
-      <td class="${p && p.status === "PAID" ? "paid" : "pending"}">
-        ${p && p.status === "PAID" ? "PAID" : "PENDING"}
-      </td>
-      <td>${p && p.paidDate ? p.paidDate : "-"}</td>
+      <td>${paid ? "₹"+p.amount : "₹0"}</td>
+      <td class="${paid ? "paid" : "pending"}">${paid ? "PAID" : "PENDING"}</td>
+      <td>${paid ? esc(p.paidDate || "-") : "-"}</td>
     </tr>`;
   });
 
   html += "</table>";
-
   document.getElementById("historyContent").innerHTML = html;
   document.getElementById("historyModal").style.display = "block";
 }
@@ -328,17 +241,16 @@ function closeAdmin(){
 }
 
 async function postData(data){
-  const response = await fetch(API_URL,{
+  const res = await fetch(API_URL,{
     method:"POST",
-    headers:{
-      "Content-Type":"text/plain;charset=utf-8"
-    },
+    headers:{"Content-Type":"text/plain;charset=utf-8"},
     body:JSON.stringify(data)
   });
-
-  return await response.json();
+  return await res.json();
 }
 
+// PIN verification is a separate action.
+// This function does not add any member.
 async function adminLogin(){
   const pin = document.getElementById("pin").value.trim();
 
@@ -347,52 +259,42 @@ async function adminLogin(){
     return;
   }
 
-  // Server-side PIN validation
   try{
-    const result = await postData({
-      action:"addMember",
-      pin:pin,
-      memberId:"__PIN_CHECK__",
-      name:"__PIN_CHECK__"
-    });
+    const result = await postData({action:"verifyPin",pin:pin});
 
-    if(result.message === "தவறான Admin PIN"){
-      alert("Wrong PIN");
+    if(!result.success){
+      alert(result.message || "Wrong PIN");
       return;
     }
 
-    // PIN is valid if response is not a PIN error.
     adminPin = pin;
     document.getElementById("adminPanel").style.display = "block";
 
-    populateMemberDropdowns();
+    populateDropdowns();
     populateYears();
 
     alert("Admin login successful");
-  }catch(error){
-    alert("Login error: " + error.message);
+  }catch(e){
+    alert("Login error: " + e.message);
   }
 }
 
-function populateMemberDropdowns(){
-  const options = members.map(m =>
-    `<option value="${escapeHtml(m.memberId)}">
-      ${escapeHtml(m.memberId)} - ${escapeHtml(m.name)}
-    </option>`
+function populateDropdowns(){
+  const opts = members.map(m =>
+    `<option value="${esc(m.memberId)}">${esc(m.memberId)} - ${esc(m.name)}</option>`
   ).join("");
 
-  document.getElementById("paymentMember").innerHTML = options;
-  document.getElementById("historyMember").innerHTML = options;
+  document.getElementById("paymentMember").innerHTML = opts;
+  document.getElementById("historyMember").innerHTML = opts;
 }
 
 function populateYears(){
-  const yearSelect = document.getElementById("paymentYear");
-  const currentYear = new Date().getFullYear();
+  const select = document.getElementById("paymentYear");
+  const now = new Date().getFullYear();
+  select.innerHTML = "";
 
-  yearSelect.innerHTML = "";
-
-  for(let y=currentYear-2;y<=currentYear+1;y++){
-    yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
+  for(let y=now-2;y<=now+1;y++){
+    select.innerHTML += `<option value="${y}">${y}</option>`;
   }
 }
 
@@ -413,11 +315,7 @@ async function addMember(){
 
   try{
     const result = await postData({
-      action:"addMember",
-      pin:adminPin,
-      memberId,
-      name,
-      phone
+      action:"addMember",pin:adminPin,memberId,name,phone
     });
 
     if(!result.success){
@@ -427,15 +325,15 @@ async function addMember(){
 
     alert("Member added successfully!");
 
-    document.getElementById("newId").value="";
-    document.getElementById("newName").value="";
-    document.getElementById("newPhone").value="";
+    document.getElementById("newId").value = "";
+    document.getElementById("newName").value = "";
+    document.getElementById("newPhone").value = "";
 
     await loadData();
-    populateMemberDropdowns();
+    populateDropdowns();
 
-  }catch(error){
-    alert("Error: " + error.message);
+  }catch(e){
+    alert("Add member error: " + e.message);
   }
 }
 
@@ -447,6 +345,11 @@ async function savePayment(){
   const amount = Number(document.getElementById("paymentAmount").value);
   const paidDate = document.getElementById("paymentDate").value;
 
+  if(!memberId){
+    alert("Member select பண்ணவும்");
+    return;
+  }
+
   if(status === "PAID" && (!amount || !paidDate)){
     alert("Amount மற்றும் Paid Date enter பண்ணவும்");
     return;
@@ -454,14 +357,8 @@ async function savePayment(){
 
   try{
     const result = await postData({
-      action:"savePayment",
-      pin:adminPin,
-      memberId,
-      month,
-      year,
-      amount,
-      paidDate,
-      status
+      action:"savePayment",pin:adminPin,
+      memberId,month,year,status,amount,paidDate
     });
 
     if(!result.success){
@@ -470,48 +367,42 @@ async function savePayment(){
     }
 
     alert("Payment update successful!");
-
     await loadData();
     showAdminHistory();
 
-  }catch(error){
-    alert("Payment error: " + error.message);
+  }catch(e){
+    alert("Payment error: " + e.message);
   }
 }
 
 function showAdminHistory(){
-  const memberId = document.getElementById("historyMember").value;
+  const id = document.getElementById("historyMember").value;
+  const list = payments.filter(p => String(p.memberId) === String(id));
 
-  const list = payments.filter(p =>
-    String(p.memberId) === String(memberId)
-  );
-
-  let html = `<table class="history">
-    <tr><th>Month</th><th>Year</th><th>Amount</th><th>Status</th><th>Date</th></tr>`;
+  let html = `<table><tr><th>Month</th><th>Year</th><th>Amount</th><th>Status</th><th>Date</th></tr>`;
 
   list.forEach(p => {
     html += `<tr>
-      <td>${escapeHtml(p.month)}</td>
+      <td>${esc(p.month)}</td>
       <td>${p.year}</td>
       <td>₹${p.amount}</td>
-      <td>${escapeHtml(p.status)}</td>
-      <td>${escapeHtml(p.paidDate || "-")}</td>
+      <td>${esc(p.status)}</td>
+      <td>${esc(p.paidDate || "-")}</td>
     </tr>`;
   });
 
   html += "</table>";
-
   document.getElementById("adminHistory").innerHTML = html;
 }
 
-function escapeHtml(value){
+function esc(value){
   return String(value ?? "").replace(/[&<>"']/g, c => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",
     '"':"&quot;","'":"&#39;"
   }[c]));
 }
 
-function escapeJs(value){
+function escJs(value){
   return String(value).replace(/\\/g,"\\\\").replace(/'/g,"\\'");
 }
 
