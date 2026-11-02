@@ -1,246 +1,365 @@
+
 <!DOCTYPE html>
 <html lang="ta">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</title>
+<title>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      text-align: center;
-      background:
-        linear-gradient(rgba(0,0,0,0.58), rgba(0,0,0,0.70)),
-        url("kovil-background.jpeg");
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      min-height: 100vh;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    .admin-button {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      padding: 10px 20px;
-      background: #ffcc00;
-      color: #222;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+:root {
+  --gold: #ffd76a;
+  --dark-gold: #a96508;
+  --maroon: #650e09;
+  --cream: #fff1cf;
+}
 
-    .header {
-      padding: 75px 15px 20px;
-    }
+body {
+  font-family: 'Noto Sans Tamil', sans-serif;
+  color: white;
+  min-height: 100vh;
 
-    .temple-name {
-      font-size: 30px;
-      color: #ffdf70;
-      font-weight: bold;
-      line-height: 1.6;
-    }
+  background:
+    linear-gradient(
+      rgba(40, 12, 4, 0.35),
+      rgba(40, 12, 4, 0.65)
+    ),
+    url("kovil-background.jpeg");
 
-    .address {
-      font-size: 18px;
-      margin-top: 8px;
-    }
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
 
-    .project-title {
-      margin-top: 30px;
-      font-size: 27px;
-      color: #fff2a8;
-      font-weight: bold;
-    }
+/* ADMIN */
 
-    .total-box {
-      margin: 20px auto;
-      padding: 20px;
-      max-width: 450px;
-      width: 90%;
-      background: rgba(255,255,255,0.15);
-      border: 2px solid #ffdf70;
-      border-radius: 15px;
-    }
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 18px 25px;
+}
 
-    .total-label {
-      font-size: 22px;
-      font-weight: bold;
-    }
+.admin-btn {
+  background: linear-gradient(#ffe7a1, #ffb900);
+  color: #541900;
+  border: 2px solid #fff1bd;
+  border-radius: 30px;
+  padding: 12px 28px;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px #0005;
+}
 
-    .total-amount {
-      margin-top: 12px;
-      font-size: 36px;
-      color: #ffdf70;
-      font-weight: bold;
-    }
+/* TEMPLE HEADER */
 
-    .members-title {
-      margin-top: 35px;
-      font-size: 25px;
-      color: #ffdf70;
-    }
+.header {
+  text-align: center;
+  padding: 15px 15px 20px;
+}
 
-    .members {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
-      justify-content: center;
-      gap: 20px;
-      padding: 25px 15px;
-    }
+.temple-name {
+  display: inline-block;
+  background: linear-gradient(135deg, #7d160b, #400800);
+  border: 3px solid var(--gold);
+  border-radius: 18px;
+  padding: 15px 30px;
+  color: #fff4d2;
+  font-size: clamp(22px, 4vw, 38px);
+  font-weight: 800;
+  box-shadow: 0 8px 20px #0006;
+  line-height: 1.6;
+}
 
-    .member-card {
-      background: rgba(255,255,255,0.16);
-      border: 1px solid #ffdf70;
-      border-radius: 12px;
-      padding: 20px 10px;
-    }
+.address {
+  margin-top: 15px;
+  font-size: clamp(14px, 2.5vw, 20px);
+  color: #fff8e8;
+  text-shadow: 0 2px 5px #000;
+}
 
-    .member-photo {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      background: #ddd;
-      border: 3px solid #ffdf70;
-    }
+/* PROJECT TITLE */
 
-    .member-id {
-      margin-top: 12px;
-      font-size: 16px;
-    }
+.project-title {
+  display: table;
+  margin: 28px auto 0;
+  padding: 12px 40px;
+  background: linear-gradient(135deg, #8a2709, #4a0a03);
+  border: 3px solid var(--gold);
+  border-radius: 50px;
+  color: var(--gold);
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 800;
+  box-shadow: 0 5px 15px #0005;
+}
 
-    .member-name {
-      margin-top: 8px;
-      font-size: 18px;
-      font-weight: bold;
-    }
+/* TOTAL COLLECTION */
 
-    @media (max-width: 600px) {
-      .temple-name {
-        font-size: 23px;
-      }
+.collection-card {
+  width: min(90%, 650px);
+  margin: 28px auto;
+  padding: 25px;
+  text-align: center;
 
-      .address {
-        font-size: 15px;
-      }
+  background: linear-gradient(135deg, #fff5db, #f8d994);
+  border: 5px double #b87516;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px #0006;
+}
 
-      .project-title {
-        font-size: 23px;
-      }
+.collection-label {
+  color: #76190c;
+  font-size: clamp(19px, 3vw, 28px);
+  font-weight: 800;
+}
 
-      .total-label {
-        font-size: 19px;
-      }
+.collection-amount {
+  margin-top: 15px;
+  padding: 10px;
+  background: linear-gradient(135deg, #79180d, #4c0803);
+  border-radius: 15px;
+  color: #ffda42;
+  font-size: clamp(38px, 6vw, 58px);
+  font-weight: 800;
+  border: 2px solid #d7a334;
+}
 
-      .total-amount {
-        font-size: 32px;
-      }
-    }
-  </style>
+.collection-caption {
+  margin-top: 10px;
+  color: #75400c;
+  font-size: 14px;
+}
+
+/* MEMBERS */
+
+.members-section {
+  width: min(95%, 1200px);
+  margin: 35px auto;
+  padding: 25px;
+  background: rgba(255, 244, 218, 0.95);
+  border: 5px double #b87516;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px #0005;
+}
+
+.members-title {
+  text-align: center;
+  color: #72180b;
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 25px;
+}
+
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.member-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+
+  background: linear-gradient(135deg, #fff8e8, #ffe6b2);
+  border: 2px solid #b87516;
+  border-radius: 20px;
+
+  box-shadow: 0 5px 12px #5b260022;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.member-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px #5b260033;
+}
+
+.member-photo {
+  width: 95px;
+  height: 95px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #d59b24;
+  background: #e4d4b7;
+}
+
+.member-info {
+  text-align: left;
+  color: #65150a;
+}
+
+.member-id {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.member-name {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* FOOTER */
+
+.footer {
+  text-align: center;
+  padding: 25px 10px;
+  color: #ffe5a2;
+  font-size: 14px;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .topbar {
+    padding: 12px;
+  }
+
+  .temple-name {
+    padding: 12px;
+    width: 95%;
+  }
+
+  .project-title {
+    padding: 10px 22px;
+  }
+
+  .collection-card {
+    padding: 18px;
+  }
+
+  .members-section {
+    padding: 15px;
+  }
+
+  .members-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .member-card {
+    padding: 15px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <button class="admin-button" onclick="adminLogin()">ADMIN</button>
+<div class="topbar">
+  <button class="admin-btn" onclick="adminLogin()">
+    🔐 ADMIN
+  </button>
+</div>
 
-  <div class="header">
+<header class="header">
 
-    <div class="temple-name">
-      மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்
-    </div>
-
-    <div class="address">
-      வைகால் ரோடு, கோபிசெட்டிபாளையம்
-    </div>
-
-    <div class="project-title">
-      மாத சேமிப்பு திட்டம்
-    </div>
-
-    <div class="total-box">
-      <div class="total-label">
-        மொத்தம் வசூலான தொகை
-      </div>
-
-      <div class="total-amount" id="totalAmount">
-        ₹0
-      </div>
-    </div>
-
+  <div class="temple-name">
+    🛕 மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்
   </div>
 
-  <div class="members-title">
-    உறுப்பினர்கள்
+  <div class="address">
+    📍 வைகால் ரோடு, கோபிசெட்டிபாளையம்
   </div>
 
-  <div class="members">
+  <div class="project-title">
+    மாத சேமிப்பு திட்டம்
+  </div>
+
+</header>
+
+<!-- TOTAL COLLECTION -->
+
+<section class="collection-card">
+
+  <div class="collection-label">
+    💰 மொத்தம் வசூலான தொகை
+  </div>
+
+  <div class="collection-amount" id="totalAmount">
+    ₹0
+  </div>
+
+  <div class="collection-caption">
+    உறுப்பினர்களின் மொத்த சேமிப்பு
+  </div>
+
+</section>
+
+<!-- MEMBER LIST -->
+
+<section class="members-section">
+
+  <h2 class="members-title">
+    👥 உறுப்பினர்கள்
+  </h2>
+
+  <div class="members-grid" id="membersGrid">
 
     <div class="member-card">
-      <img class="member-photo" src="" alt="உறுப்பினர் புகைப்படம்">
-
-      <div class="member-id">
-        உறுப்பினர் எண்: 1
-      </div>
-
-      <div class="member-name">
-        உறுப்பினர் பெயர்
+      <img class="member-photo" src="https://placehold.co/200x200?text=Member" alt="Member">
+      <div class="member-info">
+        <div class="member-id">உறுப்பினர் எண்: 1</div>
+        <div class="member-name">உறுப்பினர் பெயர்</div>
       </div>
     </div>
 
     <div class="member-card">
-      <img class="member-photo" src="" alt="உறுப்பினர் புகைப்படம்">
-
-      <div class="member-id">
-        உறுப்பினர் எண்: 2
-      </div>
-
-      <div class="member-name">
-        உறுப்பினர் பெயர்
+      <img class="member-photo" src="https://placehold.co/200x200?text=Member" alt="Member">
+      <div class="member-info">
+        <div class="member-id">உறுப்பினர் எண்: 2</div>
+        <div class="member-name">உறுப்பினர் பெயர்</div>
       </div>
     </div>
 
   </div>
 
-  <script>
-    // Google Apps Script API URL
-    const API_URL =
-      "https://script.google.com/macros/s/AKfycbzQ8mZOPaUVbGrq6pz8lfuTiSI91FJhGUr9R2SuPkxDsmen7QZDdGhmGqv_qseJ8l8/exec";
+</section>
 
-    async function loadTotalCollection() {
-      const totalElement = document.getElementById("totalAmount");
+<footer class="footer">
+  மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்
+</footer>
 
-      totalElement.textContent = "₹0";
+<script>
 
-      try {
-        const response = await fetch(API_URL);
-        const data = await response.json();
+const API_URL =
+"https://script.google.com/macros/s/AKfycbzQ8mZOPaUVbGrq6pz8lfuTiSI91FJhGUr9R2SuPkxDsmen7QZDdGhmGqv_qseJ8l8/exec";
 
-        const total = Number(data.total) || 0;
+async function loadTotalCollection() {
+  const amountElement = document.getElementById("totalAmount");
 
-        totalElement.textContent =
-          "₹" + total.toLocaleString("en-IN");
+  try {
+    const response = await fetch(API_URL);
+    const data = await response.json();
 
-      } catch (error) {
-        console.error("Collection amount loading failed:", error);
-        totalElement.textContent = "₹0";
-      }
-    }
+    const total = Number(data.total) || 0;
 
-    function adminLogin() {
-      alert("Admin Login அடுத்த கட்டத்தில் உருவாக்கப்படும்");
-    }
+    amountElement.textContent =
+      "₹" + total.toLocaleString("en-IN");
 
-    loadTotalCollection();
-  </script>
+  } catch (error) {
+    console.error("Collection loading error:", error);
+    amountElement.textContent = "₹0";
+  }
+}
+
+function adminLogin() {
+  alert("ADMIN login அடுத்த கட்டத்தில் உருவாக்கப்படும்.");
+}
+
+loadTotalCollection();
+
+</script>
 
 </body>
 </html>
