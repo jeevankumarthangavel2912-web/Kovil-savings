@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>மாதா சேமிப்பு திட்டம்</title>
+<title>மாத சேமிப்பு திட்டம்</title>
 
 <style>
 * {
@@ -23,7 +23,8 @@ header {
   background: linear-gradient(#7b2600, #b85c00);
   color: white;
   text-align: center;
-  padding: 25px 10px;
+  padding: 25px 60px;
+  position: relative;
 }
 
 header h1 {
@@ -35,28 +36,54 @@ header p {
   margin: 8px 0;
 }
 
+.admin-button {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  background: white;
+  color: #7b2600;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .background {
   background-image:
     linear-gradient(#00000055, #00000055),
-    url("Kovil-background.jpeg");
+    url("kovil-background.jpeg");
 
   background-size: cover;
   background-position: center;
-  min-height: 300px;
-  padding: 25px 15px;
+  min-height: 350px;
+  padding: 30px 15px;
   text-align: center;
 }
 
 .project-title {
   color: white;
-  font-size: 28px;
+  font-size: 30px;
   font-weight: bold;
   padding: 20px;
+  text-shadow: 1px 2px 5px black;
+}
+
+.total-collection {
+  background: #fff8e8;
+  color: #7b2600;
+  display: inline-block;
+  margin-top: 20px;
+  padding: 18px 25px;
+  border-radius: 12px;
+  font-size: 23px;
+  font-weight: bold;
+  box-shadow: 0 3px 10px #0003;
 }
 
 .members {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 15px;
   padding: 20px;
 }
@@ -75,18 +102,35 @@ header p {
   color: #8b3e00;
 }
 
-.admin {
-  text-align: center;
-  padding: 25px;
+.member-card p {
+  font-size: 18px;
 }
 
-button {
-  background: #7b2600;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 30px;
-  font-size: 17px;
+@media (max-width: 600px) {
+  header {
+    padding: 65px 10px 20px;
+  }
+
+  header h1 {
+    font-size: 21px;
+  }
+
+  header p {
+    font-size: 16px;
+  }
+
+  .project-title {
+    font-size: 25px;
+  }
+
+  .total-collection {
+    font-size: 18px;
+    padding: 15px;
+  }
+
+  .members {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
@@ -94,35 +138,86 @@ button {
 <body>
 
 <header>
+
+  <button class="admin-button" onclick="adminLogin()">
+    ADMIN
+  </button>
+
   <h1>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</h1>
+
   <p>வைகால் ரோடு, கோபிசெட்டிபாளையம்</p>
+
 </header>
 
 <section class="background">
+
   <div class="project-title">
-    மாதா சேமிப்பு திட்டம்
+    மாத சேமிப்பு திட்டம்
   </div>
+
+  <div class="total-collection">
+    மொத்தம் வசூலான தொகை:
+    <span id="totalAmount">₹0</span>
+  </div>
+
 </section>
 
 <section class="members">
 
   <div class="member-card">
     <h3>உறுப்பினர் எண்: 1</h3>
-    <p>பெயர்: உறுப்பினர் பெயர்</p>
+    <p>உறுப்பினர் பெயர்: உறுப்பினர் பெயர்</p>
   </div>
 
   <div class="member-card">
     <h3>உறுப்பினர் எண்: 2</h3>
-    <p>பெயர்: உறுப்பினர் பெயர்</p>
+    <p>உறுப்பினர் பெயர்: உறுப்பினர் பெயர்</p>
   </div>
 
 </section>
 
-<div class="admin">
-  <button onclick="alert('Admin Login அடுத்த கட்டத்தில் உருவாக்கப்படும்')">
-    ADMIN
-  </button>
-</div>
+<script>
+
+// Google Apps Script Web App URL
+const API_URL = "https://script.google.com/macros/s/AKfycbzQ8mZOPaUVbGrq6pz8lfuTiSI91FJhGUr9R2SuPkxDsmen7QZDdGhmGqv_qseJ8l8/exec";
+
+async function loadTotalCollection() {
+
+  const totalElement = document.getElementById("totalAmount");
+
+  totalElement.textContent = "₹0";
+
+  try {
+
+    const response = await fetch(API_URL);
+
+    if (!response.ok) {
+      throw new Error("API connection failed");
+    }
+
+    const data = await response.json();
+
+    const total = Number(data.total) || 0;
+
+    totalElement.textContent =
+      "₹" + total.toLocaleString("en-IN");
+
+  } catch (error) {
+
+    console.error("Total collection load failed:", error);
+
+    totalElement.textContent = "₹0";
+
+  }
+}
+
+function adminLogin() {
+  alert("Admin Login அடுத்த கட்டத்தில் உருவாக்கப்படும்");
+}
+
+loadTotalCollection();
+
+</script>
 
 </body>
 </html>
