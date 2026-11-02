@@ -4,89 +4,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kovil Savings</title>
+
+<title>மாதா சேமிப்பு திட்டம்</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #fff8ed;
-  color: #402718;
+  background: #f5f0e5;
+  color: #4b2600;
 }
 
 header {
-  background: linear-gradient(#0005, #0008),
-              url("kovil-background.jpeg") center/cover;
+  background: linear-gradient(#7b2600, #b85c00);
   color: white;
   text-align: center;
-  padding: 65px 15px;
-  position: relative;
+  padding: 25px 10px;
 }
 
-h1 {
-  font-size: 28px;
-  text-shadow: 2px 2px 5px black;
+header h1 {
+  margin: 0;
+  font-size: 25px;
 }
 
-.admin {
-  position: absolute;
-  right: 15px;
-  top: 15px;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 8px;
-  background: #f3d17a;
-  font-weight: bold;
+header p {
+  margin: 8px 0;
 }
 
-.amount {
-  background: white;
-  margin: -25px 15px 25px;
-  padding: 20px;
-  border-radius: 15px;
+.background {
+  background-image:
+    linear-gradient(#00000055, #00000055),
+    url("Kovil-background.jpeg");
+
+  background-size: cover;
+  background-position: center;
+  min-height: 300px;
+  padding: 25px 15px;
   text-align: center;
-  position: relative;
-  box-shadow: 0 3px 12px #0002;
 }
 
-.amount h2 {
-  color: #8a4b14;
-  font-size: 30px;
+.project-title {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  padding: 20px;
 }
 
 .members {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
-  padding: 15px;
+  padding: 20px;
 }
 
-.member {
+.member-card {
   background: white;
+  border: 2px solid #d5a253;
   border-radius: 12px;
-  padding: 15px;
+  padding: 20px 10px;
   text-align: center;
-  box-shadow: 0 2px 8px #0001;
+  box-shadow: 0 3px 8px #0002;
 }
 
-.photo {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: #ead8b8;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
+.member-card h3 {
+  margin: 5px;
+  color: #8b3e00;
 }
 
-@media (min-width: 700px) {
-  .members {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.admin {
+  text-align: center;
+  padding: 25px;
+}
+
+button {
+  background: #7b2600;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-size: 17px;
 }
 </style>
 </head>
@@ -94,51 +94,35 @@ h1 {
 <body>
 
 <header>
-<button class="admin" onclick="alert('Admin PIN page next!')">
-ADMIN
-</button>
-
-<h1>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</h1>
-<p>Kovil Monthly Savings</p>
-<p>Monthly Savings: ₹500 | Any Sunday</p>
+  <h1>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</h1>
+  <p>வைகால் ரோடு, கோபிசெட்டிபாளையம்</p>
 </header>
 
-<section class="amount">
-  <b>மொத்த சேமிப்பு</b>
-  <h2>₹ —</h2>
-  <p>Total Savings</p>
+<section class="background">
+  <div class="project-title">
+    மாதா சேமிப்பு திட்டம்
+  </div>
 </section>
-
-<h2 style="text-align:center">உறுப்பினர்கள் / Members</h2>
 
 <section class="members">
 
-<div class="member">
-<div class="photo">1</div>
-<p>Member 1</p>
-<small>ID: 1</small>
-</div>
+  <div class="member-card">
+    <h3>உறுப்பினர் எண்: 1</h3>
+    <p>பெயர்: உறுப்பினர் பெயர்</p>
+  </div>
 
-<div class="member">
-<div class="photo">2</div>
-<p>Member 2</p>
-<small>ID: 2</small>
-</div>
-
-<div class="member">
-<div class="photo">3</div>
-<p>Member 3</p>
-<small>ID: 3</small>
-</div>
-
-<div class="member">
-<div class="photo">4</div>
-<p>Member 4</p>
-<small>ID: 4</small>
-</div>
+  <div class="member-card">
+    <h3>உறுப்பினர் எண்: 2</h3>
+    <p>பெயர்: உறுப்பினர் பெயர்</p>
+  </div>
 
 </section>
 
+<div class="admin">
+  <button onclick="alert('Admin Login அடுத்த கட்டத்தில் உருவாக்கப்படும்')">
+    ADMIN
+  </button>
+</div>
+
 </body>
 </html>
-
