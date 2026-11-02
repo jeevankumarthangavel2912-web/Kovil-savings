@@ -60,11 +60,11 @@ body {
   box-shadow: 0 5px 15px #0005;
 }
 
-/* TEMPLE HEADER */
+/* HEADER */
 
 .header {
   text-align: center;
-  padding: 15px 15px 20px;
+  padding: 15px;
 }
 
 .temple-name {
@@ -87,8 +87,6 @@ body {
   text-shadow: 0 2px 5px #000;
 }
 
-/* PROJECT TITLE */
-
 .project-title {
   display: table;
   margin: 28px auto 0;
@@ -109,7 +107,6 @@ body {
   margin: 28px auto;
   padding: 25px;
   text-align: center;
-
   background: linear-gradient(135deg, #fff5db, #f8d994);
   border: 5px double #b87516;
   border-radius: 25px;
@@ -161,7 +158,7 @@ body {
 
 .members-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
@@ -169,25 +166,23 @@ body {
   display: flex;
   align-items: center;
   gap: 15px;
-  padding: 20px;
-
+  padding: 18px;
   background: linear-gradient(135deg, #fff8e8, #ffe6b2);
   border: 2px solid #b87516;
   border-radius: 20px;
-
   box-shadow: 0 5px 12px #5b260022;
   cursor: pointer;
   transition: 0.25s;
 }
 
 .member-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   box-shadow: 0 10px 20px #5b260033;
 }
 
 .member-photo {
-  width: 95px;
-  height: 95px;
+  width: 85px;
+  height: 85px;
   flex-shrink: 0;
   border-radius: 50%;
   object-fit: cover;
@@ -198,16 +193,76 @@ body {
 .member-info {
   text-align: left;
   color: #65150a;
+  overflow-wrap: anywhere;
 }
 
 .member-id {
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 8px;
 }
 
 .member-name {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
+}
+
+.empty-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 25px;
+  color: #72180b;
+  font-weight: 700;
+}
+
+/* MEMBER DETAILS MODAL */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.modal-content {
+  background: #fff4da;
+  color: #65150a;
+  width: min(100%, 450px);
+  margin: 50px auto;
+  padding: 25px;
+  border: 4px double #b87516;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.modal-content img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #d59b24;
+  margin: 15px;
+}
+
+.modal-content h2 {
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  margin: 10px;
+}
+
+.close-btn {
+  margin-top: 20px;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 20px;
+  background: #72180b;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 /* FOOTER */
@@ -278,8 +333,6 @@ body {
 
 </header>
 
-<!-- TOTAL COLLECTION -->
-
 <section class="collection-card">
 
   <div class="collection-label">
@@ -296,8 +349,6 @@ body {
 
 </section>
 
-<!-- MEMBER LIST -->
-
 <section class="members-section">
 
   <h2 class="members-title">
@@ -306,25 +357,34 @@ body {
 
   <div class="members-grid" id="membersGrid">
 
-    <div class="member-card">
-      <img class="member-photo" src="https://placehold.co/200x200?text=Member" alt="Member">
-      <div class="member-info">
-        <div class="member-id">உறுப்பினர் எண்: 1</div>
-        <div class="member-name">உறுப்பினர் பெயர்</div>
-      </div>
-    </div>
-
-    <div class="member-card">
-      <img class="member-photo" src="https://placehold.co/200x200?text=Member" alt="Member">
-      <div class="member-info">
-        <div class="member-id">உறுப்பினர் எண்: 2</div>
-        <div class="member-name">உறுப்பினர் பெயர்</div>
-      </div>
+    <div class="empty-message">
+      உறுப்பினர்கள் விரைவில் சேர்க்கப்படுவார்கள்
     </div>
 
   </div>
 
 </section>
+
+<!-- MEMBER DETAILS POPUP -->
+
+<div class="modal" id="memberModal">
+  <div class="modal-content">
+
+    <h2>உறுப்பினர் விவரங்கள்</h2>
+
+    <img id="modalPhoto" src="" alt="Member photo">
+
+    <p id="modalId"></p>
+    <p id="modalName"></p>
+
+    <p>Payment history அடுத்த கட்டத்தில் சேர்க்கப்படும்.</p>
+
+    <button class="close-btn" onclick="closeMemberModal()">
+      மூடு
+    </button>
+
+  </div>
+</div>
 
 <footer class="footer">
   மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்
@@ -332,14 +392,23 @@ body {
 
 <script>
 
+/* CURRENT APPS SCRIPT URL */
+
 const API_URL =
-"https://script.google.com/macros/s/AKfycbzQ8mZOPaUVbGrq6pz8lfuTiSI91FJhGUr9R2SuPkxDsmen7QZDdGhmGqv_qseJ8l8/exec";
+"https://script.google.com/macros/s/AKfycbyzCU0XMNuB2w6gt3V0Du6Xxr9Su8Hztb-MUN-DA0MhF7cTvQaAe_LajvHXXJGe3DY/exec";
+
+/* LOAD TOTAL COLLECTION */
 
 async function loadTotalCollection() {
   const amountElement = document.getElementById("totalAmount");
 
   try {
     const response = await fetch(API_URL);
+
+    if (!response.ok) {
+      throw new Error("API request failed");
+    }
+
     const data = await response.json();
 
     const total = Number(data.total) || 0;
@@ -353,9 +422,32 @@ async function loadTotalCollection() {
   }
 }
 
-function adminLogin() {
-  alert("ADMIN login அடுத்த கட்டத்தில் உருவாக்கப்படும்.");
+/* MEMBER CARDS */
+
+function showMemberDetails(id, name, photo) {
+  document.getElementById("modalId").textContent =
+    "உறுப்பினர் எண்: " + id;
+
+  document.getElementById("modalName").textContent =
+    "பெயர்: " + name;
+
+  document.getElementById("modalPhoto").src =
+    photo || "https://placehold.co/200x200?text=Member";
+
+  document.getElementById("memberModal").style.display = "block";
 }
+
+function closeMemberModal() {
+  document.getElementById("memberModal").style.display = "none";
+}
+
+/* ADMIN */
+
+function adminLogin() {
+  alert("ADMIN login அடுத்த கட்டத்தில் பாதுகாப்பாக உருவாக்கப்படும்.");
+}
+
+/* START */
 
 loadTotalCollection();
 
