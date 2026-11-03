@@ -12,40 +12,51 @@
 body{
   margin:0;
   font-family:Arial,"Noto Sans Tamil",sans-serif;
-  color:#321c0e;
-  background-image:
-    linear-gradient(rgba(255,248,232,.28),rgba(255,248,232,.38)),
-    url("samy-background.jpg");
-  background-size:cover;
-  background-position:center center;
-  background-repeat:no-repeat;
-  background-attachment:fixed;
+  background:#fff8e8;
+  color:#321c0e
 }
 
 header{
-  position:relative;
-  background:linear-gradient(135deg,rgba(76,15,7,.88),rgba(174,75,10,.82));
+  background:linear-gradient(135deg,#76230c,#d87919);
   color:white;
   text-align:center;
-  padding:24px 12px;
-  border-bottom:3px solid #e8b64b;
+  padding:24px 12px
 }
 
-header h1{font-size:25px;margin:6px}
+header h1{
+  margin:0 0 10px;
+  font-size:25px
+}
 
-.container{max-width:1100px;margin:auto;padding:15px}
+header p{
+  margin:5px 0;
+  font-size:15px
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px
+}
 
 .summary{
-  background:rgba(255,250,238,.94);
+  background:white;
   text-align:center;
   padding:20px;
   border-radius:15px;
-  border:1px solid #e3b34d;
-  box-shadow:0 5px 18px #0002;
-  margin-bottom:15px;
+  box-shadow:0 2px 8px #0001;
+  margin-bottom:15px
 }
 
-.summary h2{color:#a8440b}
+.summary h2{
+  margin:0 0 10px;
+  color:#8b2f0b
+}
+
+.summary strong{
+  font-size:28px;
+  color:#a8440b
+}
 
 button{
   border:0;
@@ -54,70 +65,78 @@ button{
   background:#a8440b;
   color:white;
   font-size:15px;
-  cursor:pointer;
+  cursor:pointer
 }
 
-button:hover{opacity:.9}
-.adminBtn{background:#45200e}
+button:hover{
+  opacity:.9
+}
 
-.search,input,select{
-  width:100%;
-  padding:12px;
-  margin:7px 0 13px;
-  border:1px solid #ccc;
-  border-radius:9px;
-  font-size:16px;
+.adminBtn{
+  background:#45200e
 }
 
 .members{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:14px;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:18px;
+  margin-top:20px
 }
 
 .member{
-  background:rgba(255,250,238,.95);
+  background:#fffaf0;
   padding:18px;
   border-radius:16px;
-  border:1px solid #e3b34d;
-  box-shadow:0 5px 18px #0002;
-  transition:transform .2s,box-shadow .2s;
+  border:1px solid #d9a441;
+  box-shadow:0 4px 14px #0002;
   text-align:center;
-}
-
-.member h3{color:#a8440b;margin-top:0}
-
-.member-photo{
-  width:110px;
-  height:110px;
-  border-radius:50%;
-  object-fit:cover;
-  display:block;
-  margin:0 auto 12px;
-  border:3px solid #d87919;
-  background:#fff0d5;
-}
-
-.member-photo-placeholder{
-  width:110px;
-  height:110px;
-  border-radius:50%;
-  background:#fff0d5;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 12px;
-  font-size:42px;
+  cursor:pointer;
+  transition:transform .2s,box-shadow .2s
 }
 
 .member:hover{
   transform:translateY(-4px);
-  box-shadow:0 9px 24px #0003;
+  box-shadow:0 6px 18px #0003
 }
 
-.search{
-  background:rgba(255,255,255,.95);
-  border:2px solid #d9a441;
+.member-photo{
+  width:150px;
+  height:150px;
+  object-fit:cover;
+  border-radius:50%;
+  display:block;
+  margin:0 auto 12px;
+  border:4px solid #d9a441;
+  background:#fff0d5
+}
+
+.member-photo-placeholder{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 12px;
+  background:#fff0d5;
+  font-size:48px;
+  border:4px solid #d9a441
+}
+
+.member h3{
+  margin:8px 0 0;
+  font-size:18px;
+  color:#76230c;
+  overflow-wrap:anywhere
+}
+
+.search-box{
+  width:100%;
+  padding:13px;
+  border:1px solid #d9a441;
+  border-radius:10px;
+  font-size:16px;
+  margin:15px 0
 }
 
 .modal{
@@ -127,55 +146,154 @@ button:hover{opacity:.9}
   background:#0008;
   z-index:9999;
   overflow:auto;
-  padding:15px;
+  padding:15px
 }
 
-.modalBox{
+.modal-content{
   background:#fffaf0;
-  border:1px solid #d9a441;
-  max-width:650px;
-  margin:25px auto;
-  padding:20px;
-  border-radius:14px;
+  max-width:700px;
+  margin:30px auto;
+  padding:22px;
+  border-radius:16px;
+  border:2px solid #d9a441;
+  box-shadow:0 8px 30px #0003
 }
 
-.close{float:right;background:#555}
+.modal-content h2{
+  color:#8b2f0b;
+  margin-top:0
+}
 
-.section{
-  border-top:1px solid #ddd;
-  margin-top:18px;
-  padding-top:15px;
+.close-btn{
+  float:right;
+  background:#76230c;
+  padding:8px 13px
+}
+
+.form-group{
+  margin:14px 0
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:bold
+}
+
+.form-group input,
+.form-group select{
+  width:100%;
+  padding:11px;
+  border:1px solid #c99a45;
+  border-radius:8px;
+  font-size:15px
+}
+
+.admin-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:15px 0
+}
+
+.popup-stat{
+  background:#fff0d5;
+  border:1px solid #e4c17a;
+  border-radius:12px;
+  padding:12px;
+  text-align:center
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin:15px 0
+}
+
+.popup-stat small{
+  display:block;
+  color:#6b4a2b;
+  margin-bottom:5px
+}
+
+.popup-stat strong{
+  font-size:20px;
+  color:#8b2f0b
+}
+
+.table-wrap{
+  overflow-x:auto;
+  margin-top:15px
 }
 
 table{
   width:100%;
   border-collapse:collapse;
-  margin-top:12px;
-  font-size:14px;
+  background:white;
+  min-width:450px
 }
 
 th,td{
-  border:1px solid #ddd;
-  padding:8px;
-  text-align:left;
+  border:1px solid #e1c38c;
+  padding:10px;
+  text-align:center
 }
 
-th{background:#fff0d5}
-.paid{color:green;font-weight:bold}
-.pending{color:#c0392b;font-weight:bold}
+th{
+  background:#76230c;
+  color:white
+}
 
-footer{text-align:center;padding:25px;color:#777}
+.paid{
+  color:#087b32;
+  font-weight:bold
+}
 
-@media(max-width:768px){
-  body{
-    background-attachment:scroll;
-    background-position:center center;
+.pending{
+  color:#c62828;
+  font-weight:bold
+}
+
+.admin-list-item{
+  background:white;
+  border:1px solid #e1c38c;
+  border-radius:10px;
+  padding:12px;
+  margin:10px 0
+}
+
+.admin-list-item button{
+  margin:4px
+}
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:#7b4b2b;
+  font-size:14px
+}
+
+.hidden{
+  display:none!important
+}
+
+@media(max-width:600px){
+  .container{padding:12px}
+  .members{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px
   }
-}
-
-@media(max-width:500px){
+  .member{padding:12px}
+  .member-photo,
+  .member-photo-placeholder{
+    width:120px;
+    height:120px
+  }
+  .member h3{font-size:15px}
   header h1{font-size:21px}
-  table{font-size:12px}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .modal-content{padding:15px;margin:15px auto}
 }
 </style>
 </head>
@@ -183,1048 +301,961 @@ footer{text-align:center;padding:25px;color:#777}
 <body>
 
 <header>
-<button class="adminBtn" style="position:absolute;right:12px;top:12px" onclick="openAdmin()">நிர்வாகி</button>
-
-<h1>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</h1>
-<p>வாய்க்கால் ரோடு, கோபிசெட்டிபாளையம்</p>
-<h2>மாத சேமிப்பு திட்டம்</h2>
-<p>மாதம் ₹500 </p>
+  <h1>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</h1>
+  <p>வாய்க்கால் ரோடு, கோபிசெட்டிபாளையம்</p>
+  <p>திருக்கோவில் சேமிப்பு திட்டம்</p>
 </header>
 
 <div class="container">
 
-<div class="summary">
-<h2>மொத்த சேமிப்பு</h2>
-<h1 id="total">₹0</h1>
-<p id="memberCount">உறுப்பினர்கள்: 0</p>
-</div>
+  <div class="summary">
+    <h2>திருக்கோவில் சேமிப்பு விவரம்</h2>
+    <p>மொத்த உறுப்பினர்கள்</p>
+    <strong id="memberCount">0</strong>
+    <p>மொத்த சேமிப்பு தொகை</p>
+    <strong id="totalAmount">₹0</strong>
+  </div>
 
-<input class="search" id="search" placeholder="பெயர் அல்லது Member ID தேடவும்..." oninput="renderMembers()">
+  <input
+    type="text"
+    id="searchInput"
+    class="search-box"
+    placeholder="உறுப்பினர் பெயரை தேடவும்..."
+    oninput="renderMembers()"
+  >
 
-<div class="members" id="members">Loading...</div>
+  <div style="text-align:right">
+    <button class="adminBtn" onclick="openAdmin()">⚙ Admin</button>
+  </div>
 
-</div>
-
-<footer>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</footer>
-
-<!-- ADMIN LOGIN -->
-<div class="modal" id="adminModal">
-<div class="modalBox">
-
-<button class="close" onclick="closeAdmin()">மூடு ✕</button>
-
-<h2>நிர்வாகி உள்நுழைவு</h2>
-<label>நிர்வாக PIN</label>
-
-<input type="password" id="pin" placeholder="PIN எண்ணை உள்ளிடவும்">
-
-<button onclick="adminLogin()">சமர்ப்பி</button>
-
-<p id="pinError" style="color:#c0392b"></p>
-
-</div>
-</div>
-
-<!-- ADMIN MENU -->
-<div class="modal" id="adminMenuModal">
-<div class="modalBox">
-
-<button class="close" onclick="closeAdminMenu()">மூடு ✕</button>
-
-<h2>நிர்வாகி பக்கம்</h2>
-
-<button onclick="openAddMemberModal()" style="width:100%;margin:8px 0">புதிய உறுப்பினர்</button>
-
-<button onclick="openPaymentModal()" style="width:100%;margin:8px 0">மாதாந்திர பணம் புதுப்பிக்க</button>
-
-<button onclick="openMemberEditList()" style="width:100%;margin:8px 0">உறுப்பினர் விவரங்களை Edit செய்ய</button>
-
-<button onclick="adminLogout()" style="width:100%;margin:8px 0;background:#b3261e">Logout / வெளியேறு</button>
-
-</div>
-</div>
-
-<!-- ADD MEMBER -->
-<div class="modal" id="addMemberModal">
-<div class="modalBox">
-
-<button class="close" onclick="closeAddMemberModal()">மூடு ✕</button>
-
-<h2>புதிய உறுப்பினர் சேர்க்க</h2>
-
-<label>உறுப்பினர் ID</label>
-<input id="newId" placeholder="உதா: M001">
-
-<label>உறுப்பினர் பெயர்</label>
-<input id="newName" placeholder="உறுப்பினர் பெயர்">
-
-<label>தொலைபேசி எண் (விருப்பம்)</label>
-<input id="newPhone" placeholder="Phone (Optional)">
-
-<label>உறுப்பினர் புகைப்படம்</label>
-<input type="file" id="newPhoto" accept="image/*" onchange="previewMemberPhoto()">
-
-<img id="photoPreview" alt="Photo Preview" style="display:none;max-width:150px;max-height:150px;border-radius:10px;margin:8px 0">
-
-<button onclick="addMember()">உறுப்பினரை சேமிக்க</button>
-
-</div>
-</div>
-
-<!-- EDIT MEMBER -->
-<div class="modal" id="editMemberModal">
-<div class="modalBox">
-
-<button class="close" onclick="closeEditMemberModal()">மூடு ✕</button>
-
-<h2>உறுப்பினர் விவரங்களை மாற்ற</h2>
-
-<label>உறுப்பினர்</label>
-<select id="editMemberSelect" onchange="loadMemberEditForm()"></select>
-
-<label>உறுப்பினர் ID</label>
-<input id="editMemberId" disabled>
-
-<label>பெயர்</label>
-<input id="editMemberName">
-
-<label>Phone</label>
-<input id="editMemberPhone">
-
-<label>புதிய புகைப்படம்</label>
-<input type="file" id="editMemberPhoto" accept="image/*">
-
-<button onclick="updateMember()">விவரங்களை சேமிக்க</button>
-
-</div>
-</div>
-
-<!-- PAYMENT UPDATE -->
-<div class="modal" id="paymentModal">
-<div class="modalBox">
-
-<button class="close" onclick="closePaymentModal()">மூடு ✕</button>
-
-<h2>மாதாந்திர பணம் புதுப்பிக்க</h2>
-
-<div class="section">
-
-<h3>பணம் புதுப்பிக்க</h3>
-
-<label>உறுப்பினர்</label>
-<select id="paymentMember" onchange="syncHistoryMember();showAdminHistory()"></select>
-
-<label>மாதம்</label>
-<select id="paymentMonth">
-<option>January</option>
-<option>February</option>
-<option>March</option>
-<option>April</option>
-<option>May</option>
-<option>June</option>
-<option>July</option>
-<option>August</option>
-<option>September</option>
-<option>October</option>
-<option>November</option>
-<option>December</option>
-</select>
-
-<label>ஆண்டு</label>
-<select id="paymentYear"></select>
-
-<label>நிலை</label>
-<select id="paymentStatus" onchange="statusChanged()">
-<option value="PAID">PAID - பணம் செலுத்தினார்</option>
-<option value="PENDING">PENDING - பணம் செலுத்தவில்லை</option>
-</select>
-
-<div id="paidFields">
-<label>தொகை</label>
-<input type="number" id="paymentAmount" value="500">
-
-<label>பணம் செலுத்திய தேதி</label>
-<input type="date" id="paymentDate">
-</div>
-
-<button onclick="savePayment()">புதுப்பிக்க / சேமிக்க</button>
+  <div class="members" id="members">
+    Loading...
+  </div>
 
 </div>
 
-<div class="section">
+<footer>
+  மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்<br>
+  சேமிப்பு திட்டம்
+</footer>
 
-<h3>உறுப்பினர் பண வரலாறு</h3>
 
-<label>உறுப்பினர் தேர்வு</label>
-<select id="historyMember" onchange="showAdminHistory()"></select>
-
-<div id="adminHistory"></div>
-
-</div>
-</div>
-</div>
-
-<!-- MEMBER HISTORY -->
+<!-- MEMBER HISTORY MODAL -->
 <div class="modal" id="historyModal">
-<div class="modalBox">
-
-<button class="close" onclick="closeHistory()">மூடு ✕</button>
-
-<h2 id="historyTitle">Payment History</h2>
-
-<div id="historyContent"></div>
-
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeHistory()">✕</button>
+    <h2 id="historyTitle">உறுப்பினர் சேமிப்பு விவரம்</h2>
+    <div id="historyContent"></div>
+  </div>
 </div>
+
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal" id="adminModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('adminModal')">✕</button>
+    <h2>Admin Login</h2>
+
+    <div class="form-group">
+      <label>Admin PIN</label>
+      <input type="password" id="adminPin" placeholder="PIN உள்ளிடவும்">
+    </div>
+
+    <button onclick="adminLogin()">Login</button>
+    <p id="adminLoginMessage"></p>
+  </div>
 </div>
+
+
+<!-- ADMIN DASHBOARD -->
+<div class="modal" id="adminDashboard">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('adminDashboard')">✕</button>
+
+    <h2>Admin Dashboard</h2>
+
+    <div class="admin-actions">
+      <button onclick="openAddMemberModal()">+ உறுப்பினர் சேர்க்க</button>
+      <button onclick="openPaymentModal()">💰 Payment பதிவு</button>
+      <button onclick="openMemberEditList()">✏️ உறுப்பினர் Edit</button>
+      <button onclick="showAdminHistory()">📋 Payment History</button>
+      <button onclick="adminLogout()" class="adminBtn">Logout</button>
+    </div>
+
+    <div id="adminDashboardContent"></div>
+  </div>
+</div>
+
+
+<!-- ADD MEMBER MODAL -->
+<div class="modal" id="addMemberModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('addMemberModal')">✕</button>
+
+    <h2>புதிய உறுப்பினர் சேர்க்க</h2>
+
+    <div class="form-group">
+      <label>உறுப்பினர் ID</label>
+      <input id="newMemberId" placeholder="Member ID">
+    </div>
+
+    <div class="form-group">
+      <label>உறுப்பினர் பெயர்</label>
+      <input id="newMemberName" placeholder="பெயர்">
+    </div>
+
+    <div class="form-group">
+      <label>Phone</label>
+      <input id="newMemberPhone" placeholder="Phone number">
+    </div>
+
+    <div class="form-group">
+      <label>Photo URL</label>
+      <input id="newMemberPhoto" placeholder="Google Drive Photo URL">
+    </div>
+
+    <button onclick="addMember()">உறுப்பினர் சேர்க்க</button>
+    <p id="addMemberMessage"></p>
+  </div>
+</div>
+
+
+<!-- PAYMENT MODAL -->
+<div class="modal" id="paymentModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('paymentModal')">✕</button>
+
+    <h2>சேமிப்பு தொகை பதிவு</h2>
+
+    <div class="form-group">
+      <label>உறுப்பினர்</label>
+      <select id="paymentMember"></select>
+    </div>
+
+    <div class="form-group">
+      <label>மாதம்</label>
+      <select id="paymentMonth"></select>
+    </div>
+
+    <div class="form-group">
+      <label>வருடம்</label>
+      <input type="number" id="paymentYear">
+    </div>
+
+    <div class="form-group">
+      <label>தொகை</label>
+      <input type="number" id="paymentAmount" value="500">
+    </div>
+
+    <div class="form-group">
+      <label>செலுத்திய தேதி</label>
+      <input type="date" id="paymentDate">
+    </div>
+
+    <button onclick="savePayment()">Payment Save</button>
+    <p id="paymentMessage"></p>
+  </div>
+</div>
+
+
+<!-- EDIT MEMBER MODAL -->
+<div class="modal" id="editMemberModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('editMemberModal')">✕</button>
+
+    <h2>உறுப்பினர் விவரம் Edit</h2>
+
+    <div class="form-group">
+      <label>Member ID</label>
+      <input id="editMemberId" readonly>
+    </div>
+
+    <div class="form-group">
+      <label>பெயர்</label>
+      <input id="editMemberName">
+    </div>
+
+    <div class="form-group">
+      <label>Phone</label>
+      <input id="editMemberPhone">
+    </div>
+
+    <div class="form-group">
+      <label>Photo URL</label>
+      <input id="editMemberPhoto">
+    </div>
+
+    <button onclick="updateMember()">Update Member</button>
+    <p id="editMemberMessage"></p>
+  </div>
+</div>
+
+
+<!-- EDIT PAYMENT MODAL -->
+<div class="modal" id="editPaymentModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal('editPaymentModal')">✕</button>
+
+    <h2>Payment Edit</h2>
+
+    <input type="hidden" id="editPaymentMemberId">
+    <input type="hidden" id="editPaymentOldMonth">
+    <input type="hidden" id="editPaymentOldYear">
+
+    <div class="form-group">
+      <label>Member ID</label>
+      <input id="editPaymentMemberDisplay" readonly>
+    </div>
+
+    <div class="form-group">
+      <label>Month</label>
+      <select id="editPaymentMonth"></select>
+    </div>
+
+    <div class="form-group">
+      <label>Year</label>
+      <input type="number" id="editPaymentYear">
+    </div>
+
+    <div class="form-group">
+      <label>Amount</label>
+      <input type="number" id="editPaymentAmount">
+    </div>
+
+    <div class="form-group">
+      <label>Paid Date</label>
+      <input type="date" id="editPaymentDate">
+    </div>
+
+    <button onclick="updatePayment()">Update Payment</button>
+    <p id="editPaymentMessage"></p>
+  </div>
+</div>
+
 
 <script>
-
 const API_URL = "https://script.google.com/macros/s/AKfycbyzCU0XMNuB2w6gt3V0Du6Xxr9Su8Hztb-MUN-DA0MhF7cTvQaAe_LajvHXXJGe3DY/exec";
+
+const MONTHLY_AMOUNT = 500;
+const START_YEAR = 2026;
+const START_MONTH = 5; // June (0-based)
+
+const months = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December"
+];
+
+const monthsTamil = [
+  "ஜனவரி","பிப்ரவரி","மார்ச்","ஏப்ரல்","மே","ஜூன்",
+  "ஜூலை","ஆகஸ்ட்","செப்டம்பர்","அக்டோபர்","நவம்பர்","டிசம்பர்"
+];
 
 let members = [];
 let payments = [];
+let totalAmount = 0;
+let isAdmin = false;
 
-let adminPin = localStorage.getItem("temple_admin_pin") || "";
 
-const months = [
-"January","February","March","April","May","June",
-"July","August","September","October","November","December"
-];
+function monthTamil(month){
+  const index = months.indexOf(month);
+  return index >= 0 ? monthsTamil[index] : month;
+}
+
+
+function escapeHTML(value){
+  return String(value ?? "").replace(/[&<>"']/g, function(char){
+    return {
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[char];
+  });
+}
+
+
+function formatMoney(amount){
+  return "₹" + Number(amount || 0).toLocaleString("en-IN");
+}
+
+
+function getMemberId(member){
+  return String(member["Member ID"] ?? member.memberId ?? member.id ?? "").trim();
+}
+
+
+function getMemberName(member){
+  return String(member["Name"] ?? member.name ?? "").trim();
+}
+
+
+function getMemberPhoto(member){
+  return String(member["Photo"] ?? member.photo ?? "").trim();
+}
+
+
+function getPaymentMemberId(payment){
+  return String(payment["Member ID"] ?? payment.memberId ?? payment.id ?? "").trim();
+}
+
+
+function getPaymentMonth(payment){
+  return String(payment["Month"] ?? payment.month ?? "").trim();
+}
+
+
+function getPaymentYear(payment){
+  return Number(payment["Year"] ?? payment.year ?? 0);
+}
+
+
+function getPaymentAmount(payment){
+  return Number(payment["Amount"] ?? payment.amount ?? 0);
+}
+
+
+function getPaymentStatus(payment){
+  return String(payment["Status"] ?? payment.status ?? "PAID").trim().toUpperCase();
+}
+
+
+function getPaymentDate(payment){
+  return String(payment["Paid Date"] ?? payment.paidDate ?? payment.date ?? "").trim();
+}
+
+
+function getDrivePhotoURL(photoLink){
+  if(!photoLink) return "";
+
+  if(photoLink.includes("drive.google.com/thumbnail")){
+    return photoLink;
+  }
+
+  const match = photoLink.match(/[-\w]{25,}/);
+
+  if(match){
+    return "https://drive.google.com/thumbnail?id=" + match[0] + "&sz=w500";
+  }
+
+  return photoLink;
+}
+
 
 async function loadData(){
+  try{
+    const response = await fetch(API_URL);
+    const data = await response.json();
 
-try{
+    members = data.members || [];
+    payments = data.payments || [];
+    totalAmount = Number(data.total || 0);
 
-const res = await fetch(API_URL);
-const data = await res.json();
+    document.getElementById("memberCount").textContent = members.length;
+    document.getElementById("totalAmount").textContent = formatMoney(totalAmount);
 
-if(!data.success) throw new Error(data.message || "API error");
+    renderMembers();
 
-members = data.members || [];
-payments = data.payments || [];
+  }catch(error){
+    document.getElementById("members").innerHTML =
+      "<p>Data load ஆகவில்லை. Apps Script deployment check செய்யவும்.</p>";
 
-document.getElementById("total").textContent =
-"₹" + Number(data.total || 0).toLocaleString("en-IN");
-
-document.getElementById("memberCount").textContent =
-"உறுப்பினர்கள்: " + members.length;
-
-renderMembers();
-
-}catch(e){
-
-document.getElementById("members").innerHTML =
-"<p>Data load ஆகவில்லை. Apps Script deployment check செய்யவும்.</p>";
-
-console.error(e);
-
+    console.error(error);
+  }
 }
 
-}
 
 function renderMembers(){
+  const container = document.getElementById("members");
+  const search = document.getElementById("searchInput").value.toLowerCase().trim();
 
-const q = document.getElementById("search").value.toLowerCase();
+  const filtered = members.filter(member =>
+    getMemberName(member).toLowerCase().includes(search) ||
+    getMemberId(member).toLowerCase().includes(search)
+  );
 
-const filtered = members.filter(m =>
-String(m.name).toLowerCase().includes(q) ||
-String(m.memberId).toLowerCase().includes(q)
-);
+  if(filtered.length === 0){
+    container.innerHTML = "<p>உறுப்பினர்கள் இல்லை.</p>";
+    return;
+  }
 
-const box = document.getElementById("members");
+  container.innerHTML = filtered.map(member => {
+    const memberId = getMemberId(member);
+    const name = getMemberName(member);
+    const photoLink = getMemberPhoto(member);
+    const photo = getDrivePhotoURL(photoLink);
 
-if(!filtered.length){
-box.innerHTML = "<p>உறுப்பினர் கிடைக்கவில்லை</p>";
-return;
+    const photoHTML = photo
+      ? `<img class="member-photo" src="${escapeHTML(photo)}" alt="${escapeHTML(name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+         <div class="member-photo-placeholder" style="display:none">👤</div>`
+      : `<div class="member-photo-placeholder">👤</div>`;
+
+    return `
+      <div class="member" onclick="openHistory('${escapeHTML(memberId)}')">
+        ${photoHTML}
+        <h3>${escapeHTML(name)}</h3>
+      </div>
+    `;
+  }).join("");
 }
 
-box.innerHTML = filtered.map(m => {
 
-const list = payments.filter(p => String(p.memberId) === String(m.memberId));
-
-const paid = list.filter(p => String(p.status).toUpperCase() === "PAID");
-
-const sum = paid.reduce((s,p) => s + Number(p.amount || 0),0);
-
-// Drive image link -> thumbnail URL
-let photoUrl = "";
-
-if(m.photo){
-
-const photoLink = String(m.photo).trim();
-
-const fileIdMatch = photoLink.match(/[-\w]{25,}/);
-
-if(fileIdMatch){
-
-photoUrl = "https://drive.google.com/thumbnail?id=" +
-fileIdMatch[0] + "&sz=w500";
-
-}else if(/^https?:\/\//i.test(photoLink)){
-
-photoUrl = photoLink;
-
+function getPaymentForMonth(memberId, month, year){
+  return payments.find(payment =>
+    getPaymentMemberId(payment) === String(memberId) &&
+    getPaymentMonth(payment).toLowerCase() === month.toLowerCase() &&
+    getPaymentYear(payment) === Number(year) &&
+    getPaymentStatus(payment) === "PAID"
+  );
 }
 
+
+function getMonthsFromStartToNow(){
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth();
+
+  const result = [];
+
+  let year = START_YEAR;
+  let month = START_MONTH;
+
+  while(year < currentYear || (year === currentYear && month <= currentMonth)){
+    result.push({
+      month:months[month],
+      tamil:monthsTamil[month],
+      year:year
+    });
+
+    month++;
+
+    if(month > 11){
+      month = 0;
+      year++;
+    }
+  }
+
+  return result;
 }
 
-const photoHTML = photoUrl
-
-? `<img src="${esc(photoUrl)}" class="member-photo"
-alt="${esc(m.name)}" loading="lazy"
-onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-<div class="member-photo-placeholder" style="display:none">👤</div>`
-
-: `<div class="member-photo-placeholder">👤</div>`;
-
-return `
-<div class="member">
-
-${photoHTML}
-
-<h3>${esc(m.name)}</h3>
-
-<p>Member ID: ${esc(m.memberId)}</p>
-
-<p>Paid Months: ${paid.length}</p>
-
-<p>Total Paid: <b>₹${sum.toLocaleString("en-IN")}</b></p>
-
-<button onclick="openHistory('${escJs(m.memberId)}')">Payment History</button>
-
-${adminPin ? `<button style="margin-top:8px" onclick="editMember('${escJs(m.memberId)}')">Edit Member</button>` : ""}
-
-</div>`;
-
-}).join("");
-
-}
 
 function openHistory(id){
+  const member = members.find(item => getMemberId(item) === String(id));
 
-const m = members.find(x => String(x.memberId) === String(id));
+  if(!member) return;
 
-if(!m) return;
+  const memberId = getMemberId(member);
+  const name = getMemberName(member);
 
-document.getElementById("historyTitle").textContent =
-m.name + " - Payment History";
+  const monthList = getMonthsFromStartToNow();
 
-const list = payments.filter(p => String(p.memberId) === String(id));
+  let paidCount = 0;
+  let pendingCount = 0;
+  let totalPaid = 0;
 
-let html = `<table><tr><th>Month</th><th>Amount</th><th>Status</th><th>Date</th></tr>`;
+  const rows = monthList.map(item => {
+    const payment = getPaymentForMonth(memberId, item.month, item.year);
 
-months.forEach(month => {
+    if(payment){
+      paidCount++;
+      totalPaid += getPaymentAmount(payment);
+    }else{
+      pendingCount++;
+    }
 
-const p = list.find(x => x.month === month);
+    const statusHTML = payment
+      ? `<span class="paid">✔ செலுத்தியது</span>`
+      : `<span class="pending">✘ நிலுவை</span>`;
 
-const paid = p && String(p.status).toUpperCase() === "PAID";
+    const amount = payment
+      ? formatMoney(getPaymentAmount(payment))
+      : "—";
 
-html += `<tr>
-<td>${month}</td>
-<td>${paid ? "₹"+p.amount : "₹0"}</td>
-<td class="${paid ? "paid" : "pending"}">${paid ? "PAID" : "PENDING"}</td>
-<td>${paid ? esc(p.paidDate || "-") : "-"}</td>
-</tr>`;
+    const date = payment
+      ? escapeHTML(getPaymentDate(payment) || "—")
+      : "—";
 
-});
+    return `
+      <tr>
+        <td>${item.tamil} ${item.year}</td>
+        <td>${amount}</td>
+        <td>${date}</td>
+        <td>${statusHTML}</td>
+      </tr>
+    `;
+  }).join("");
 
-html += "</table>";
+  const pendingAmount = pendingCount * MONTHLY_AMOUNT;
 
-document.getElementById("historyContent").innerHTML = html;
+  document.getElementById("historyTitle").textContent =
+    name + " - சேமிப்பு விவரம்";
 
-document.getElementById("historyModal").style.display = "block";
+  document.getElementById("historyContent").innerHTML = `
+    <div class="stats-grid">
+      <div class="popup-stat">
+        <small>உறுப்பினர் ID</small>
+        <strong>${escapeHTML(memberId)}</strong>
+      </div>
 
+      <div class="popup-stat">
+        <small>செலுத்திய மாதங்கள்</small>
+        <strong class="paid">${paidCount}</strong>
+      </div>
+
+      <div class="popup-stat">
+        <small>மொத்தம் செலுத்தியது</small>
+        <strong>${formatMoney(totalPaid)}</strong>
+      </div>
+
+      <div class="popup-stat">
+        <small>நிலுவை தொகை</small>
+        <strong class="pending">${formatMoney(pendingAmount)}</strong>
+      </div>
+    </div>
+
+    <h3>மாத வாரியான சேமிப்பு விவரம்</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>மாதம்</th>
+            <th>தொகை</th>
+            <th>செலுத்திய தேதி</th>
+            <th>நிலை</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows || "<tr><td colspan='4'>விவரம் இல்லை</td></tr>"}
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  document.getElementById("historyModal").style.display = "block";
 }
+
 
 function closeHistory(){
-document.getElementById("historyModal").style.display = "none";
+  document.getElementById("historyModal").style.display = "none";
 }
+
+
+function closeModal(id){
+  document.getElementById(id).style.display = "none";
+}
+
 
 function openAdmin(){
-
-if(adminPin){
-
-document.getElementById("adminMenuModal").style.display = "block";
-
-return;
-
+  if(isAdmin){
+    document.getElementById("adminDashboard").style.display = "block";
+  }else{
+    document.getElementById("adminModal").style.display = "block";
+  }
 }
 
-document.getElementById("pin").value = "";
-document.getElementById("pinError").textContent = "";
-
-document.getElementById("adminModal").style.display = "block";
-
-}
-
-function adminLogout(){
-
-adminPin = "";
-
-localStorage.removeItem("temple_admin_pin");
-
-document.getElementById("adminMenuModal").style.display = "none";
-
-document.getElementById("adminModal").style.display = "none";
-
-alert("Admin Logout successful!");
-
-}
-
-function closeAdmin(){
-document.getElementById("adminModal").style.display = "none";
-}
-
-function closeAdminMenu(){
-document.getElementById("adminMenuModal").style.display = "none";
-}
-
-function openAddMemberModal(){
-
-if(!adminPin){alert("Admin PIN login தேவை");return;}
-
-document.getElementById("adminMenuModal").style.display = "none";
-
-document.getElementById("addMemberModal").style.display = "block";
-
-}
-
-function closeAddMemberModal(){
-document.getElementById("addMemberModal").style.display = "none";
-}
-
-function openPaymentModal(){
-
-if(!adminPin){alert("Admin PIN login தேவை");return;}
-
-document.getElementById("adminMenuModal").style.display = "none";
-
-document.getElementById("paymentModal").style.display = "block";
-
-populateDropdowns();
-populateYears();
-syncHistoryMember();
-showAdminHistory();
-
-}
-
-function closePaymentModal(){
-document.getElementById("paymentModal").style.display = "none";
-}
-
-async function postData(data){
-
-const res = await fetch(API_URL,{
-method:"POST",
-headers:{"Content-Type":"text/plain;charset=utf-8"},
-body:JSON.stringify(data)
-});
-
-const text = await res.text();
-
-try{
-
-return JSON.parse(text);
-
-}catch(e){
-
-throw new Error("Apps Script JSON பதில் கிடைக்கவில்லை. Deployment URL / access check செய்யவும்.");
-
-}
-
-}
 
 async function adminLogin(){
+  const pin = document.getElementById("adminPin").value;
 
-const pin = document.getElementById("pin").value.trim();
+  if(!pin){
+    document.getElementById("adminLoginMessage").textContent = "PIN உள்ளிடவும்";
+    return;
+  }
 
-const errorBox = document.getElementById("pinError");
+  try{
+    const response = await fetch(API_URL,{
+      method:"POST",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify({
+        action:"verifyPin",
+        pin:pin
+      })
+    });
 
-errorBox.textContent = "";
+    const result = await response.json();
 
-if(!pin){
+    if(result.success){
+      isAdmin = true;
+      localStorage.setItem("templeAdminPin",pin);
 
-errorBox.textContent = "PIN எண்ணை உள்ளிடவும்";
+      closeModal("adminModal");
+      document.getElementById("adminDashboard").style.display = "block";
+      document.getElementById("adminLoginMessage").textContent = "";
 
-return;
+    }else{
+      document.getElementById("adminLoginMessage").textContent =
+        result.message || "தவறான PIN";
+    }
 
+  }catch(error){
+    document.getElementById("adminLoginMessage").textContent =
+      "Login செய்ய முடியவில்லை";
+  }
 }
 
-try{
 
-const result = await postData({action:"verifyPin",pin:pin});
-
-if(!result.success){
-
-errorBox.textContent = result.message || "தவறான PIN. மீண்டும் முயற்சிக்கவும்.";
-
-return;
-
+function adminLogout(){
+  isAdmin = false;
+  localStorage.removeItem("templeAdminPin");
+  closeModal("adminDashboard");
 }
 
-adminPin = pin;
 
-localStorage.setItem("temple_admin_pin", pin);
+function openAddMemberModal(){
+  if(!isAdmin) return;
 
-closeAdmin();
+  document.getElementById("newMemberId").value = "";
+  document.getElementById("newMemberName").value = "";
+  document.getElementById("newMemberPhone").value = "";
+  document.getElementById("newMemberPhoto").value = "";
 
-document.getElementById("adminMenuModal").style.display = "block";
-
-populateDropdowns();
-populateYears();
-
-}catch(e){
-
-errorBox.textContent = "PIN சரிபார்க்க முடியவில்லை: " + e.message;
-
-console.error(e);
-
+  document.getElementById("addMemberModal").style.display = "block";
 }
 
-}
-
-function populateDropdowns(){
-
-const opts = members.map(m =>
-`<option value="${esc(m.memberId)}">${esc(m.memberId)} - ${esc(m.name)}</option>`
-).join("");
-
-document.getElementById("paymentMember").innerHTML = opts;
-
-document.getElementById("historyMember").innerHTML = opts;
-
-}
-
-function populateYears(){
-
-const select = document.getElementById("paymentYear");
-
-const now = new Date().getFullYear();
-
-select.innerHTML = "";
-
-for(let y=now-2;y<=now+1;y++){
-
-select.innerHTML += `<option value="${y}">${y}</option>`;
-
-}
-
-}
-
-function statusChanged(){
-
-const paid = document.getElementById("paymentStatus").value === "PAID";
-
-document.getElementById("paidFields").style.display = paid ? "block" : "none";
-
-}
-
-function syncHistoryMember(){
-
-const p = document.getElementById("paymentMember");
-
-const h = document.getElementById("historyMember");
-
-if(p && h) h.value = p.value;
-
-}
-
-function previewMemberPhoto(){
-
-const file = document.getElementById("newPhoto").files[0];
-
-const img = document.getElementById("photoPreview");
-
-if(!file){
-
-img.style.display="none";
-
-img.src="";
-
-return;
-
-}
-
-if(!file.type.startsWith("image/")){
-
-alert("புகைப்பட கோப்பை மட்டும் தேர்வு செய்யவும்");
-
-return;
-
-}
-
-const reader = new FileReader();
-
-reader.onload = () => {
-
-img.src=reader.result;
-
-img.style.display="block";
-
-};
-
-reader.readAsDataURL(file);
-
-}
 
 async function addMember(){
+  const memberId = document.getElementById("newMemberId").value.trim();
+  const name = document.getElementById("newMemberName").value.trim();
+  const phone = document.getElementById("newMemberPhone").value.trim();
+  const photo = document.getElementById("newMemberPhoto").value.trim();
 
-if(!adminPin){alert("Admin PIN login தேவை");return;}
+  if(!memberId || !name){
+    document.getElementById("addMemberMessage").textContent =
+      "Member ID மற்றும் பெயர் அவசியம்";
+    return;
+  }
 
-const memberId = document.getElementById("newId").value.trim();
+  try{
+    const result = await postAction({
+      action:"addMember",
+      pin:localStorage.getItem("templeAdminPin"),
+      memberId:memberId,
+      name:name,
+      phone:phone,
+      photo:photo
+    });
 
-const name = document.getElementById("newName").value.trim();
+    if(result.success){
+      document.getElementById("addMemberMessage").textContent = "Member சேர்க்கப்பட்டது";
+      await loadData();
+    }else{
+      document.getElementById("addMemberMessage").textContent =
+        result.message || "Member சேர்க்க முடியவில்லை";
+    }
 
-const phone = document.getElementById("newPhone").value.trim();
-
-const photoFile = document.getElementById("newPhoto").files[0];
-
-let photo = "";
-
-if(photoFile){
-
-if(photoFile.size > 2 * 1024 * 1024){
-
-alert("புகைப்படம் 2MB-க்கு குறைவாக இருக்க வேண்டும்");
-
-return;
-
+  }catch(error){
+    document.getElementById("addMemberMessage").textContent = error.message;
+  }
 }
 
-photo = await new Promise((resolve,reject)=>{
 
-const reader = new FileReader();
+function openPaymentModal(){
+  if(!isAdmin) return;
 
-reader.onload=()=>resolve(reader.result);
+  const select = document.getElementById("paymentMember");
 
-reader.onerror=reject;
+  select.innerHTML = members.map(member => `
+    <option value="${escapeHTML(getMemberId(member))}">
+      ${escapeHTML(getMemberId(member))} - ${escapeHTML(getMemberName(member))}
+    </option>
+  `).join("");
 
-reader.readAsDataURL(photoFile);
+  const monthSelect = document.getElementById("paymentMonth");
 
-});
+  monthSelect.innerHTML = months.map(month =>
+    `<option value="${month}">${monthTamil(month)}</option>`
+  ).join("");
 
+  const now = new Date();
+
+  document.getElementById("paymentYear").value = now.getFullYear();
+  document.getElementById("paymentDate").value = now.toISOString().slice(0,10);
+  document.getElementById("paymentAmount").value = MONTHLY_AMOUNT;
+
+  document.getElementById("paymentModal").style.display = "block";
 }
 
-if(!memberId || !name){
-
-alert("Member ID மற்றும் பெயர் தேவை");
-
-return;
-
-}
-
-try{
-
-const result = await postData({
-
-action:"addMember",
-pin:adminPin,
-memberId,
-name,
-phone,
-photo
-
-});
-
-if(!result.success){
-
-alert(result.message || "Member add failed");
-
-return;
-
-}
-
-alert("Member added successfully!");
-
-document.getElementById("newId").value = "";
-
-document.getElementById("newName").value = "";
-
-document.getElementById("newPhone").value = "";
-
-document.getElementById("newPhoto").value = "";
-
-document.getElementById("photoPreview").style.display = "none";
-
-document.getElementById("photoPreview").src = "";
-
-closeAddMemberModal();
-
-await loadData();
-
-populateDropdowns();
-
-}catch(e){
-
-alert("Add member error: " + e.message);
-
-}
-
-}
 
 async function savePayment(){
+  const memberId = document.getElementById("paymentMember").value;
+  const month = document.getElementById("paymentMonth").value;
+  const year = document.getElementById("paymentYear").value;
+  const amount = document.getElementById("paymentAmount").value;
+  const date = document.getElementById("paymentDate").value;
 
-if(!adminPin){alert("Admin PIN login தேவை");return;}
+  if(!memberId || !month || !year || !amount){
+    document.getElementById("paymentMessage").textContent =
+      "அனைத்து விவரங்களையும் நிரப்பவும்";
+    return;
+  }
 
-const memberId = document.getElementById("paymentMember").value;
+  try{
+    const result = await postAction({
+      action:"savePayment",
+      pin:localStorage.getItem("templeAdminPin"),
+      memberId:memberId,
+      month:month,
+      year:year,
+      amount:amount,
+      paidDate:date,
+      status:"PAID"
+    });
 
-const month = document.getElementById("paymentMonth").value;
+    if(result.success){
+      document.getElementById("paymentMessage").textContent =
+        "Payment சேமிக்கப்பட்டது";
 
-const year = Number(document.getElementById("paymentYear").value);
+      await loadData();
+    }else{
+      document.getElementById("paymentMessage").textContent =
+        result.message || "Payment சேமிக்க முடியவில்லை";
+    }
 
-const status = document.getElementById("paymentStatus").value;
-
-const amount = Number(document.getElementById("paymentAmount").value);
-
-const paidDate = document.getElementById("paymentDate").value;
-
-if(!memberId){
-
-alert("Member select பண்ணவும்");
-
-return;
-
+  }catch(error){
+    document.getElementById("paymentMessage").textContent = error.message;
+  }
 }
 
-if(status === "PAID" && (!amount || !paidDate)){
-
-alert("Amount மற்றும் Paid Date enter பண்ணவும்");
-
-return;
-
-}
-
-try{
-
-const result = await postData({
-
-action:"savePayment",
-pin:adminPin,
-memberId,
-month,
-year,
-status,
-amount,
-paidDate
-
-});
-
-if(!result.success){
-
-alert(result.message || "Payment update failed");
-
-return;
-
-}
-
-alert("Payment update successful!");
-
-await loadData();
-
-showAdminHistory();
-
-}catch(e){
-
-alert("Payment error: " + e.message);
-
-}
-
-}
 
 function openMemberEditList(){
+  if(!isAdmin) return;
 
-if(!adminPin){alert("Admin PIN login தேவை");return;}
+  let html = "<h3>உறுப்பினர்கள்</h3>";
 
-document.getElementById("adminMenuModal").style.display="none";
+  members.forEach(member => {
+    html += `
+      <div class="admin-list-item">
+        <strong>${escapeHTML(getMemberId(member))}</strong>
+        - ${escapeHTML(getMemberName(member))}
+        <button onclick="editMember('${escapeHTML(getMemberId(member))}')">
+          Edit
+        </button>
+      </div>
+    `;
+  });
 
-const select=document.getElementById("editMemberSelect");
-
-select.innerHTML=members.map(m =>
-`<option value="${esc(m.memberId)}">${esc(m.memberId)} - ${esc(m.name)}</option>`
-).join("");
-
-document.getElementById("editMemberModal").style.display="block";
-
-loadMemberEditForm();
-
+  document.getElementById("adminDashboardContent").innerHTML = html;
 }
 
-function closeEditMemberModal(){
-
-document.getElementById("editMemberModal").style.display="none";
-
-}
-
-function loadMemberEditForm(){
-
-const id=document.getElementById("editMemberSelect").value;
-
-const m=members.find(x=>String(x.memberId)===String(id));
-
-if(!m)return;
-
-document.getElementById("editMemberId").value=m.memberId;
-
-document.getElementById("editMemberName").value=m.name||"";
-
-document.getElementById("editMemberPhone").value="";
-
-fetchMemberPhone(m.memberId);
-
-}
 
 function editMember(id){
+  const member = members.find(item => getMemberId(item) === String(id));
 
-if(!adminPin){alert("Admin PIN login தேவை");return;}
+  if(!member) return;
 
-document.getElementById("adminMenuModal").style.display="none";
+  document.getElementById("editMemberId").value = getMemberId(member);
+  document.getElementById("editMemberName").value = getMemberName(member);
+  document.getElementById("editMemberPhone").value = member["Phone"] || member.phone || "";
+  document.getElementById("editMemberPhoto").value = getMemberPhoto(member);
 
-document.getElementById("editMemberModal").style.display="block";
-
-document.getElementById("editMemberSelect").innerHTML=members.map(m =>
-`<option value="${esc(m.memberId)}">${esc(m.memberId)} - ${esc(m.name)}</option>`
-).join("");
-
-document.getElementById("editMemberSelect").value=id;
-
-loadMemberEditForm();
-
+  document.getElementById("editMemberModal").style.display = "block";
 }
+
 
 async function updateMember(){
+  const memberId = document.getElementById("editMemberId").value;
+  const name = document.getElementById("editMemberName").value.trim();
+  const phone = document.getElementById("editMemberPhone").value.trim();
+  const photo = document.getElementById("editMemberPhoto").value.trim();
 
-if(!adminPin){alert("Admin PIN login தேவை");return;}
+  try{
+    const result = await postAction({
+      action:"editMember",
+      pin:localStorage.getItem("templeAdminPin"),
+      memberId:memberId,
+      name:name,
+      phone:phone,
+      photo:photo
+    });
 
-const memberId=document.getElementById("editMemberId").value;
+    if(result.success){
+      document.getElementById("editMemberMessage").textContent = "Updated";
+      await loadData();
+      closeModal("editMemberModal");
+    }else{
+      document.getElementById("editMemberMessage").textContent =
+        result.message || "Update முடியவில்லை";
+    }
 
-const name=document.getElementById("editMemberName").value.trim();
-
-const phone=document.getElementById("editMemberPhone").value.trim();
-
-const file=document.getElementById("editMemberPhoto").files[0];
-
-let photo="";
-
-if(file){
-
-if(file.size>2*1024*1024){
-
-alert("Photo 2MB-க்கு குறைவாக இருக்க வேண்டும்");
-
-return;
-
+  }catch(error){
+    document.getElementById("editMemberMessage").textContent = error.message;
+  }
 }
 
-photo=await new Promise((resolve,reject)=>{
-
-const r=new FileReader();
-
-r.onload=()=>resolve(r.result);
-
-r.onerror=reject;
-
-r.readAsDataURL(file);
-
-});
-
-}
-
-if(!name){
-
-alert("பெயர் தேவை");
-
-return;
-
-}
-
-try{
-
-const r=await postData({
-
-action:"editMember",
-pin:adminPin,
-memberId,
-name,
-phone,
-photo
-
-});
-
-if(!r.success){
-
-alert(r.message||"Update failed");
-
-return;
-
-}
-
-alert("உறுப்பினர் விவரம் update செய்யப்பட்டது");
-
-document.getElementById("editMemberPhoto").value="";
-
-await loadData();
-
-loadMemberEditForm();
-
-populateDropdowns();
-
-}catch(e){
-
-alert("Update error: "+e.message);
-
-}
-
-}
-
-async function fetchMemberPhone(memberId){
-
-try{
-
-const r=await postData({
-
-action:"getMemberDetails",
-pin:adminPin,
-memberId
-
-});
-
-if(r.success){
-
-document.getElementById("editMemberPhone").value=r.phone||"";
-
-}
-
-}catch(e){
-
-console.warn(e);
-
-}
-
-}
-
-function editPayment(memberId,month,year){
-
-if(!adminPin){alert("Admin PIN login தேவை");return;}
-
-document.getElementById("paymentMember").value=memberId;
-
-document.getElementById("paymentMonth").value=month;
-
-document.getElementById("paymentYear").value=String(year);
-
-const p=payments.find(x =>
-String(x.memberId)===String(memberId) &&
-String(x.month)===String(month) &&
-Number(x.year)===Number(year)
-);
-
-if(p){
-
-document.getElementById("paymentStatus").value=String(p.status||"PENDING").toUpperCase();
-
-document.getElementById("paymentAmount").value=p.amount||500;
-
-document.getElementById("paymentDate").value=p.paidDate||"";
-
-statusChanged();
-
-}
-
-document.getElementById("paymentModal").style.display="block";
-
-}
-
-async function deletePayment(memberId,month,year){
-
-if(!adminPin){alert("Admin PIN login தேவை");return;}
-
-if(!confirm(`${month} ${year} payment record-ஐ நீக்கலாமா?`))return;
-
-try{
-
-const r=await postData({
-
-action:"deletePayment",
-pin:adminPin,
-memberId,
-month,
-year
-
-});
-
-if(!r.success){
-
-alert(r.message||"Delete failed");
-
-return;
-
-}
-
-alert("Payment record நீக்கப்பட்டது");
-
-await loadData();
-
-showAdminHistory();
-
-}catch(e){
-
-alert("Delete error: "+e.message);
-
-}
-
-}
 
 function showAdminHistory(){
+  if(!isAdmin) return;
 
-const id = document.getElementById("historyMember").value;
+  let html = `
+    <h3>Payment History</h3>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Member ID</th>
+          <th>Month</th>
+          <th>Year</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
 
-const list = payments.filter(p => String(p.memberId) === String(id));
+  payments.forEach(payment => {
+    const memberId = getPaymentMemberId(payment);
+    const month = getPaymentMonth(payment);
+    const year = getPaymentYear(payment);
 
-let html = `<table>
-<tr><th>Month</th><th>Year</th><th>Amount</th><th>Status</th><th>Date</th><th>Action</th></tr>`;
+    html += `
+      <tr>
+        <td>${escapeHTML(memberId)}</td>
+        <td>${escapeHTML(monthTamil(month))}</td>
+        <td>${year}</td>
+        <td>${formatMoney(getPaymentAmount(payment))}</td>
+        <td>${escapeHTML(getPaymentDate(payment))}</td>
+        <td>${escapeHTML(getPaymentStatus(payment))}</td>
+        <td>
+          <button onclick="editPayment('${escapeHTML(memberId)}','${escapeHTML(month)}','${year}')">
+            Edit
+          </button>
+          <button onclick="deletePayment('${escapeHTML(memberId)}','${escapeHTML(month)}','${year}')">
+            Delete
+          </button>
+        </td>
+      </tr>
+    `;
+  });
 
-list.forEach(p => {
+  html += "</tbody></table></div>";
 
-html += `<tr>
-<td>${esc(p.month)}</td>
-<td>${p.year}</td>
-<td>₹${p.amount}</td>
-<td>${esc(p.status)}</td>
-<td>${esc(p.paidDate || "-")}</td>
-<td>
-<button onclick="editPayment('${escJs(p.memberId)}','${escJs(p.month)}',${Number(p.year)})">Edit</button>
-<button style="background:#b3261e" onclick="deletePayment('${escJs(p.memberId)}','${escJs(p.month)}',${Number(p.year)})">Delete</button>
-</td>
-</tr>`;
-
-});
-
-html += "</table>";
-
-document.getElementById("adminHistory").innerHTML = html;
-
+  document.getElementById("adminDashboardContent").innerHTML = html;
 }
 
-function esc(value){
 
-return String(value ?? "").replace(/[&<>"']/g, c => ({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[c]));
+function editPayment(memberId,month,year){
+  const payment = payments.find(item =>
+    getPaymentMemberId(item) === String(memberId) &&
+    getPaymentMonth(item) === String(month) &&
+    getPaymentYear(item) === Number(year)
+  );
 
+  if(!payment) return;
+
+  document.getElementById("editPaymentMemberId").value = memberId;
+  document.getElementById("editPaymentOldMonth").value = month;
+  document.getElementById("editPaymentOldYear").value = year;
+  document.getElementById("editPaymentMemberDisplay").value = memberId;
+
+  document.getElementById("editPaymentMonth").innerHTML = months.map(m =>
+    `<option value="${m}" ${m===month?"selected":""}>${monthTamil(m)}</option>`
+  ).join("");
+
+  document.getElementById("editPaymentYear").value = year;
+  document.getElementById("editPaymentAmount").value = getPaymentAmount(payment);
+  document.getElementById("editPaymentDate").value = getPaymentDate(payment);
+
+  document.getElementById("editPaymentModal").style.display = "block";
 }
 
-function escJs(value){
 
-return String(value).replace(/\\/g,"\\\\").replace(/'/g,"\\'");
+async function updatePayment(){
+  const memberId = document.getElementById("editPaymentMemberId").value;
+  const oldMonth = document.getElementById("editPaymentOldMonth").value;
+  const oldYear = document.getElementById("editPaymentOldYear").value;
 
+  const month = document.getElementById("editPaymentMonth").value;
+  const year = document.getElementById("editPaymentYear").value;
+  const amount = document.getElementById("editPaymentAmount").value;
+  const date = document.getElementById("editPaymentDate").value;
+
+  try{
+    const result = await postAction({
+      action:"editPayment",
+      pin:localStorage.getItem("templeAdminPin"),
+      memberId:memberId,
+      oldMonth:oldMonth,
+      oldYear:oldYear,
+      month:month,
+      year:year,
+      amount:amount,
+      paidDate:date,
+      status:"PAID"
+    });
+
+    if(result.success){
+      document.getElementById("editPaymentMessage").textContent = "Payment Updated";
+      await loadData();
+      closeModal("editPaymentModal");
+      showAdminHistory();
+    }else{
+      document.getElementById("editPaymentMessage").textContent =
+        result.message || "Payment update failed";
+    }
+
+  }catch(error){
+    document.getElementById("editPaymentMessage").textContent = error.message;
+  }
 }
+
+
+async function deletePayment(memberId,month,year){
+  if(!confirm("இந்த Payment-ஐ delete செய்ய வேண்டுமா?")) return;
+
+  try{
+    const result = await postAction({
+      action:"deletePayment",
+      pin:localStorage.getItem("templeAdminPin"),
+      memberId:memberId,
+      month:month,
+      year:year
+    });
+
+    if(result.success){
+      await loadData();
+      showAdminHistory();
+    }else{
+      alert(result.message || "Delete முடியவில்லை");
+    }
+
+  }catch(error){
+    alert(error.message);
+  }
+}
+
+
+async function postAction(payload){
+  const response = await fetch(API_URL,{
+    method:"POST",
+    headers:{
+      "Content-Type":"text/plain;charset=utf-8"
+    },
+    body:JSON.stringify(payload)
+  });
+
+  const text = await response.text();
+
+  try{
+    return JSON.parse(text);
+  }catch(error){
+    throw new Error("Apps Script JSON பதில் கிடைக்கவில்லை. Deployment URL / access check செய்யவும்.");
+  }
+}
+
+
+window.onclick = function(event){
+  document.querySelectorAll(".modal").forEach(modal => {
+    if(event.target === modal){
+      modal.style.display = "none";
+    }
+  });
+};
+
 
 loadData();
-
 </script>
 
 </body>
