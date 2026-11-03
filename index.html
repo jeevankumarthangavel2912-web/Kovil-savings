@@ -17,21 +17,14 @@ body{
 }
 
 header{
-  background:linear-gradient(135deg,#76230c,#d87919);
+  background:linear-gradient(135deg,#76230c,#b65b16);
   color:white;
   text-align:center;
-  padding:24px 12px
+  padding:25px 15px
 }
 
-header h1{
-  margin:0 0 10px;
-  font-size:25px
-}
-
-header p{
-  margin:5px 0;
-  font-size:15px
-}
+header h1{margin:0 0 8px;font-size:27px}
+header p{margin:0}
 
 .container{
   max-width:1100px;
@@ -39,52 +32,44 @@ header p{
   padding:20px
 }
 
-.summary{
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-bottom:25px
+}
+
+.stat-card{
   background:white;
-  text-align:center;
   padding:20px;
-  border-radius:15px;
-  box-shadow:0 2px 8px #0001;
-  margin-bottom:15px
+  border-radius:12px;
+  text-align:center;
+  box-shadow:0 2px 10px #0001
 }
 
-.summary h2{
-  margin:0 0 10px;
-  color:#8b2f0b
+.stat-card h3{margin:0 0 10px;color:#76230c}
+.stat-card p{font-size:22px;font-weight:bold;margin:0}
+
+.search-box{
+  width:100%;
+  padding:13px;
+  border:1px solid #d8b98b;
+  border-radius:8px;
+  font-size:16px;
+  margin-bottom:20px
 }
-
-.summary strong{
-  font-size:28px;
-  color:#a8440b
-}
-
-button{
-  border:0;
-  border-radius:9px;
-  padding:12px 16px;
-  background:#a8440b;
-  color:white;
-  font-size:15px;
-  cursor:pointer
-}
-
-button:hover{opacity:.9}
-
-.adminBtn{background:#45200e}
 
 .members{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-  gap:18px;
-  margin-top:20px
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:15px
 }
 
 .member{
-  background:#fffaf0;
+  background:white;
   padding:18px;
-  border-radius:16px;
-  border:1px solid #d9a441;
-  box-shadow:0 4px 14px #0002;
+  border-radius:12px;
+  box-shadow:0 2px 10px #0002;
   text-align:center;
   cursor:pointer;
   transition:transform .2s,box-shadow .2s
@@ -126,147 +111,109 @@ button:hover{opacity:.9}
   overflow-wrap:anywhere
 }
 
-.search-box{
-  width:100%;
-  padding:13px;
-  border:1px solid #d9a441;
-  border-radius:10px;
-  font-size:16px;
-  margin:15px 0
+.member p{margin:7px 0 0;color:#76543b}
+
+button{
+  background:#8b2f0d;
+  color:white;
+  border:0;
+  border-radius:7px;
+  padding:11px 16px;
+  cursor:pointer;
+  font-size:14px
+}
+
+button:hover{background:#b65b16}
+
+.admin-button{
+  display:block;
+  margin:25px auto;
+  padding:13px 25px
 }
 
 .modal{
   display:none;
   position:fixed;
+  z-index:1000;
   inset:0;
-  background:#0008;
-  z-index:9999;
   overflow:auto;
-  padding:15px
+  background:#0009;
+  padding:20px
 }
 
 .modal-content{
   background:#fffaf0;
-  max-width:700px;
-  margin:30px auto;
-  padding:22px;
-  border-radius:16px;
-  border:2px solid #d9a441;
-  box-shadow:0 8px 30px #0003
-}
-
-.modal-content h2{
-  color:#8b2f0b;
-  margin-top:0
+  max-width:650px;
+  margin:35px auto;
+  padding:25px;
+  border-radius:12px;
+  position:relative
 }
 
 .close-btn{
   float:right;
-  background:#76230c;
-  padding:8px 13px
+  padding:7px 12px
 }
 
-.form-group{margin:14px 0}
+.form-group{margin:15px 0}
 
 .form-group label{
   display:block;
-  margin-bottom:6px;
+  margin-bottom:7px;
   font-weight:bold
 }
 
 .form-group input,
 .form-group select{
   width:100%;
-  padding:11px;
-  border:1px solid #c99a45;
-  border-radius:8px;
-  font-size:15px
-}
-
-.admin-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin:15px 0
-}
-
-.popup-stat{
-  background:#fff0d5;
-  border:1px solid #e4c17a;
-  border-radius:12px;
   padding:12px;
-  text-align:center
+  border:1px solid #d8b98b;
+  border-radius:7px;
+  font-size:16px;
+  background:white
 }
 
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
+.admin-list-item{
+  background:white;
+  border:1px solid #ead7b9;
+  padding:18px;
+  border-radius:10px;
   margin:15px 0
-}
-
-.popup-stat small{
-  display:block;
-  color:#6b4a2b;
-  margin-bottom:5px
-}
-
-.popup-stat strong{
-  font-size:20px;
-  color:#8b2f0b
 }
 
 .table-wrap{
-  overflow-x:auto;
-  margin-top:15px
+  width:100%;
+  overflow-x:auto
 }
 
 table{
   width:100%;
   border-collapse:collapse;
   background:white;
-  min-width:450px
+  min-width:550px
 }
 
 th,td{
-  border:1px solid #e1c38c;
+  border:1px solid #ead7b9;
   padding:10px;
-  text-align:center
+  text-align:left
 }
 
 th{
-  background:#76230c;
-  color:white
+  background:#f4e2c4;
+  color:#76230c
 }
 
-.paid{
-  color:#087b32;
+#paymentMessage,
+#addMemberMessage,
+#editMemberMessage{
+  color:#24733a;
   font-weight:bold
 }
 
-.pending{
-  color:#c62828;
-  font-weight:bold
+@media(max-width:800px){
+  .members{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
-
-.admin-list-item{
-  background:white;
-  border:1px solid #e1c38c;
-  border-radius:10px;
-  padding:12px;
-  margin:10px 0
-}
-
-.admin-list-item button{margin:4px}
-
-footer{
-  text-align:center;
-  padding:25px;
-  color:#7b4b2b;
-  font-size:14px
-}
-
-.hidden{display:none!important}
 
 @media(max-width:600px){
   .container{padding:12px}
@@ -293,53 +240,58 @@ footer{
 <header>
   <h1>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</h1>
   <p>வாய்க்கால் ரோடு, கோபிசெட்டிபாளையம்</p>
-  <p>திருக்கோவில் சேமிப்பு திட்டம்</p>
+  <p>கோவில் சேமிப்பு கணக்கு</p>
 </header>
 
 <div class="container">
 
-  <div class="summary">
-    <h2>திருக்கோவில் சேமிப்பு விவரம்</h2>
-    <p>மொத்த உறுப்பினர்கள்</p>
-    <strong id="memberCount">0</strong>
-    <p>மொத்த சேமிப்பு தொகை</p>
-    <strong id="totalAmount">₹0</strong>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>மொத்த உறுப்பினர்கள்</h3>
+      <p id="totalMembers">0</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>மொத்த சேமிப்பு</h3>
+      <p id="totalSavings">₹0</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>மாத சேமிப்பு</h3>
+      <p>₹500</p>
+    </div>
   </div>
 
   <input
-    type="text"
-    id="searchInput"
     class="search-box"
-    placeholder="உறுப்பினர் பெயரை தேடவும்..."
+    id="searchInput"
+    placeholder="உறுப்பினர் பெயர் அல்லது ID தேடவும்..."
     oninput="renderMembers()"
   >
 
-  <div style="text-align:right">
-    <button class="adminBtn" onclick="openAdmin()">⚙ Admin</button>
-  </div>
+  <div class="members" id="membersList"></div>
 
-  <div class="members" id="members">Loading...</div>
+  <button class="admin-button" onclick="openAdminLogin()">
+    Admin Login
+  </button>
 
 </div>
 
-<footer>
-  மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்<br>
-  சேமிப்பு திட்டம்
-</footer>
+<!-- MEMBER DETAILS MODAL -->
 
-<!-- MEMBER HISTORY MODAL -->
-<div class="modal" id="historyModal">
+<div class="modal" id="memberModal">
   <div class="modal-content">
-    <button class="close-btn" onclick="closeHistory()">✕</button>
-    <h2 id="historyTitle">உறுப்பினர் சேமிப்பு விவரம்</h2>
-    <div id="historyContent"></div>
+    <button class="close-btn" onclick="closeModal('memberModal')">✕</button>
+    <div id="memberDetails"></div>
   </div>
 </div>
 
 <!-- ADMIN LOGIN MODAL -->
-<div class="modal" id="adminModal">
+
+<div class="modal" id="adminLoginModal">
   <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('adminModal')">✕</button>
+    <button class="close-btn" onclick="closeModal('adminLoginModal')">✕</button>
+
     <h2>Admin Login</h2>
 
     <div class="form-group">
@@ -348,29 +300,24 @@ footer{
     </div>
 
     <button onclick="adminLogin()">Login</button>
-    <p id="adminLoginMessage"></p>
+    <p id="loginMessage"></p>
   </div>
 </div>
 
-<!-- ADMIN DASHBOARD -->
+<!-- ADMIN DASHBOARD MODAL -->
+
 <div class="modal" id="adminDashboard">
   <div class="modal-content">
     <button class="close-btn" onclick="closeModal('adminDashboard')">✕</button>
 
     <h2>Admin Dashboard</h2>
 
-    <div class="admin-actions">
-      <button onclick="openAddMemberModal()">+ உறுப்பினர் சேர்க்க</button>
-      <button onclick="openPaymentModal()">💰 Payment பதிவு</button>
-      <button onclick="openMemberEditList()">✏️ உறுப்பினர் Edit</button>
-      <button onclick="adminLogout()" class="adminBtn">Logout</button>
-    </div>
-
     <div id="adminDashboardContent"></div>
   </div>
 </div>
 
 <!-- ADD MEMBER MODAL -->
+
 <div class="modal" id="addMemberModal">
   <div class="modal-content">
     <button class="close-btn" onclick="closeModal('addMemberModal')">✕</button>
@@ -378,7 +325,7 @@ footer{
     <h2>புதிய உறுப்பினர் சேர்க்க</h2>
 
     <div class="form-group">
-      <label>உறுப்பினர் ID</label>
+      <label>Member ID</label>
       <input id="newMemberId" placeholder="Member ID">
     </div>
 
@@ -393,8 +340,18 @@ footer{
     </div>
 
     <div class="form-group">
-      <label>Photo URL</label>
-      <input id="newMemberPhoto" placeholder="Google Drive Photo URL">
+      <label>புகைப்படம் (Phone / Gallery)</label>
+      <input
+        id="newMemberPhoto"
+        type="file"
+        accept="image/*"
+        onchange="previewMemberPhoto(this,'newMemberPhotoPreview')"
+      >
+      <img
+        id="newMemberPhotoPreview"
+        class="member-photo"
+        style="display:none;width:100px;height:100px;margin-top:10px"
+      >
     </div>
 
     <button onclick="addMember()">உறுப்பினர் சேர்க்க</button>
@@ -403,6 +360,7 @@ footer{
 </div>
 
 <!-- EDIT MEMBER MODAL -->
+
 <div class="modal" id="editMemberModal">
   <div class="modal-content">
     <button class="close-btn" onclick="closeModal('editMemberModal')">✕</button>
@@ -425,8 +383,23 @@ footer{
     </div>
 
     <div class="form-group">
-      <label>Photo URL</label>
-      <input id="editMemberPhoto">
+      <label>தற்போதைய புகைப்படம்</label>
+      <div id="editMemberCurrentPhoto"></div>
+    </div>
+
+    <div class="form-group">
+      <label>புதிய புகைப்படம் (Phone / Gallery)</label>
+      <input
+        id="editMemberPhoto"
+        type="file"
+        accept="image/*"
+        onchange="previewMemberPhoto(this,'editMemberPhotoPreview')"
+      >
+      <img
+        id="editMemberPhotoPreview"
+        class="member-photo"
+        style="display:none;width:100px;height:100px;margin-top:10px"
+      >
     </div>
 
     <button onclick="updateMember()">Update Member</button>
@@ -435,6 +408,7 @@ footer{
 </div>
 
 <script>
+
 const API_URL = "https://script.google.com/macros/s/AKfycbyzCU0XMNuB2w6gt3V0Du6Xxr9Su8Hztb-MUN-DA0MhF7cTvQaAe_LajvHXXJGe3DY/exec";
 
 const MONTHLY_AMOUNT = 500;
@@ -456,13 +430,17 @@ let payments = [];
 let totalAmount = 0;
 let isAdmin = false;
 
+// ======================================
+// COMMON HELPERS
+// ======================================
+
 function monthTamil(month){
   const index = months.indexOf(month);
   return index >= 0 ? monthsTamil[index] : month;
 }
 
 function escapeHTML(value){
-  return String(value ?? "").replace(/[&<>"']/g, function(char){
+  return String(value ?? "").replace(/[&<>"']/g,function(char){
     return {
       "&":"&amp;",
       "<":"&lt;",
@@ -505,295 +483,303 @@ function getPaymentAmount(payment){
   return Number(payment["Amount"] ?? payment.amount ?? 0);
 }
 
-function getPaymentStatus(payment){
-  return String(payment["Status"] ?? payment.status ?? "PAID").trim().toUpperCase();
-}
-
 function getPaymentDate(payment){
-  return String(payment["Paid Date"] ?? payment.paidDate ?? payment.date ?? "").trim();
+  return String(payment["Paid Date"] ?? payment.paidDate ?? "");
 }
 
-function getDrivePhotoURL(photoLink){
-  if(!photoLink) return "";
-
-  if(photoLink.includes("drive.google.com/thumbnail")){
-    return photoLink;
-  }
-
-  const match = photoLink.match(/[-\w]{25,}/);
-
-  if(match){
-    return "https://drive.google.com/thumbnail?id=" + match[0] + "&sz=w500";
-  }
-
-  return photoLink;
+function getPaymentStatus(payment){
+  return String(payment["Status"] ?? payment.status ?? "");
 }
+
+// ======================================
+// LOAD DATA
+// ======================================
 
 async function loadData(){
   try{
     const response = await fetch(API_URL);
-    const data = await response.json();
+    const result = await response.json();
 
-    members = data.members || [];
-    payments = data.payments || [];
-    totalAmount = Number(data.total || 0);
+    if(!result.success){
+      throw new Error(result.message || "Data load ஆகவில்லை");
+    }
 
-    document.getElementById("memberCount").textContent = members.length;
-    document.getElementById("totalAmount").textContent = formatMoney(totalAmount);
+    members = result.members || [];
+    payments = result.payments || [];
+
+    totalAmount = payments.reduce((sum,payment)=>{
+      return sum + getPaymentAmount(payment);
+    },0);
+
+    document.getElementById("totalMembers").textContent = members.length;
+    document.getElementById("totalSavings").textContent = formatMoney(totalAmount);
 
     renderMembers();
 
   }catch(error){
-    document.getElementById("members").innerHTML =
-      "<p>Data load ஆகவில்லை. Apps Script deployment check செய்யவும்.</p>";
-
     console.error(error);
+    document.getElementById("membersList").innerHTML =
+      "<p>Data load செய்ய முடியவில்லை. Internet connection சரிபார்க்கவும்.</p>";
   }
 }
 
-function renderMembers(){
-  const container = document.getElementById("members");
-  const search = document.getElementById("searchInput").value.toLowerCase().trim();
+// ======================================
+// RENDER MEMBERS
+// ======================================
 
-  const filtered = members.filter(member =>
-    getMemberName(member).toLowerCase().includes(search) ||
-    getMemberId(member).toLowerCase().includes(search)
-  );
+function renderMembers(){
+  const search = document.getElementById("searchInput").value
+    .toLowerCase()
+    .trim();
+
+  const filtered = members.filter(member=>{
+    return (
+      getMemberName(member).toLowerCase().includes(search) ||
+      getMemberId(member).toLowerCase().includes(search)
+    );
+  });
+
+  const container = document.getElementById("membersList");
 
   if(filtered.length === 0){
-    container.innerHTML = "<p>உறுப்பினர்கள் இல்லை.</p>";
+    container.innerHTML = "<p>உறுப்பினர்கள் இல்லை</p>";
     return;
   }
 
-  container.innerHTML = filtered.map(member => {
-    const memberId = getMemberId(member);
-    const name = getMemberName(member);
-    const photoLink = getMemberPhoto(member);
-    const photo = getDrivePhotoURL(photoLink);
-
-    const photoHTML = photo
-      ? `<img class="member-photo" src="${escapeHTML(photo)}" alt="${escapeHTML(name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-         <div class="member-photo-placeholder" style="display:none">👤</div>`
-      : `<div class="member-photo-placeholder">👤</div>`;
+  container.innerHTML = filtered.map(member=>{
+    const photo = getMemberPhoto(member);
 
     return `
-      <div class="member" onclick="openHistory('${escapeHTML(memberId)}')">
-        ${photoHTML}
-        <h3>${escapeHTML(name)}</h3>
+      <div class="member" onclick="showMemberDetails('${escapeHTML(getMemberId(member))}')">
+        ${
+          photo
+          ? `<img class="member-photo" src="${escapeHTML(photo)}" alt="Member Photo">`
+          : `<div class="member-photo-placeholder">👤</div>`
+        }
+        <h3>${escapeHTML(getMemberName(member))}</h3>
+        <p>${escapeHTML(getMemberId(member))}</p>
       </div>
     `;
   }).join("");
 }
 
-function getPaymentForMonth(memberId, month, year){
-  return payments.find(payment =>
-    getPaymentMemberId(payment) === String(memberId) &&
-    getPaymentMonth(payment).toLowerCase() === month.toLowerCase() &&
-    getPaymentYear(payment) === Number(year) &&
-    getPaymentStatus(payment) === "PAID"
-  );
-}
+// ======================================
+// MEMBER DETAILS
+// ======================================
 
-function getMonthsFromStartToNow(){
-  const now = new Date();
-  const currentYear = now.getFullYear();
-  const currentMonth = now.getMonth();
-
-  const result = [];
-
-  let year = START_YEAR;
-  let month = START_MONTH;
-
-  while(year < currentYear || (year === currentYear && month <= currentMonth)){
-    result.push({
-      month:months[month],
-      tamil:monthsTamil[month],
-      year:year
-    });
-
-    month++;
-
-    if(month > 11){
-      month = 0;
-      year++;
-    }
-  }
-
-  return result;
-}
-
-function openHistory(id){
-  const member = members.find(item => getMemberId(item) === String(id));
+function showMemberDetails(id){
+  const member = members.find(item=>getMemberId(item) === String(id));
 
   if(!member) return;
 
   const memberId = getMemberId(member);
-  const name = getMemberName(member);
-  const monthList = getMonthsFromStartToNow();
+  const memberPayments = payments
+    .filter(payment=>getPaymentMemberId(payment) === memberId)
+    .slice()
+    .reverse();
 
-  let paidCount = 0;
-  let pendingCount = 0;
-  let totalPaid = 0;
+  const photo = getMemberPhoto(member);
 
-  const rows = monthList.map(item => {
-    const payment = getPaymentForMonth(memberId, item.month, item.year);
+  let history = "";
 
-    if(payment){
-      paidCount++;
-      totalPaid += getPaymentAmount(payment);
-    }else{
-      pendingCount++;
-    }
-
-    const statusHTML = payment
-      ? `<span class="paid">✔ செலுத்தியது</span>`
-      : `<span class="pending">✘ நிலுவை</span>`;
-
-    const amount = payment
-      ? formatMoney(getPaymentAmount(payment))
-      : "—";
-
-    const date = payment
-      ? escapeHTML(getPaymentDate(payment) || "—")
-      : "—";
-
-    return `
-      <tr>
-        <td>${item.tamil} ${item.year}</td>
-        <td>${amount}</td>
-        <td>${date}</td>
-        <td>${statusHTML}</td>
-      </tr>
+  if(memberPayments.length === 0){
+    history = "<p>Payment History இல்லை.</p>";
+  }else{
+    history = `
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>மாதம்</th>
+              <th>வருடம்</th>
+              <th>தொகை</th>
+              <th>தேதி</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${memberPayments.map(payment=>`
+              <tr>
+                <td>${escapeHTML(monthTamil(getPaymentMonth(payment)))}</td>
+                <td>${getPaymentYear(payment)}</td>
+                <td>${formatMoney(getPaymentAmount(payment))}</td>
+                <td>${escapeHTML(getPaymentDate(payment))}</td>
+                <td>${escapeHTML(getPaymentStatus(payment))}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </div>
     `;
-  }).join("");
+  }
 
-  const pendingAmount = pendingCount * MONTHLY_AMOUNT;
-
-  document.getElementById("historyTitle").textContent =
-    name + " - சேமிப்பு விவரம்";
-
-  document.getElementById("historyContent").innerHTML = `
-    <div class="stats-grid">
-      <div class="popup-stat">
-        <small>உறுப்பினர் ID</small>
-        <strong>${escapeHTML(memberId)}</strong>
-      </div>
-
-      <div class="popup-stat">
-        <small>செலுத்திய மாதங்கள்</small>
-        <strong class="paid">${paidCount}</strong>
-      </div>
-
-      <div class="popup-stat">
-        <small>மொத்தம் செலுத்தியது</small>
-        <strong>${formatMoney(totalPaid)}</strong>
-      </div>
-
-      <div class="popup-stat">
-        <small>நிலுவை தொகை</small>
-        <strong class="pending">${formatMoney(pendingAmount)}</strong>
-      </div>
+  document.getElementById("memberDetails").innerHTML = `
+    <div style="text-align:center">
+      ${
+        photo
+        ? `<img src="${escapeHTML(photo)}" class="member-photo">`
+        : `<div class="member-photo-placeholder">👤</div>`
+      }
+      <h2>${escapeHTML(getMemberName(member))}</h2>
+      <p>Member ID: ${escapeHTML(memberId)}</p>
+      <p>Phone: ${escapeHTML(member["Phone"] || member.phone || "")}</p>
     </div>
 
-    <h3>மாத வாரியான சேமிப்பு விவரம்</h3>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>மாதம்</th>
-            <th>தொகை</th>
-            <th>செலுத்திய தேதி</th>
-            <th>நிலை</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${rows || "<tr><td colspan='4'>விவரம் இல்லை</td></tr>"}
-        </tbody>
-      </table>
-    </div>
+    <h3>Payment History</h3>
+    ${history}
   `;
 
-  document.getElementById("historyModal").style.display = "block";
+  document.getElementById("memberModal").style.display = "block";
 }
 
-function closeHistory(){
-  document.getElementById("historyModal").style.display = "none";
-}
+// ======================================
+// MODAL HELPERS
+// ======================================
 
 function closeModal(id){
   document.getElementById(id).style.display = "none";
 }
 
-function openAdmin(){
-  if(isAdmin){
-    document.getElementById("adminDashboard").style.display = "block";
-  }else{
-    document.getElementById("adminModal").style.display = "block";
-  }
+function openAdminLogin(){
+  document.getElementById("adminLoginModal").style.display = "block";
 }
 
+// ======================================
+// ADMIN LOGIN
+// ======================================
+
 async function adminLogin(){
-  const pin = document.getElementById("adminPin").value;
+  const pin = document.getElementById("adminPin").value.trim();
 
   if(!pin){
-    document.getElementById("adminLoginMessage").textContent = "PIN உள்ளிடவும்";
+    document.getElementById("loginMessage").textContent = "PIN உள்ளிடவும்";
     return;
   }
 
   try{
-    const response = await fetch(API_URL,{
-      method:"POST",
-      headers:{"Content-Type":"text/plain;charset=utf-8"},
-      body:JSON.stringify({
-        action:"verifyPin",
-        pin:pin
-      })
+    const result = await postAction({
+      action:"adminLogin",
+      pin:pin
     });
 
-    const result = await response.json();
-
     if(result.success){
-      isAdmin = true;
       localStorage.setItem("templeAdminPin",pin);
+      isAdmin = true;
 
-      closeModal("adminModal");
+      closeModal("adminLoginModal");
+
       document.getElementById("adminDashboard").style.display = "block";
-      document.getElementById("adminLoginMessage").textContent = "";
+      renderAdminDashboard();
 
     }else{
-      document.getElementById("adminLoginMessage").textContent =
-        result.message || "தவறான PIN";
+      document.getElementById("loginMessage").textContent =
+        result.message || "Login தோல்வி";
     }
 
   }catch(error){
-    document.getElementById("adminLoginMessage").textContent =
-      "Login செய்ய முடியவில்லை";
+    document.getElementById("loginMessage").textContent = error.message;
   }
 }
 
-function adminLogout(){
-  isAdmin = false;
-  localStorage.removeItem("templeAdminPin");
-  closeModal("adminDashboard");
-}
+// ======================================
+// ADMIN DASHBOARD
+// ======================================
 
-function openAddMemberModal(){
+function renderAdminDashboard(){
   if(!isAdmin) return;
 
-  document.getElementById("newMemberId").value = "";
-  document.getElementById("newMemberName").value = "";
-  document.getElementById("newMemberPhone").value = "";
-  document.getElementById("newMemberPhoto").value = "";
+  document.getElementById("adminDashboardContent").innerHTML = `
+    <div class="admin-list-item">
+      <h3>உறுப்பினர் மேலாண்மை</h3>
+      <button onclick="openAddMember()">புதிய உறுப்பினர் சேர்க்க</button>
+      <button onclick="openMemberEditList()">உறுப்பினர் Edit</button>
+    </div>
+
+    <div class="admin-list-item">
+      <h3>சேமிப்பு மேலாண்மை</h3>
+      <button onclick="openPaymentModal()">Payment Update / History</button>
+    </div>
+  `;
+}
+
+function openAddMember(){
+  if(!isAdmin) return;
 
   document.getElementById("addMemberModal").style.display = "block";
 }
+
+// ======================================
+// PHOTO FILE HELPERS
+// ======================================
+
+function readPhotoFile(input){
+  return new Promise((resolve,reject)=>{
+    const file = input && input.files ? input.files[0] : null;
+
+    if(!file){
+      resolve("");
+      return;
+    }
+
+    if(!file.type || !file.type.startsWith("image/")){
+      reject(new Error("படக் கோப்பை மட்டும் தேர்வு செய்யவும்"));
+      return;
+    }
+
+    if(file.size > 2 * 1024 * 1024){
+      reject(new Error("புகைப்படம் 2MB-க்கு குறைவாக இருக்க வேண்டும்"));
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = ()=>resolve(String(reader.result || ""));
+    reader.onerror = ()=>reject(new Error("புகைப்படத்தை படிக்க முடியவில்லை"));
+
+    reader.readAsDataURL(file);
+  });
+}
+
+function previewMemberPhoto(input,previewId){
+  const preview = document.getElementById(previewId);
+  const file = input.files && input.files[0];
+
+  if(!preview) return;
+
+  if(!file){
+    preview.style.display = "none";
+    preview.removeAttribute("src");
+    return;
+  }
+
+  if(!file.type.startsWith("image/") || file.size > 2 * 1024 * 1024){
+    alert("Image மட்டும் தேர்வு செய்யவும். அதிகபட்சம் 2MB.");
+    input.value = "";
+    preview.style.display = "none";
+    return;
+  }
+
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = "block";
+}
+
+// ======================================
+// ADD MEMBER
+// ======================================
 
 async function addMember(){
   const memberId = document.getElementById("newMemberId").value.trim();
   const name = document.getElementById("newMemberName").value.trim();
   const phone = document.getElementById("newMemberPhone").value.trim();
-  const photo = document.getElementById("newMemberPhoto").value.trim();
+
+  let photo = "";
+
+  try{
+    photo = await readPhotoFile(document.getElementById("newMemberPhoto"));
+  }catch(error){
+    document.getElementById("addMemberMessage").textContent = error.message;
+    return;
+  }
 
   if(!memberId || !name){
     document.getElementById("addMemberMessage").textContent =
@@ -812,8 +798,17 @@ async function addMember(){
     });
 
     if(result.success){
-      document.getElementById("addMemberMessage").textContent = "Member சேர்க்கப்பட்டது";
+      document.getElementById("addMemberMessage").textContent =
+        "Member சேர்க்கப்பட்டது";
+
+      document.getElementById("newMemberId").value = "";
+      document.getElementById("newMemberName").value = "";
+      document.getElementById("newMemberPhone").value = "";
+      document.getElementById("newMemberPhoto").value = "";
+      document.getElementById("newMemberPhotoPreview").style.display = "none";
+
       await loadData();
+
     }else{
       document.getElementById("addMemberMessage").textContent =
         result.message || "Member சேர்க்க முடியவில்லை";
@@ -824,6 +819,10 @@ async function addMember(){
   }
 }
 
+// ======================================
+// PAYMENT MANAGEMENT
+// ======================================
+
 function openPaymentModal(){
   if(!isAdmin) return;
 
@@ -831,22 +830,27 @@ function openPaymentModal(){
   renderPaymentManagementPage();
 }
 
-/* PAYMENT UPDATE + SELECTED MEMBER HISTORY */
-function renderPaymentManagementPage(){
+function renderPaymentManagementPage(selectedMemberId = ""){
   if(!isAdmin) return;
 
-  const memberOptions = members.map(member => `
-    <option value="${escapeHTML(getMemberId(member))}">
+  const memberOptions = members.map(member=>`
+    <option
+      value="${escapeHTML(getMemberId(member))}"
+      ${getMemberId(member) === String(selectedMemberId) ? "selected" : ""}
+    >
       ${escapeHTML(getMemberId(member))} - ${escapeHTML(getMemberName(member))}
     </option>
   `).join("");
 
-  const monthOptions = months.map(month =>
+  const monthOptions = months.map(month=>
     `<option value="${month}">${monthTamil(month)}</option>`
   ).join("");
 
   const now = new Date();
-  const today = new Date(now.getTime() - now.getTimezoneOffset()*60000).toISOString().slice(0,10);
+
+  const today = new Date(
+    now.getTime() - now.getTimezoneOffset() * 60000
+  ).toISOString().slice(0,10);
 
   document.getElementById("adminDashboardContent").innerHTML = `
     <section class="admin-list-item">
@@ -892,7 +896,10 @@ function renderPaymentManagementPage(){
   showAdminHistory();
 }
 
-/* SELECTED MEMBER-க்கு மட்டும் HISTORY */
+// ======================================
+// SELECTED MEMBER PAYMENT HISTORY
+// ======================================
+
 function showAdminHistory(){
   if(!isAdmin) return;
 
@@ -903,12 +910,12 @@ function showAdminHistory(){
 
   const memberId = memberSelect.value;
 
-  const member = members.find(m =>
+  const member = members.find(m=>
     getMemberId(m) === String(memberId)
   );
 
   const memberPayments = payments
-    .filter(p => getPaymentMemberId(p) === String(memberId))
+    .filter(p=>getPaymentMemberId(p) === String(memberId))
     .slice()
     .reverse();
 
@@ -937,7 +944,7 @@ function showAdminHistory(){
       </tr>
     `;
   }else{
-    memberPayments.forEach(payment => {
+    memberPayments.forEach(payment=>{
       const month = getPaymentMonth(payment);
       const year = getPaymentYear(payment);
 
@@ -967,6 +974,10 @@ function showAdminHistory(){
   historyBox.innerHTML = html;
 }
 
+// ======================================
+// SAVE PAYMENT
+// ======================================
+
 async function savePayment(){
   const memberId = document.getElementById("paymentMember").value;
   const month = document.getElementById("paymentMonth").value;
@@ -994,10 +1005,14 @@ async function savePayment(){
 
     if(result.success){
       await loadData();
-      renderPaymentManagementPage();
+
+      // அதே உறுப்பினர் தேர்விலேயே இருக்கும்.
+      renderPaymentManagementPage(memberId);
 
       const message = document.getElementById("paymentMessage");
-      if(message) message.textContent = "Payment சேமிக்கப்பட்டது";
+      if(message){
+        message.textContent = "Payment சேமிக்கப்பட்டது";
+      }
 
     }else{
       document.getElementById("paymentMessage").textContent =
@@ -1009,16 +1024,21 @@ async function savePayment(){
   }
 }
 
+// ======================================
+// EDIT MEMBER LIST
+// ======================================
+
 function openMemberEditList(){
   if(!isAdmin) return;
 
   let html = "<h3>உறுப்பினர்கள்</h3>";
 
-  members.forEach(member => {
+  members.forEach(member=>{
     html += `
       <div class="admin-list-item">
         <strong>${escapeHTML(getMemberId(member))}</strong>
         - ${escapeHTML(getMemberName(member))}
+
         <button onclick="editMember('${escapeHTML(getMemberId(member))}')">
           Edit
         </button>
@@ -1029,25 +1049,53 @@ function openMemberEditList(){
   document.getElementById("adminDashboardContent").innerHTML = html;
 }
 
+// ======================================
+// OPEN EDIT MEMBER
+// ======================================
+
 function editMember(id){
-  const member = members.find(item => getMemberId(item) === String(id));
+  const member = members.find(item=>
+    getMemberId(item) === String(id)
+  );
 
   if(!member) return;
 
   document.getElementById("editMemberId").value = getMemberId(member);
   document.getElementById("editMemberName").value = getMemberName(member);
+
   document.getElementById("editMemberPhone").value =
     member["Phone"] || member.phone || "";
-  document.getElementById("editMemberPhoto").value = getMemberPhoto(member);
+
+  document.getElementById("editMemberPhoto").value = "";
+  document.getElementById("editMemberPhotoPreview").style.display = "none";
+
+  const currentPhoto = getMemberPhoto(member);
+
+  document.getElementById("editMemberCurrentPhoto").innerHTML =
+    currentPhoto
+    ? `<img src="${escapeHTML(currentPhoto)}" alt="Current photo" style="width:90px;height:90px;object-fit:cover;border-radius:50%">`
+    : "பழைய புகைப்படம் இல்லை";
 
   document.getElementById("editMemberModal").style.display = "block";
 }
+
+// ======================================
+// UPDATE MEMBER
+// ======================================
 
 async function updateMember(){
   const memberId = document.getElementById("editMemberId").value;
   const name = document.getElementById("editMemberName").value.trim();
   const phone = document.getElementById("editMemberPhone").value.trim();
-  const photo = document.getElementById("editMemberPhoto").value.trim();
+
+  let photo = "";
+
+  try{
+    photo = await readPhotoFile(document.getElementById("editMemberPhoto"));
+  }catch(error){
+    document.getElementById("editMemberMessage").textContent = error.message;
+    return;
+  }
 
   try{
     const result = await postAction({
@@ -1061,8 +1109,13 @@ async function updateMember(){
 
     if(result.success){
       document.getElementById("editMemberMessage").textContent = "Updated";
+
       await loadData();
       closeModal("editMemberModal");
+
+      // Dashboard member list-ஐ புதுப்பிக்கவும்.
+      openMemberEditList();
+
     }else{
       document.getElementById("editMemberMessage").textContent =
         result.message || "Update முடியவில்லை";
@@ -1072,6 +1125,10 @@ async function updateMember(){
     document.getElementById("editMemberMessage").textContent = error.message;
   }
 }
+
+// ======================================
+// DELETE PAYMENT
+// ======================================
 
 async function deletePayment(memberId,month,year){
   if(!confirm("இந்த Payment-ஐ delete செய்ய வேண்டுமா?")) return;
@@ -1087,7 +1144,10 @@ async function deletePayment(memberId,month,year){
 
     if(result.success){
       await loadData();
-      renderPaymentManagementPage();
+
+      // Delete செய்த பிறகும் அதே உறுப்பினரின் history காட்டப்படும்.
+      renderPaymentManagementPage(memberId);
+
     }else{
       alert(result.message || "Delete முடியவில்லை");
     }
@@ -1096,6 +1156,10 @@ async function deletePayment(memberId,month,year){
     alert(error.message);
   }
 }
+
+// ======================================
+// API POST
+// ======================================
 
 async function postAction(payload){
   const response = await fetch(API_URL,{
@@ -1111,19 +1175,30 @@ async function postAction(payload){
   try{
     return JSON.parse(text);
   }catch(error){
-    throw new Error("Apps Script JSON பதில் கிடைக்கவில்லை. Deployment URL / access check செய்யவும்.");
+    throw new Error(
+      "Apps Script JSON பதில் கிடைக்கவில்லை. Deployment URL / access check செய்யவும்."
+    );
   }
 }
 
+// ======================================
+// CLOSE MODAL ON OUTSIDE CLICK
+// ======================================
+
 window.onclick = function(event){
-  document.querySelectorAll(".modal").forEach(modal => {
+  document.querySelectorAll(".modal").forEach(modal=>{
     if(event.target === modal){
       modal.style.display = "none";
     }
   });
 };
 
+// ======================================
+// INITIAL LOAD
+// ======================================
+
 loadData();
+
 </script>
 
 </body>
