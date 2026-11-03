@@ -28,111 +28,258 @@ header h1{
   font-size:25px
 }
 
-header p{margin:5px 0;font-size:15px}
-
-.container{max-width:1100px;margin:auto;padding:20px}
-
-.summary{
-  background:white;text-align:center;padding:20px;
-  border-radius:15px;box-shadow:0 2px 8px #0001;margin-bottom:15px
+header p{
+  margin:5px 0;
+  font-size:15px
 }
 
-.summary h2{margin:0 0 10px;color:#8b2f0b}
-.summary strong{font-size:28px;color:#a8440b}
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px
+}
+
+.summary{
+  background:white;
+  text-align:center;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 2px 8px #0001;
+  margin-bottom:15px
+}
+
+.summary h2{
+  margin:0 0 10px;
+  color:#8b2f0b
+}
+
+.summary strong{
+  font-size:28px;
+  color:#a8440b
+}
 
 button{
-  border:0;border-radius:9px;padding:12px 16px;
-  background:#a8440b;color:white;font-size:15px;cursor:pointer
+  border:0;
+  border-radius:9px;
+  padding:12px 16px;
+  background:#a8440b;
+  color:white;
+  font-size:15px;
+  cursor:pointer
 }
 
 button:hover{opacity:.9}
+
 .adminBtn{background:#45200e}
 
 .members{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-  gap:18px;margin-top:20px
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:18px;
+  margin-top:20px
 }
 
 .member{
-  background:#fffaf0;padding:18px;border-radius:16px;
-  border:1px solid #d9a441;box-shadow:0 4px 14px #0002;
-  text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s
+  background:#fffaf0;
+  padding:18px;
+  border-radius:16px;
+  border:1px solid #d9a441;
+  box-shadow:0 4px 14px #0002;
+  text-align:center;
+  cursor:pointer;
+  transition:transform .2s,box-shadow .2s
 }
 
-.member:hover{transform:translateY(-4px);box-shadow:0 6px 18px #0003}
+.member:hover{
+  transform:translateY(-4px);
+  box-shadow:0 6px 18px #0003
+}
 
 .member-photo{
-  width:150px;height:150px;object-fit:cover;border-radius:50%;
-  display:block;margin:0 auto 12px;border:4px solid #d9a441;background:#fff0d5
+  width:150px;
+  height:150px;
+  object-fit:cover;
+  border-radius:50%;
+  display:block;
+  margin:0 auto 12px;
+  border:4px solid #d9a441;
+  background:#fff0d5
 }
 
 .member-photo-placeholder{
-  width:150px;height:150px;border-radius:50%;display:flex;
-  align-items:center;justify-content:center;margin:0 auto 12px;
-  background:#fff0d5;font-size:48px;border:4px solid #d9a441
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 12px;
+  background:#fff0d5;
+  font-size:48px;
+  border:4px solid #d9a441
 }
 
 .member h3{
-  margin:8px 0 0;font-size:18px;color:#76230c;overflow-wrap:anywhere
+  margin:8px 0 0;
+  font-size:18px;
+  color:#76230c;
+  overflow-wrap:anywhere
 }
 
 .search-box{
-  width:100%;padding:13px;border:1px solid #d9a441;
-  border-radius:10px;font-size:16px;margin:15px 0
+  width:100%;
+  padding:13px;
+  border:1px solid #d9a441;
+  border-radius:10px;
+  font-size:16px;
+  margin:15px 0
 }
 
 .modal{
-  display:none;position:fixed;inset:0;background:#0008;
-  z-index:9999;overflow:auto;padding:15px
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0008;
+  z-index:9999;
+  overflow:auto;
+  padding:15px
 }
 
 .modal-content{
-  background:#fffaf0;max-width:700px;margin:30px auto;padding:22px;
-  border-radius:16px;border:2px solid #d9a441;box-shadow:0 8px 30px #0003
+  background:#fffaf0;
+  max-width:700px;
+  margin:30px auto;
+  padding:22px;
+  border-radius:16px;
+  border:2px solid #d9a441;
+  box-shadow:0 8px 30px #0003
 }
 
-.modal-content h2{color:#8b2f0b;margin-top:0}
-.close-btn{float:right;background:#76230c;padding:8px 13px}
+.modal-content h2{
+  color:#8b2f0b;
+  margin-top:0
+}
+
+.close-btn{
+  float:right;
+  background:#76230c;
+  padding:8px 13px
+}
+
 .form-group{margin:14px 0}
-.form-group label{display:block;margin-bottom:6px;font-weight:bold}
 
-.form-group input,.form-group select{
-  width:100%;padding:11px;border:1px solid #c99a45;
-  border-radius:8px;font-size:15px
+.form-group label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:bold
 }
 
-.admin-actions{display:flex;flex-wrap:wrap;gap:10px;margin:15px 0}
+.form-group input,
+.form-group select{
+  width:100%;
+  padding:11px;
+  border:1px solid #c99a45;
+  border-radius:8px;
+  font-size:15px
+}
+
+.admin-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:15px 0
+}
 
 .popup-stat{
-  background:#fff0d5;border:1px solid #e4c17a;
-  border-radius:12px;padding:12px;text-align:center
+  background:#fff0d5;
+  border:1px solid #e4c17a;
+  border-radius:12px;
+  padding:12px;
+  text-align:center
 }
 
-.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:15px 0}
-.popup-stat small{display:block;color:#6b4a2b;margin-bottom:5px}
-.popup-stat strong{font-size:20px;color:#8b2f0b}
-.table-wrap{overflow-x:auto;margin-top:15px}
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin:15px 0
+}
 
-table{width:100%;border-collapse:collapse;background:white;min-width:450px}
-th,td{border:1px solid #e1c38c;padding:10px;text-align:center}
-th{background:#76230c;color:white}
-.paid{color:#087b32;font-weight:bold}
-.pending{color:#c62828;font-weight:bold}
+.popup-stat small{
+  display:block;
+  color:#6b4a2b;
+  margin-bottom:5px
+}
+
+.popup-stat strong{
+  font-size:20px;
+  color:#8b2f0b
+}
+
+.table-wrap{
+  overflow-x:auto;
+  margin-top:15px
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  min-width:450px
+}
+
+th,td{
+  border:1px solid #e1c38c;
+  padding:10px;
+  text-align:center
+}
+
+th{
+  background:#76230c;
+  color:white
+}
+
+.paid{
+  color:#087b32;
+  font-weight:bold
+}
+
+.pending{
+  color:#c62828;
+  font-weight:bold
+}
 
 .admin-list-item{
-  background:white;border:1px solid #e1c38c;
-  border-radius:10px;padding:12px;margin:10px 0
+  background:white;
+  border:1px solid #e1c38c;
+  border-radius:10px;
+  padding:12px;
+  margin:10px 0
 }
 
 .admin-list-item button{margin:4px}
-footer{text-align:center;padding:25px;color:#7b4b2b;font-size:14px}
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:#7b4b2b;
+  font-size:14px
+}
+
 .hidden{display:none!important}
 
 @media(max-width:600px){
   .container{padding:12px}
-  .members{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .members{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px
+  }
   .member{padding:12px}
-  .member-photo,.member-photo-placeholder{width:120px;height:120px}
+  .member-photo,
+  .member-photo-placeholder{
+    width:120px;
+    height:120px
+  }
   .member h3{font-size:15px}
   header h1{font-size:21px}
   .stats-grid{grid-template-columns:1fr 1fr}
@@ -150,6 +297,7 @@ footer{text-align:center;padding:25px;color:#7b4b2b;font-size:14px}
 </header>
 
 <div class="container">
+
   <div class="summary">
     <h2>திருக்கோவில் சேமிப்பு விவரம்</h2>
     <p>மொத்த உறுப்பினர்கள்</p>
@@ -158,14 +306,20 @@ footer{text-align:center;padding:25px;color:#7b4b2b;font-size:14px}
     <strong id="totalAmount">₹0</strong>
   </div>
 
-  <input type="text" id="searchInput" class="search-box"
-    placeholder="உறுப்பினர் பெயரை தேடவும்..." oninput="renderMembers()">
+  <input
+    type="text"
+    id="searchInput"
+    class="search-box"
+    placeholder="உறுப்பினர் பெயரை தேடவும்..."
+    oninput="renderMembers()"
+  >
 
   <div style="text-align:right">
     <button class="adminBtn" onclick="openAdmin()">⚙ Admin</button>
   </div>
 
   <div class="members" id="members">Loading...</div>
+
 </div>
 
 <footer>
@@ -187,10 +341,12 @@ footer{text-align:center;padding:25px;color:#7b4b2b;font-size:14px}
   <div class="modal-content">
     <button class="close-btn" onclick="closeModal('adminModal')">✕</button>
     <h2>Admin Login</h2>
+
     <div class="form-group">
       <label>Admin PIN</label>
       <input type="password" id="adminPin" placeholder="PIN உள்ளிடவும்">
     </div>
+
     <button onclick="adminLogin()">Login</button>
     <p id="adminLoginMessage"></p>
   </div>
@@ -200,13 +356,13 @@ footer{text-align:center;padding:25px;color:#7b4b2b;font-size:14px}
 <div class="modal" id="adminDashboard">
   <div class="modal-content">
     <button class="close-btn" onclick="closeModal('adminDashboard')">✕</button>
+
     <h2>Admin Dashboard</h2>
 
     <div class="admin-actions">
       <button onclick="openAddMemberModal()">+ உறுப்பினர் சேர்க்க</button>
       <button onclick="openPaymentModal()">💰 Payment பதிவு</button>
       <button onclick="openMemberEditList()">✏️ உறுப்பினர் Edit</button>
-      <button onclick="showAdminHistory()">📋 Payment History</button>
       <button onclick="adminLogout()" class="adminBtn">Logout</button>
     </div>
 
@@ -218,6 +374,7 @@ footer{text-align:center;padding:25px;color:#7b4b2b;font-size:14px}
 <div class="modal" id="addMemberModal">
   <div class="modal-content">
     <button class="close-btn" onclick="closeModal('addMemberModal')">✕</button>
+
     <h2>புதிய உறுப்பினர் சேர்க்க</h2>
 
     <div class="form-group">
@@ -236,9 +393,8 @@ footer{text-align:center;padding:25px;color:#7b4b2b;font-size:14px}
     </div>
 
     <div class="form-group">
-      <label>புகைப்படம் (Phone Gallery)</label>
-      <input id="newMemberPhoto" type="file" accept="image/*">
-      <small>புகைப்படம் 2MB-க்கு குறைவாக இருக்க வேண்டும்</small>
+      <label>Photo URL</label>
+      <input id="newMemberPhoto" placeholder="Google Drive Photo URL">
     </div>
 
     <button onclick="addMember()">உறுப்பினர் சேர்க்க</button>
@@ -246,46 +402,11 @@ footer{text-align:center;padding:25px;color:#7b4b2b;font-size:14px}
   </div>
 </div>
 
-<!-- PAYMENT MODAL -->
-<div class="modal" id="paymentModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('paymentModal')">✕</button>
-    <h2>சேமிப்பு தொகை பதிவு</h2>
-
-    <div class="form-group">
-      <label>உறுப்பினர்</label>
-      <select id="paymentMember"></select>
-    </div>
-
-    <div class="form-group">
-      <label>மாதம்</label>
-      <select id="paymentMonth"></select>
-    </div>
-
-    <div class="form-group">
-      <label>வருடம்</label>
-      <input type="number" id="paymentYear">
-    </div>
-
-    <div class="form-group">
-      <label>தொகை</label>
-      <input type="number" id="paymentAmount" value="500">
-    </div>
-
-    <div class="form-group">
-      <label>செலுத்திய தேதி</label>
-      <input type="date" id="paymentDate">
-    </div>
-
-    <button onclick="savePayment()">Payment Save</button>
-    <p id="paymentMessage"></p>
-  </div>
-</div>
-
 <!-- EDIT MEMBER MODAL -->
 <div class="modal" id="editMemberModal">
   <div class="modal-content">
     <button class="close-btn" onclick="closeModal('editMemberModal')">✕</button>
+
     <h2>உறுப்பினர் விவரம் Edit</h2>
 
     <div class="form-group">
@@ -304,9 +425,8 @@ footer{text-align:center;padding:25px;color:#7b4b2b;font-size:14px}
     </div>
 
     <div class="form-group">
-      <label>புதிய புகைப்படம் தேர்வு செய்யவும் (விருப்பம்)</label>
-      <input id="editMemberPhoto" type="file" accept="image/*">
-      <small>புதிய photo தேர்வு செய்யாவிட்டால் பழைய photo இருக்கும். 2MB-க்கு குறைவாக.</small>
+      <label>Photo URL</label>
+      <input id="editMemberPhoto">
     </div>
 
     <button onclick="updateMember()">Update Member</button>
@@ -318,6 +438,7 @@ footer{text-align:center;padding:25px;color:#7b4b2b;font-size:14px}
 <div class="modal" id="editPaymentModal">
   <div class="modal-content">
     <button class="close-btn" onclick="closeModal('editPaymentModal')">✕</button>
+
     <h2>Payment Edit</h2>
 
     <input type="hidden" id="editPaymentMemberId">
@@ -384,8 +505,11 @@ function monthTamil(month){
 function escapeHTML(value){
   return String(value ?? "").replace(/[&<>"']/g, function(char){
     return {
-      "&":"&amp;","<":"&lt;",">":"&gt;",
-      '"':"&quot;","'":"&#39;"
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
     }[char];
   });
 }
@@ -459,9 +583,11 @@ async function loadData(){
     document.getElementById("totalAmount").textContent = formatMoney(totalAmount);
 
     renderMembers();
+
   }catch(error){
     document.getElementById("members").innerHTML =
       "<p>Data load ஆகவில்லை. Apps Script deployment check செய்யவும்.</p>";
+
     console.error(error);
   }
 }
@@ -483,11 +609,11 @@ function renderMembers(){
   container.innerHTML = filtered.map(member => {
     const memberId = getMemberId(member);
     const name = getMemberName(member);
-    const photo = getDrivePhotoURL(getMemberPhoto(member));
+    const photoLink = getMemberPhoto(member);
+    const photo = getDrivePhotoURL(photoLink);
 
     const photoHTML = photo
-      ? `<img class="member-photo" src="${escapeHTML(photo)}" alt="${escapeHTML(name)}"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      ? `<img class="member-photo" src="${escapeHTML(photo)}" alt="${escapeHTML(name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
          <div class="member-photo-placeholder" style="display:none">👤</div>`
       : `<div class="member-photo-placeholder">👤</div>`;
 
@@ -513,6 +639,7 @@ function getMonthsFromStartToNow(){
   const now = new Date();
   const currentYear = now.getFullYear();
   const currentMonth = now.getMonth();
+
   const result = [];
 
   let year = START_YEAR;
@@ -526,6 +653,7 @@ function getMonthsFromStartToNow(){
     });
 
     month++;
+
     if(month > 11){
       month = 0;
       year++;
@@ -537,6 +665,7 @@ function getMonthsFromStartToNow(){
 
 function openHistory(id){
   const member = members.find(item => getMemberId(item) === String(id));
+
   if(!member) return;
 
   const memberId = getMemberId(member);
@@ -561,8 +690,13 @@ function openHistory(id){
       ? `<span class="paid">✔ செலுத்தியது</span>`
       : `<span class="pending">✘ நிலுவை</span>`;
 
-    const amount = payment ? formatMoney(getPaymentAmount(payment)) : "—";
-    const date = payment ? escapeHTML(getPaymentDate(payment) || "—") : "—";
+    const amount = payment
+      ? formatMoney(getPaymentAmount(payment))
+      : "—";
+
+    const date = payment
+      ? escapeHTML(getPaymentDate(payment) || "—")
+      : "—";
 
     return `
       <tr>
@@ -603,6 +737,7 @@ function openHistory(id){
     </div>
 
     <h3>மாத வாரியான சேமிப்பு விவரம்</h3>
+
     <div class="table-wrap">
       <table>
         <thead>
@@ -651,7 +786,10 @@ async function adminLogin(){
     const response = await fetch(API_URL,{
       method:"POST",
       headers:{"Content-Type":"text/plain;charset=utf-8"},
-      body:JSON.stringify({action:"verifyPin",pin:pin})
+      body:JSON.stringify({
+        action:"verifyPin",
+        pin:pin
+      })
     });
 
     const result = await response.json();
@@ -659,13 +797,16 @@ async function adminLogin(){
     if(result.success){
       isAdmin = true;
       localStorage.setItem("templeAdminPin",pin);
+
       closeModal("adminModal");
       document.getElementById("adminDashboard").style.display = "block";
       document.getElementById("adminLoginMessage").textContent = "";
+
     }else{
       document.getElementById("adminLoginMessage").textContent =
         result.message || "தவறான PIN";
     }
+
   }catch(error){
     document.getElementById("adminLoginMessage").textContent =
       "Login செய்ய முடியவில்லை";
@@ -689,44 +830,19 @@ function openAddMemberModal(){
   document.getElementById("addMemberModal").style.display = "block";
 }
 
-// Gallery photo-வை Apps Script-க்கு அனுப்பும் base64 data URL-ஆக மாற்றும்
-function readPhotoAsDataURL(file){
-  return new Promise((resolve,reject)=>{
-    if(!file){resolve("");return;}
-
-    if(!file.type || !file.type.startsWith("image/")){
-      reject(new Error("Image file மட்டும் தேர்வு செய்யவும்"));
-      return;
-    }
-
-    if(file.size > 2 * 1024 * 1024){
-      reject(new Error("Photo 2MB-க்கு குறைவாக இருக்க வேண்டும்"));
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result || ""));
-    reader.onerror = () => reject(new Error("Photo படிக்க முடியவில்லை"));
-    reader.readAsDataURL(file);
-  });
-}
-
 async function addMember(){
   const memberId = document.getElementById("newMemberId").value.trim();
   const name = document.getElementById("newMemberName").value.trim();
   const phone = document.getElementById("newMemberPhone").value.trim();
-  const photoFile = document.getElementById("newMemberPhoto").files[0];
-  const message = document.getElementById("addMemberMessage");
+  const photo = document.getElementById("newMemberPhoto").value.trim();
 
   if(!memberId || !name){
-    message.textContent = "Member ID மற்றும் பெயர் அவசியம்";
+    document.getElementById("addMemberMessage").textContent =
+      "Member ID மற்றும் பெயர் அவசியம்";
     return;
   }
 
   try{
-    message.textContent = "Photo upload / Member save செய்கிறது...";
-    const photo = await readPhotoAsDataURL(photoFile);
-
     const result = await postAction({
       action:"addMember",
       pin:localStorage.getItem("templeAdminPin"),
@@ -737,40 +853,119 @@ async function addMember(){
     });
 
     if(result.success){
-      message.textContent = "Member சேர்க்கப்பட்டது";
-      document.getElementById("newMemberPhoto").value = "";
+      document.getElementById("addMemberMessage").textContent = "Member சேர்க்கப்பட்டது";
       await loadData();
     }else{
-      message.textContent = result.message || "Member சேர்க்க முடியவில்லை";
+      document.getElementById("addMemberMessage").textContent =
+        result.message || "Member சேர்க்க முடியவில்லை";
     }
+
   }catch(error){
-    message.textContent = error.message || "Photo upload முடியவில்லை";
+    document.getElementById("addMemberMessage").textContent = error.message;
   }
 }
-  function openPaymentModal(){
+
+function openPaymentModal(){
   if(!isAdmin) return;
 
-  const select = document.getElementById("paymentMember");
+  document.getElementById("adminDashboard").style.display = "block";
+  renderPaymentManagementPage();
+}
 
-  select.innerHTML = members.map(member => `
+function renderPaymentManagementPage(){
+  if(!isAdmin) return;
+
+  const memberOptions = members.map(member => `
     <option value="${escapeHTML(getMemberId(member))}">
       ${escapeHTML(getMemberId(member))} - ${escapeHTML(getMemberName(member))}
     </option>
   `).join("");
 
-  const monthSelect = document.getElementById("paymentMonth");
-
-  monthSelect.innerHTML = months.map(month =>
+  const monthOptions = months.map(month =>
     `<option value="${month}">${monthTamil(month)}</option>`
   ).join("");
 
+  let historyRows = "";
+
+  payments.slice().reverse().forEach(payment => {
+    const memberId = getPaymentMemberId(payment);
+    const month = getPaymentMonth(payment);
+    const year = getPaymentYear(payment);
+
+    historyRows += `
+      <tr>
+        <td>${escapeHTML(memberId)}</td>
+        <td>${escapeHTML(monthTamil(month))}</td>
+        <td>${year}</td>
+        <td>${formatMoney(getPaymentAmount(payment))}</td>
+        <td>${escapeHTML(getPaymentDate(payment))}</td>
+        <td>${escapeHTML(getPaymentStatus(payment))}</td>
+        <td>
+          <button onclick="deletePayment('${escapeHTML(memberId)}','${escapeHTML(month)}','${year}')">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+
   const now = new Date();
+  const today = new Date(now.getTime() - now.getTimezoneOffset()*60000).toISOString().slice(0,10);
 
-  document.getElementById("paymentYear").value = now.getFullYear();
-  document.getElementById("paymentDate").value = now.toISOString().slice(0,10);
-  document.getElementById("paymentAmount").value = MONTHLY_AMOUNT;
+  document.getElementById("adminDashboardContent").innerHTML = `
+    <section class="admin-list-item">
+      <h3>💰 சேமிப்பு தொகை பதிவு / Payment Update</h3>
 
-  document.getElementById("paymentModal").style.display = "block";
+      <div class="form-group">
+        <label>உறுப்பினர்</label>
+        <select id="paymentMember">${memberOptions}</select>
+      </div>
+
+      <div class="form-group">
+        <label>மாதம்</label>
+        <select id="paymentMonth">${monthOptions}</select>
+      </div>
+
+      <div class="form-group">
+        <label>வருடம்</label>
+        <input type="number" id="paymentYear" value="${now.getFullYear()}">
+      </div>
+
+      <div class="form-group">
+        <label>தொகை</label>
+        <input type="number" id="paymentAmount" value="${MONTHLY_AMOUNT}">
+      </div>
+
+      <div class="form-group">
+        <label>செலுத்திய தேதி</label>
+        <input type="date" id="paymentDate" value="${today}">
+      </div>
+
+      <button onclick="savePayment()">Payment Save / Update</button>
+      <p id="paymentMessage"></p>
+    </section>
+
+    <section class="admin-list-item">
+      <h3>📋 Payment History</h3>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Member ID</th>
+              <th>Month</th>
+              <th>Year</th>
+              <th>Amount</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${historyRows || "<tr><td colspan='7'>Payment history இல்லை</td></tr>"}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  `;
 }
 
 async function savePayment(){
@@ -799,13 +994,17 @@ async function savePayment(){
     });
 
     if(result.success){
-      document.getElementById("paymentMessage").textContent =
-        "Payment சேமிக்கப்பட்டது";
       await loadData();
+      renderPaymentManagementPage();
+
+      const message = document.getElementById("paymentMessage");
+      if(message) message.textContent = "Payment சேமிக்கப்பட்டது";
+
     }else{
       document.getElementById("paymentMessage").textContent =
         result.message || "Payment சேமிக்க முடியவில்லை";
     }
+
   }catch(error){
     document.getElementById("paymentMessage").textContent = error.message;
   }
@@ -833,18 +1032,13 @@ function openMemberEditList(){
 
 function editMember(id){
   const member = members.find(item => getMemberId(item) === String(id));
+
   if(!member) return;
 
   document.getElementById("editMemberId").value = getMemberId(member);
   document.getElementById("editMemberName").value = getMemberName(member);
-  document.getElementById("editMemberPhone").value =
-    member["Phone"] || member.phone || "";
-
-  // File input-ல் பழைய URL-ஐ set செய்ய முடியாது.
-  // Photo தேர்வு செய்யாமல் விட்டால் பழைய photo பாதுகாக்கப்படும்.
-  document.getElementById("editMemberPhoto").value = "";
-  document.getElementById("editMemberPhoto").dataset.oldPhoto =
-    getMemberPhoto(member);
+  document.getElementById("editMemberPhone").value = member["Phone"] || member.phone || "";
+  document.getElementById("editMemberPhoto").value = getMemberPhoto(member);
 
   document.getElementById("editMemberModal").style.display = "block";
 }
@@ -853,21 +1047,9 @@ async function updateMember(){
   const memberId = document.getElementById("editMemberId").value;
   const name = document.getElementById("editMemberName").value.trim();
   const phone = document.getElementById("editMemberPhone").value.trim();
-  const photoFile = document.getElementById("editMemberPhoto").files[0];
-  const message = document.getElementById("editMemberMessage");
-
-  if(!memberId || !name){
-    message.textContent = "Member ID மற்றும் பெயர் அவசியம்";
-    return;
-  }
+  const photo = document.getElementById("editMemberPhoto").value.trim();
 
   try{
-    message.textContent = "Member update செய்கிறது...";
-
-    // Photo தேர்வு செய்தால் மட்டுமே புதிய photo upload ஆகும்.
-    // Photo தேர்வு செய்யாவிட்டால் Apps Script பழைய photo-வை வைத்திருக்கும்.
-    const photo = await readPhotoAsDataURL(photoFile);
-
     const result = await postAction({
       action:"editMember",
       pin:localStorage.getItem("templeAdminPin"),
@@ -878,130 +1060,22 @@ async function updateMember(){
     });
 
     if(result.success){
-      message.textContent = "Updated";
+      document.getElementById("editMemberMessage").textContent = "Updated";
       await loadData();
       closeModal("editMemberModal");
     }else{
-      message.textContent = result.message || "Update முடியவில்லை";
+      document.getElementById("editMemberMessage").textContent =
+        result.message || "Update முடியவில்லை";
     }
+
   }catch(error){
-    message.textContent = error.message || "Update முடியவில்லை";
+    document.getElementById("editMemberMessage").textContent = error.message;
   }
 }
 
 function showAdminHistory(){
   if(!isAdmin) return;
-
-  let html = `
-    <h3>Payment History</h3>
-    <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Member ID</th>
-          <th>Month</th>
-          <th>Year</th>
-          <th>Amount</th>
-          <th>Date</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-  `;
-
-  payments.forEach(payment => {
-    const memberId = getPaymentMemberId(payment);
-    const month = getPaymentMonth(payment);
-    const year = getPaymentYear(payment);
-
-    html += `
-      <tr>
-        <td>${escapeHTML(memberId)}</td>
-        <td>${escapeHTML(monthTamil(month))}</td>
-        <td>${year}</td>
-        <td>${formatMoney(getPaymentAmount(payment))}</td>
-        <td>${escapeHTML(getPaymentDate(payment))}</td>
-        <td>${escapeHTML(getPaymentStatus(payment))}</td>
-        <td>
-          <button onclick="editPayment('${escapeHTML(memberId)}','${escapeHTML(month)}','${year}')">
-            Edit
-          </button>
-          <button onclick="deletePayment('${escapeHTML(memberId)}','${escapeHTML(month)}','${year}')">
-            Delete
-          </button>
-        </td>
-      </tr>
-    `;
-  });
-
-  html += "</tbody></table></div>";
-
-  document.getElementById("adminDashboardContent").innerHTML = html;
-}
-
-function editPayment(memberId,month,year){
-  const payment = payments.find(item =>
-    getPaymentMemberId(item) === String(memberId) &&
-    getPaymentMonth(item) === String(month) &&
-    getPaymentYear(item) === Number(year)
-  );
-
-  if(!payment) return;
-
-  document.getElementById("editPaymentMemberId").value = memberId;
-  document.getElementById("editPaymentOldMonth").value = month;
-  document.getElementById("editPaymentOldYear").value = year;
-  document.getElementById("editPaymentMemberDisplay").value = memberId;
-
-  document.getElementById("editPaymentMonth").innerHTML = months.map(m =>
-    `<option value="${m}" ${m===month?"selected":""}>${monthTamil(m)}</option>`
-  ).join("");
-
-  document.getElementById("editPaymentYear").value = year;
-  document.getElementById("editPaymentAmount").value = getPaymentAmount(payment);
-  document.getElementById("editPaymentDate").value = getPaymentDate(payment);
-
-  document.getElementById("editPaymentModal").style.display = "block";
-}
-
-async function updatePayment(){
-  const memberId = document.getElementById("editPaymentMemberId").value;
-  const oldMonth = document.getElementById("editPaymentOldMonth").value;
-  const oldYear = document.getElementById("editPaymentOldYear").value;
-
-  const month = document.getElementById("editPaymentMonth").value;
-  const year = document.getElementById("editPaymentYear").value;
-  const amount = document.getElementById("editPaymentAmount").value;
-  const date = document.getElementById("editPaymentDate").value;
-
-  try{
-    const result = await postAction({
-      action:"editPayment",
-      pin:localStorage.getItem("templeAdminPin"),
-      memberId:memberId,
-      oldMonth:oldMonth,
-      oldYear:oldYear,
-      month:month,
-      year:year,
-      amount:amount,
-      paidDate:date,
-      status:"PAID"
-    });
-
-    if(result.success){
-      document.getElementById("editPaymentMessage").textContent =
-        "Payment Updated";
-      await loadData();
-      closeModal("editPaymentModal");
-      showAdminHistory();
-    }else{
-      document.getElementById("editPaymentMessage").textContent =
-        result.message || "Payment update failed";
-    }
-  }catch(error){
-    document.getElementById("editPaymentMessage").textContent = error.message;
-  }
+  renderPaymentManagementPage();
 }
 
 async function deletePayment(memberId,month,year){
@@ -1018,10 +1092,11 @@ async function deletePayment(memberId,month,year){
 
     if(result.success){
       await loadData();
-      showAdminHistory();
+      renderPaymentManagementPage();
     }else{
       alert(result.message || "Delete முடியவில்லை");
     }
+
   }catch(error){
     alert(error.message);
   }
@@ -1041,9 +1116,7 @@ async function postAction(payload){
   try{
     return JSON.parse(text);
   }catch(error){
-    throw new Error(
-      "Apps Script JSON பதில் கிடைக்கவில்லை. Deployment URL / access check செய்யவும்."
-    );
+    throw new Error("Apps Script JSON பதில் கிடைக்கவில்லை. Deployment URL / access check செய்யவும்.");
   }
 }
 
