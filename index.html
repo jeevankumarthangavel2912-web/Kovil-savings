@@ -19,8 +19,32 @@ button:hover{opacity:.9}
 .adminBtn{background:#45200e}
 .search,input,select{width:100%;padding:12px;margin:7px 0 13px;border:1px solid #ccc;border-radius:9px;font-size:16px}
 .members{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
-.member{background:white;padding:18px;border-radius:13px;box-shadow:0 2px 8px #0001}
+.member{background:white;padding:18px;border-radius:13px;box-shadow:0 2px 8px #0001;text-align:center}
 .member h3{color:#a8440b;margin-top:0}
+
+.member-photo{
+width:110px;
+height:110px;
+border-radius:50%;
+object-fit:cover;
+display:block;
+margin:0 auto 12px;
+border:3px solid #d87919;
+background:#fff0d5
+}
+
+.member-photo-placeholder{
+width:110px;
+height:110px;
+border-radius:50%;
+background:#fff0d5;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:0 auto 12px;
+font-size:42px
+}
+
 .modal{display:none;position:fixed;inset:0;background:#0008;z-index:9999;overflow:auto;padding:15px}
 .modalBox{background:white;max-width:650px;margin:25px auto;padding:20px;border-radius:14px}
 .close{float:right;background:#555}
@@ -180,8 +204,6 @@ const API_URL = "https://script.google.com/macros/s/AKfycbyzCU0XMNuB2w6gt3V0Du6X
 
 let members = [];
 let payments = [];
-
-// Login refresh செய்தாலும் தொடரும்
 let adminPin = localStorage.getItem("temple_admin_pin") || "";
 
 const months = [
@@ -213,6 +235,7 @@ console.error(e);
 }
 }
 
+/* HOME PAGE MEMBERS + PHOTO */
 function renderMembers(){
 const q = document.getElementById("search").value.toLowerCase();
 
@@ -233,9 +256,35 @@ const list = payments.filter(p => String(p.memberId) === String(m.memberId));
 const paid = list.filter(p => String(p.status).toUpperCase() === "PAID");
 const sum = paid.reduce((s,p) => s + Number(p.amount || 0),0);
 
+// Google Drive photo link -> image thumbnail
+let photoUrl = "";
+
+if(m.photo){
+  const link = String(m.photo).trim();
+
+  // Drive file ID extract
+  const match = link.match(/[-\w]{25,}/);
+
+  if(match){
+    photoUrl = "https://drive.google.com/thumbnail?id=" +
+      match[0] + "&sz=w500";
+  }else if(/^https?:\/\//i.test(link)){
+    photoUrl = link;
+  }
+}
+
+const photoHTML = photoUrl
+? `<img src="${esc(photoUrl)}"
+       class="member-photo"
+       alt="${esc(m.name)}"
+       loading="lazy"
+       onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+   <div class="member-photo-placeholder" style="display:none">👤</div>`
+: `<div class="member-photo-placeholder">👤</div>`;
+
 return `
 <div class="member">
-${m.photo ? `<img src="${esc(m.photo)}" alt="${esc(m.name)}" style="width:90px;height:90px;object-fit:cover;border-radius:50%;display:block;margin:0 auto 10px">` : ""}
+${photoHTML}
 <h3>${esc(m.name)}</h3>
 <p>Member ID: ${esc(m.memberId)}</p>
 <p>Paid Months: ${paid.length}</p>
@@ -282,7 +331,6 @@ if(adminPin){
 document.getElementById("adminMenuModal").style.display = "block";
 return;
 }
-
 document.getElementById("pin").value = "";
 document.getElementById("pinError").textContent = "";
 document.getElementById("adminModal").style.display = "block";
