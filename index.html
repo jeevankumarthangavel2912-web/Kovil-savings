@@ -913,7 +913,9 @@ function showMemberDetails(id){
                 <td>${getPaymentYear(payment)}</td>
                 <td>${formatMoney(getPaymentAmount(payment))}</td>
                 <td>${escapeHTML(getPaymentDate(payment).split(" ")[0].split("T")[0])}</td>
-                <td>${escapeHTML(getPaymentStatus(payment))}</td>
+                <td style="text-align:center">
+  <span style="color:#16a34a;font-size:22px;font-weight:bold">✓</span>
+</td>
               </tr>
             `).join("")}
           </tbody>
@@ -1288,7 +1290,13 @@ function showAdminHistory(){
           <td>${year}</td>
           <td>${formatMoney(getPaymentAmount(payment))}</td>
           <td>${escapeHTML(getPaymentDate(payment).split(" ")[0].split("T")[0])}</td>
-          <td>${escapeHTML(getPaymentStatus(payment))}</td>
+          <td style="text-align:center">
+  ${
+    getPaymentStatus(payment) === "PAID"
+      ? '<span style="color:#16a34a;font-size:22px;font-weight:bold">✓</span>'
+      : '<span style="color:#e59a12;font-weight:700">Pending</span>'
+  }
+</td>
           <td>
             <button onclick="deletePayment('${escapeHTML(memberId)}','${escapeHTML(month)}','${year}')">
               Delete
