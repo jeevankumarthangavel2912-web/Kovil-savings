@@ -912,7 +912,7 @@ function showMemberDetails(id){
                 <td>${escapeHTML(monthTamil(getPaymentMonth(payment)))}</td>
                 <td>${getPaymentYear(payment)}</td>
                 <td>${formatMoney(getPaymentAmount(payment))}</td>
-                <td>${escapeHTML(getPaymentDate(payment))}</td>
+                <td>${escapeHTML(getPaymentDate(payment).split(" ")[0].split("T")[0])}</td>
                 <td>${escapeHTML(getPaymentStatus(payment))}</td>
               </tr>
             `).join("")}
@@ -1287,7 +1287,7 @@ function showAdminHistory(){
           <td>${escapeHTML(monthTamil(month))}</td>
           <td>${year}</td>
           <td>${formatMoney(getPaymentAmount(payment))}</td>
-          <td>${escapeHTML(getPaymentDate(payment))}</td>
+          <td>${escapeHTML(getPaymentDate(payment).split(" ")[0].split("T")[0])}</td>
           <td>${escapeHTML(getPaymentStatus(payment))}</td>
           <td>
             <button onclick="deletePayment('${escapeHTML(memberId)}','${escapeHTML(month)}','${year}')">
