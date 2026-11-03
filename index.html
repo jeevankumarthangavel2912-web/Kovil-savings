@@ -434,47 +434,6 @@ footer{
   </div>
 </div>
 
-<!-- EDIT PAYMENT MODAL -->
-<div class="modal" id="editPaymentModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('editPaymentModal')">✕</button>
-
-    <h2>Payment Edit</h2>
-
-    <input type="hidden" id="editPaymentMemberId">
-    <input type="hidden" id="editPaymentOldMonth">
-    <input type="hidden" id="editPaymentOldYear">
-
-    <div class="form-group">
-      <label>Member ID</label>
-      <input id="editPaymentMemberDisplay" readonly>
-    </div>
-
-    <div class="form-group">
-      <label>Month</label>
-      <select id="editPaymentMonth"></select>
-    </div>
-
-    <div class="form-group">
-      <label>Year</label>
-      <input type="number" id="editPaymentYear">
-    </div>
-
-    <div class="form-group">
-      <label>Amount</label>
-      <input type="number" id="editPaymentAmount">
-    </div>
-
-    <div class="form-group">
-      <label>Paid Date</label>
-      <input type="date" id="editPaymentDate">
-    </div>
-
-    <button onclick="updatePayment()">Update Payment</button>
-    <p id="editPaymentMessage"></p>
-  </div>
-</div>
-
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbyzCU0XMNuB2w6gt3V0Du6Xxr9Su8Hztb-MUN-DA0MhF7cTvQaAe_LajvHXXJGe3DY/exec";
 
@@ -872,6 +831,7 @@ function openPaymentModal(){
   renderPaymentManagementPage();
 }
 
+/* PAYMENT UPDATE + SELECTED MEMBER HISTORY */
 function renderPaymentManagementPage(){
   if(!isAdmin) return;
 
@@ -885,28 +845,6 @@ function renderPaymentManagementPage(){
     `<option value="${month}">${monthTamil(month)}</option>`
   ).join("");
 
-  let historyRows = "";
-
-  payments.slice().reverse().forEach(payment => {
-    const memberId = getPaymentMemberId(payment);
-    const month = getPaymentMonth(payment);
-    const year = getPaymentYear(payment);
-
-    historyRows += `
-      <tr>
-        <td>${escapeHTML(memberId)}</td>
-        <td>${escapeHTML(monthTamil(month))}</td>
-        <td>${year}</td>
-        <td>${formatMoney(getPaymentAmount(payment))}</td>
-        <td>${escapeHTML(getPaymentDate(payment))}</td>
-        <td>${escapeHTML(getPaymentStatus(payment))}</td>
-        <td>
-          <button onclick="deletePayment('${escapeHTML(memberId)}','${escapeHTML(month)}','${year}')">Delete</button>
-        </td>
-      </tr>
-    `;
-  });
-
   const now = new Date();
   const today = new Date(now.getTime() - now.getTimezoneOffset()*60000).toISOString().slice(0,10);
 
@@ -916,7 +854,9 @@ function renderPaymentManagementPage(){
 
       <div class="form-group">
         <label>உறுப்பினர்</label>
-        <select id="paymentMember">${memberOptions}</select>
+        <select id="paymentMember" onchange="showAdminHistory()">
+          ${memberOptions}
+        </select>
       </div>
 
       <div class="form-group">
@@ -944,28 +884,87 @@ function renderPaymentManagementPage(){
     </section>
 
     <section class="admin-list-item">
-      <h3>📋 Payment History</h3>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Member ID</th>
-              <th>Month</th>
-              <th>Year</th>
-              <th>Amount</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${historyRows || "<tr><td colspan='7'>Payment history இல்லை</td></tr>"}
-          </tbody>
-        </table>
-      </div>
+      <h3>📋 தேர்வு செய்த உறுப்பினரின் Payment History</h3>
+      <div id="adminHistory"></div>
     </section>
   `;
+
+  showAdminHistory();
+}
+
+/* SELECTED MEMBER-க்கு மட்டும் HISTORY */
+function showAdminHistory(){
+  if(!isAdmin) return;
+
+  const memberSelect = document.getElementById("paymentMember");
+  const historyBox = document.getElementById("adminHistory");
+
+  if(!memberSelect || !historyBox) return;
+
+  const memberId = memberSelect.value;
+
+  const member = members.find(m =>
+    getMemberId(m) === String(memberId)
+  );
+
+  const memberPayments = payments
+    .filter(p => getPaymentMemberId(p) === String(memberId))
+    .slice()
+    .reverse();
+
+  let html = `
+    <h3>${member ? escapeHTML(getMemberName(member)) : "உறுப்பினர்"} - History</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Year</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+
+  if(memberPayments.length === 0){
+    html += `
+      <tr>
+        <td colspan="6">இந்த உறுப்பினருக்கு Payment History இல்லை.</td>
+      </tr>
+    `;
+  }else{
+    memberPayments.forEach(payment => {
+      const month = getPaymentMonth(payment);
+      const year = getPaymentYear(payment);
+
+      html += `
+        <tr>
+          <td>${escapeHTML(monthTamil(month))}</td>
+          <td>${year}</td>
+          <td>${formatMoney(getPaymentAmount(payment))}</td>
+          <td>${escapeHTML(getPaymentDate(payment))}</td>
+          <td>${escapeHTML(getPaymentStatus(payment))}</td>
+          <td>
+            <button onclick="deletePayment('${escapeHTML(memberId)}','${escapeHTML(month)}','${year}')">
+              Delete
+            </button>
+          </td>
+        </tr>
+      `;
+    });
+  }
+
+  html += `
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  historyBox.innerHTML = html;
 }
 
 async function savePayment(){
@@ -1037,7 +1036,8 @@ function editMember(id){
 
   document.getElementById("editMemberId").value = getMemberId(member);
   document.getElementById("editMemberName").value = getMemberName(member);
-  document.getElementById("editMemberPhone").value = member["Phone"] || member.phone || "";
+  document.getElementById("editMemberPhone").value =
+    member["Phone"] || member.phone || "";
   document.getElementById("editMemberPhoto").value = getMemberPhoto(member);
 
   document.getElementById("editMemberModal").style.display = "block";
@@ -1071,11 +1071,6 @@ async function updateMember(){
   }catch(error){
     document.getElementById("editMemberMessage").textContent = error.message;
   }
-}
-
-function showAdminHistory(){
-  if(!isAdmin) return;
-  renderPaymentManagementPage();
 }
 
 async function deletePayment(memberId,month,year){
