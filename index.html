@@ -9,7 +9,7 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,"Noto Sans Tamil",sans-serif;background:#fff8e8;color:#321c0e}
-header{background:linear-gradient(135deg,#76230c,#d87919);color:white;text-align:center;padding:24px 12px}
+header{position:relative;background:linear-gradient(135deg,#76230c,#d87919);color:white;text-align:center;padding:24px 12px}
 header h1{font-size:25px;margin:6px}
 .container{max-width:1100px;margin:auto;padding:15px}
 .summary{background:white;text-align:center;padding:20px;border-radius:15px;box-shadow:0 2px 8px #0001;margin-bottom:15px}
@@ -38,6 +38,7 @@ footer{text-align:center;padding:25px;color:#777}
 <body>
 
 <header>
+<button class="adminBtn" style="position:absolute;right:12px;top:12px" onclick="openAdmin()">நிர்வாகி</button>
 <h1>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</h1>
 <p>வாய்க்கால் ரோடு, கோபிசெட்டிபாளையம்</p>
 <h2>மாத சேமிப்பு திட்டம்</h2>
@@ -50,7 +51,6 @@ footer{text-align:center;padding:25px;color:#777}
 <h2>மொத்த சேமிப்பு</h2>
 <h1 id="total">₹0</h1>
 <p id="memberCount">உறுப்பினர்கள்: 0</p>
-<button class="adminBtn" onclick="openAdmin()">ADMIN LOGIN</button>
 </div>
 
 <input class="search" id="search" placeholder="பெயர் அல்லது Member ID தேடவும்..." oninput="renderMembers()">
@@ -60,69 +60,83 @@ footer{text-align:center;padding:25px;color:#777}
 
 <footer>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</footer>
 
-<!-- ADMIN MODAL -->
+<!-- ADMIN PIN AUTHENTICATION -->
 <div class="modal" id="adminModal">
-<div class="modalBox">
-<button class="close" onclick="closeAdmin()">Close ✕</button>
-<h2>Admin Panel</h2>
-
-<label>Admin PIN</label>
-<input type="password" id="pin" placeholder="Admin PIN">
-<button onclick="adminLogin()">Login</button>
-
-<div id="adminPanel" style="display:none">
-
-<div class="section">
-<h3>உறுப்பினர் சேர்க்க</h3>
-<input id="newId" placeholder="Member ID (M001)">
-<input id="newName" placeholder="உறுப்பினர் பெயர்">
-<input id="newPhone" placeholder="Phone (Optional)">
-<button onclick="addMember()">Add Member</button>
+  <div class="modalBox">
+    <button class="close" onclick="closeAdmin()">மூடு ✕</button>
+    <h2>நிர்வாகி உள்நுழைவு</h2>
+    <label>நிர்வாக PIN</label>
+    <input type="password" id="pin" placeholder="PIN எண்ணை உள்ளிடவும்">
+    <button onclick="adminLogin()">சமர்ப்பி</button>
+    <p id="pinError" style="color:#c0392b"></p>
+  </div>
 </div>
 
-<div class="section">
-<h3>மாத சேமிப்பு Update</h3>
-
-<label>Member</label>
-<select id="paymentMember"></select>
-
-<label>Month</label>
-<select id="paymentMonth">
-<option>January</option><option>February</option>
-<option>March</option><option>April</option>
-<option>May</option><option>June</option>
-<option>July</option><option>August</option>
-<option>September</option><option>October</option>
-<option>November</option><option>December</option>
-</select>
-
-<label>Year</label>
-<select id="paymentYear"></select>
-
-<label>Status</label>
-<select id="paymentStatus" onchange="statusChanged()">
-<option value="PAID">PAID - பணம் கொடுத்தார்</option>
-<option value="PENDING">PENDING - பணம் கொடுக்கவில்லை</option>
-</select>
-
-<div id="paidFields">
-<label>Amount</label>
-<input type="number" id="paymentAmount" value="500">
-<label>Paid Date</label>
-<input type="date" id="paymentDate">
+<!-- ADMIN MENU -->
+<div class="modal" id="adminMenuModal">
+  <div class="modalBox">
+    <button class="close" onclick="closeAdminMenu()">மூடு ✕</button>
+    <h2>நிர்வாகி பக்கம்</h2>
+    <button onclick="openAddMemberModal()" style="width:100%;margin:8px 0">புதிய உறுப்பினர்</button>
+    <button onclick="openPaymentModal()" style="width:100%;margin:8px 0">மாதாந்திர பணம் புதுப்பிக்க</button>
+  </div>
 </div>
 
-<button onclick="savePayment()">Save Payment</button>
+<!-- ADD MEMBER POPUP -->
+<div class="modal" id="addMemberModal">
+  <div class="modalBox">
+    <button class="close" onclick="closeAddMemberModal()">மூடு ✕</button>
+    <h2>புதிய உறுப்பினர் சேர்க்க</h2>
+    <label>உறுப்பினர் ID</label>
+    <input id="newId" placeholder="உதா: M001">
+    <label>உறுப்பினர் பெயர்</label>
+    <input id="newName" placeholder="உறுப்பினர் பெயர்">
+    <label>தொலைபேசி எண் (விருப்பம்)</label>
+    <input id="newPhone" placeholder="Phone (Optional)">
+    <label>உறுப்பினர் புகைப்படம்</label>
+    <input type="file" id="newPhoto" accept="image/*" onchange="previewMemberPhoto()">
+    <img id="photoPreview" alt="புகைப்பட முன்னோட்டம்" style="display:none;max-width:150px;max-height:150px;border-radius:10px;margin:8px 0">
+    <button onclick="addMember()">உறுப்பினரை சேமிக்க</button>
+  </div>
 </div>
 
-<div class="section">
-<h3>Member Payment History</h3>
-<select id="historyMember" onchange="showAdminHistory()"></select>
-<div id="adminHistory"></div>
-</div>
-
-</div>
-</div>
+<!-- MONTHLY PAYMENT UPDATE + HISTORY -->
+<div class="modal" id="paymentModal">
+  <div class="modalBox">
+    <button class="close" onclick="closePaymentModal()">மூடு ✕</button>
+    <h2>மாதாந்திர பணம் புதுப்பிக்க</h2>
+    <div class="section">
+      <h3>பணம் புதுப்பிக்க</h3>
+      <label>உறுப்பினர்</label>
+      <select id="paymentMember" onchange="syncHistoryMember();showAdminHistory()"></select>
+      <label>மாதம்</label>
+      <select id="paymentMonth">
+        <option>January</option><option>February</option><option>March</option><option>April</option>
+        <option>May</option><option>June</option><option>July</option><option>August</option>
+        <option>September</option><option>October</option><option>November</option><option>December</option>
+      </select>
+      <label>ஆண்டு</label>
+      <select id="paymentYear"></select>
+      <label>நிலை</label>
+      <select id="paymentStatus" onchange="statusChanged()">
+        <option value="PAID">PAID - பணம் செலுத்தினார்</option>
+        <option value="PENDING">PENDING - பணம் செலுத்தவில்லை</option>
+      </select>
+      <div id="paidFields">
+        <label>தொகை</label>
+        <input type="number" id="paymentAmount" value="500">
+        <label>பணம் செலுத்திய தேதி</label>
+        <input type="date" id="paymentDate">
+      </div>
+      <button onclick="savePayment()">புதுப்பிக்க / சேமிக்க</button>
+    </div>
+    <div class="section">
+      <h3>உறுப்பினர் பண வரலாறு</h3>
+      <label>உறுப்பினர் தேர்வு</label>
+      <select id="historyMember" onchange="showAdminHistory()"></select>
+      <div id="adminHistory"></div>
+    </div>
+  </div>
 </div>
 
 <!-- MEMBER HISTORY -->
@@ -192,6 +206,7 @@ function renderMembers(){
 
     return `
       <div class="member">
+        ${m.photo ? `<img src="${esc(m.photo)}" alt="${esc(m.name)}" style="width:90px;height:90px;object-fit:cover;border-radius:50%;display:block;margin:0 auto 10px">` : ""}
         <h3>${esc(m.name)}</h3>
         <p>Member ID: ${esc(m.memberId)}</p>
         <p>Paid Months: ${paid.length}</p>
@@ -233,12 +248,23 @@ function closeHistory(){
 }
 
 function openAdmin(){
+  document.getElementById("pin").value = "";
+  document.getElementById("pinError").textContent = "";
   document.getElementById("adminModal").style.display = "block";
 }
-
-function closeAdmin(){
-  document.getElementById("adminModal").style.display = "none";
+function closeAdmin(){ document.getElementById("adminModal").style.display = "none"; }
+function closeAdminMenu(){ document.getElementById("adminMenuModal").style.display = "none"; }
+function openAddMemberModal(){
+  document.getElementById("adminMenuModal").style.display = "none";
+  document.getElementById("addMemberModal").style.display = "block";
 }
+function closeAddMemberModal(){ document.getElementById("addMemberModal").style.display = "none"; }
+function openPaymentModal(){
+  document.getElementById("adminMenuModal").style.display = "none";
+  document.getElementById("paymentModal").style.display = "block";
+  populateDropdowns(); populateYears(); syncHistoryMember(); showAdminHistory();
+}
+function closePaymentModal(){ document.getElementById("paymentModal").style.display = "none"; }
 
 async function postData(data){
   const res = await fetch(API_URL,{
@@ -246,36 +272,31 @@ async function postData(data){
     headers:{"Content-Type":"text/plain;charset=utf-8"},
     body:JSON.stringify(data)
   });
-  return await res.json();
+  const text = await res.text();
+  try { return JSON.parse(text); }
+  catch(e) { throw new Error("Apps Script JSON பதில் கிடைக்கவில்லை. Deployment URL / access check செய்யவும்."); }
 }
 
 // PIN verification is a separate action.
 // This function does not add any member.
 async function adminLogin(){
   const pin = document.getElementById("pin").value.trim();
-
-  if(!pin){
-    alert("Admin PIN enter பண்ணவும்");
-    return;
-  }
-
+  const errorBox = document.getElementById("pinError");
+  errorBox.textContent = "";
+  if(!pin){ errorBox.textContent = "PIN எண்ணை உள்ளிடவும்"; return; }
   try{
     const result = await postData({action:"verifyPin",pin:pin});
-
     if(!result.success){
-      alert(result.message || "Wrong PIN");
+      errorBox.textContent = result.message || "தவறான PIN. மீண்டும் முயற்சிக்கவும்.";
       return;
     }
-
     adminPin = pin;
-    document.getElementById("adminPanel").style.display = "block";
-
-    populateDropdowns();
-    populateYears();
-
-    alert("Admin login successful");
+    closeAdmin();
+    document.getElementById("adminMenuModal").style.display = "block";
+    populateDropdowns(); populateYears();
   }catch(e){
-    alert("Login error: " + e.message);
+    errorBox.textContent = "PIN சரிபார்க்க முடியவில்லை: " + e.message;
+    console.error("PIN verification error:", e);
   }
 }
 
@@ -303,10 +324,36 @@ function statusChanged(){
   document.getElementById("paidFields").style.display = paid ? "block" : "none";
 }
 
+function syncHistoryMember(){
+  const p = document.getElementById("paymentMember");
+  const h = document.getElementById("historyMember");
+  if(p && h) h.value = p.value;
+}
+function previewMemberPhoto(){
+  const file = document.getElementById("newPhoto").files[0];
+  const img = document.getElementById("photoPreview");
+  if(!file){ img.style.display="none"; img.src=""; return; }
+  if(!file.type.startsWith("image/")){ alert("புகைப்பட கோப்பை மட்டும் தேர்வு செய்யவும்"); return; }
+  const reader = new FileReader();
+  reader.onload = () => { img.src=reader.result; img.style.display="block"; };
+  reader.readAsDataURL(file);
+}
+
 async function addMember(){
   const memberId = document.getElementById("newId").value.trim();
   const name = document.getElementById("newName").value.trim();
   const phone = document.getElementById("newPhone").value.trim();
+  const photoFile = document.getElementById("newPhoto").files[0];
+  let photo = "";
+  if(photoFile){
+    if(photoFile.size > 2 * 1024 * 1024){ alert("புகைப்படம் 2MB-க்கு குறைவாக இருக்க வேண்டும்"); return; }
+    photo = await new Promise((resolve,reject)=>{
+      const reader = new FileReader();
+      reader.onload=()=>resolve(reader.result);
+      reader.onerror=reject;
+      reader.readAsDataURL(photoFile);
+    });
+  }
 
   if(!memberId || !name){
     alert("Member ID மற்றும் பெயர் தேவை");
@@ -315,7 +362,7 @@ async function addMember(){
 
   try{
     const result = await postData({
-      action:"addMember",pin:adminPin,memberId,name,phone
+      action:"addMember",pin:adminPin,memberId,name,phone,photo
     });
 
     if(!result.success){
@@ -328,6 +375,10 @@ async function addMember(){
     document.getElementById("newId").value = "";
     document.getElementById("newName").value = "";
     document.getElementById("newPhone").value = "";
+    document.getElementById("newPhoto").value = "";
+    document.getElementById("photoPreview").style.display = "none";
+    document.getElementById("photoPreview").src = "";
+    closeAddMemberModal();
 
     await loadData();
     populateDropdowns();
