@@ -483,12 +483,42 @@ function getPaymentAmount(payment){
   return Number(payment["Amount"] ?? payment.amount ?? 0);
 }
 
-function getPaymentDate(payment){
-  return String(payment["Paid Date"] ?? payment.paidDate ?? "");
+function getPaymentStatus(payment){
+  return String(payment["Status"] ?? payment.status ?? "PAID").trim().toUpperCase();
 }
 
-function getPaymentStatus(payment){
-  return String(payment["Status"] ?? payment.status ?? "");
+function getPaymentDate(payment){
+  return String(payment["Paid Date"] ?? payment.paidDate ?? payment.date ?? "").trim();
+}
+
+// ======================================
+// GOOGLE DRIVE PHOTO URL FIX
+// ======================================
+
+function getDrivePhotoURL(photoLink){
+  if(!photoLink) return "";
+
+  photoLink = String(photoLink).trim();
+
+  // Google Drive URL formats:
+  // drive.google.com/file/d/FILE_ID/view
+  // drive.google.com/open?id=FILE_ID
+  // drive.google.com/uc?id=FILE_ID
+  // drive.google.com/uc?export=view&id=FILE_ID
+
+  const match = photoLink.match(/(?:id=|\/d\/)([-\w]{20,})/);
+
+  if(match && match[1]){
+    return "https://drive.google.com/uc?export=view&id=" + match[1];
+  }
+
+  // Google Drive File ID நேரடியாக sheet-ல் இருந்தால்
+  if(/^[\w-]{20,}$/.test(photoLink)){
+    return "https://drive.google.com/uc?export=view&id=" + photoLink;
+  }
+
+  // Google Drive அல்லாத image URL
+  return photoLink;
 }
 
 // ======================================
@@ -498,26 +528,22 @@ function getPaymentStatus(payment){
 async function loadData(){
   try{
     const response = await fetch(API_URL);
-    const result = await response.json();
+    const data = await response.json();
 
-    if(!result.success){
-      throw new Error(result.message || "Data load ஆகவில்லை");
-    }
-
-    members = result.members || [];
-    payments = result.payments || [];
-
-    totalAmount = payments.reduce((sum,payment)=>{
-      return sum + getPaymentAmount(payment);
-    },0);
+    members = data.members || [];
+    payments = data.payments || [];
+    totalAmount = Number(data.total || 0);
 
     document.getElementById("totalMembers").textContent = members.length;
-    document.getElementById("totalSavings").textContent = formatMoney(totalAmount);
+
+    document.getElementById("totalSavings").textContent =
+      formatMoney(payments.reduce((sum,p)=>sum + getPaymentAmount(p),0));
 
     renderMembers();
 
   }catch(error){
     console.error(error);
+
     document.getElementById("membersList").innerHTML =
       "<p>Data load செய்ய முடியவில்லை. Internet connection சரிபார்க்கவும்.</p>";
   }
@@ -528,36 +554,42 @@ async function loadData(){
 // ======================================
 
 function renderMembers(){
+  const container = document.getElementById("membersList");
+
   const search = document.getElementById("searchInput").value
     .toLowerCase()
     .trim();
 
-  const filtered = members.filter(member=>{
-    return (
-      getMemberName(member).toLowerCase().includes(search) ||
-      getMemberId(member).toLowerCase().includes(search)
-    );
-  });
-
-  const container = document.getElementById("membersList");
+  const filtered = members.filter(member =>
+    getMemberName(member).toLowerCase().includes(search) ||
+    getMemberId(member).toLowerCase().includes(search)
+  );
 
   if(filtered.length === 0){
-    container.innerHTML = "<p>உறுப்பினர்கள் இல்லை</p>";
+    container.innerHTML = "<p>உறுப்பினர்கள் இல்லை.</p>";
     return;
   }
 
   container.innerHTML = filtered.map(member=>{
-    const photo = getMemberPhoto(member);
+    const memberId = getMemberId(member);
+    const name = getMemberName(member);
+
+    const photo = getDrivePhotoURL(getMemberPhoto(member));
+
+    const photoHTML = photo
+      ? `<img
+           class="member-photo"
+           src="${escapeHTML(photo)}"
+           alt="${escapeHTML(name)}"
+           onerror="this.onerror=null;this.src='https://drive.google.com/thumbnail?id=${escapeHTML(getMemberPhoto(member).match(/(?:id=|\/d\/)([-\w]{20,})/)?.[1] || getMemberPhoto(member))}&sz=w500'"
+         >`
+      : `<div class="member-photo-placeholder">👤</div>`;
 
     return `
-      <div class="member" onclick="showMemberDetails('${escapeHTML(getMemberId(member))}')">
-        ${
-          photo
-          ? `<img class="member-photo" src="${escapeHTML(photo)}" alt="Member Photo">`
-          : `<div class="member-photo-placeholder">👤</div>`
-        }
-        <h3>${escapeHTML(getMemberName(member))}</h3>
-        <p>${escapeHTML(getMemberId(member))}</p>
+      <div class="member" onclick="showMemberDetails('${escapeHTML(memberId)}')">
+        ${photoHTML}
+        <h3>${escapeHTML(name)}</h3>
+        <p>${escapeHTML(memberId)}</p>
       </div>
     `;
   }).join("");
@@ -573,12 +605,13 @@ function showMemberDetails(id){
   if(!member) return;
 
   const memberId = getMemberId(member);
+
   const memberPayments = payments
     .filter(payment=>getPaymentMemberId(payment) === memberId)
     .slice()
     .reverse();
 
-  const photo = getMemberPhoto(member);
+  const photo = getDrivePhotoURL(getMemberPhoto(member));
 
   let history = "";
 
@@ -617,9 +650,14 @@ function showMemberDetails(id){
     <div style="text-align:center">
       ${
         photo
-        ? `<img src="${escapeHTML(photo)}" class="member-photo">`
+        ? `<img
+             src="${escapeHTML(photo)}"
+             class="member-photo"
+             onerror="this.onerror=null;this.src='${escapeHTML(getMemberPhoto(member))}'"
+           >`
         : `<div class="member-photo-placeholder">👤</div>`
       }
+
       <h2>${escapeHTML(getMemberName(member))}</h2>
       <p>Member ID: ${escapeHTML(memberId)}</p>
       <p>Phone: ${escapeHTML(member["Phone"] || member.phone || "")}</p>
@@ -669,6 +707,7 @@ async function adminLogin(){
       closeModal("adminLoginModal");
 
       document.getElementById("adminDashboard").style.display = "block";
+
       renderAdminDashboard();
 
     }else{
@@ -691,12 +730,15 @@ function renderAdminDashboard(){
   document.getElementById("adminDashboardContent").innerHTML = `
     <div class="admin-list-item">
       <h3>உறுப்பினர் மேலாண்மை</h3>
+
       <button onclick="openAddMember()">புதிய உறுப்பினர் சேர்க்க</button>
+
       <button onclick="openMemberEditList()">உறுப்பினர் Edit</button>
     </div>
 
     <div class="admin-list-item">
       <h3>சேமிப்பு மேலாண்மை</h3>
+
       <button onclick="openPaymentModal()">Payment Update / History</button>
     </div>
   `;
@@ -805,6 +847,7 @@ async function addMember(){
       document.getElementById("newMemberName").value = "";
       document.getElementById("newMemberPhone").value = "";
       document.getElementById("newMemberPhoto").value = "";
+
       document.getElementById("newMemberPhotoPreview").style.display = "none";
 
       await loadData();
@@ -827,6 +870,7 @@ function openPaymentModal(){
   if(!isAdmin) return;
 
   document.getElementById("adminDashboard").style.display = "block";
+
   renderPaymentManagementPage();
 }
 
@@ -858,6 +902,7 @@ function renderPaymentManagementPage(selectedMemberId = ""){
 
       <div class="form-group">
         <label>உறுப்பினர்</label>
+
         <select id="paymentMember" onchange="showAdminHistory()">
           ${memberOptions}
         </select>
@@ -884,11 +929,13 @@ function renderPaymentManagementPage(selectedMemberId = ""){
       </div>
 
       <button onclick="savePayment()">Payment Save / Update</button>
+
       <p id="paymentMessage"></p>
     </section>
 
     <section class="admin-list-item">
       <h3>📋 தேர்வு செய்த உறுப்பினரின் Payment History</h3>
+
       <div id="adminHistory"></div>
     </section>
   `;
@@ -1006,10 +1053,10 @@ async function savePayment(){
     if(result.success){
       await loadData();
 
-      // அதே உறுப்பினர் தேர்விலேயே இருக்கும்.
       renderPaymentManagementPage(memberId);
 
       const message = document.getElementById("paymentMessage");
+
       if(message){
         message.textContent = "Payment சேமிக்கப்பட்டது";
       }
@@ -1067,13 +1114,19 @@ function editMember(id){
     member["Phone"] || member.phone || "";
 
   document.getElementById("editMemberPhoto").value = "";
+
   document.getElementById("editMemberPhotoPreview").style.display = "none";
 
-  const currentPhoto = getMemberPhoto(member);
+  const currentPhoto = getDrivePhotoURL(getMemberPhoto(member));
 
   document.getElementById("editMemberCurrentPhoto").innerHTML =
     currentPhoto
-    ? `<img src="${escapeHTML(currentPhoto)}" alt="Current photo" style="width:90px;height:90px;object-fit:cover;border-radius:50%">`
+    ? `<img
+         src="${escapeHTML(currentPhoto)}"
+         alt="Current photo"
+         style="width:100px;height:100px;object-fit:cover;border-radius:50%"
+         onerror="this.onerror=null;this.src='${escapeHTML(getMemberPhoto(member))}'"
+       >`
     : "பழைய புகைப்படம் இல்லை";
 
   document.getElementById("editMemberModal").style.display = "block";
@@ -1111,9 +1164,9 @@ async function updateMember(){
       document.getElementById("editMemberMessage").textContent = "Updated";
 
       await loadData();
+
       closeModal("editMemberModal");
 
-      // Dashboard member list-ஐ புதுப்பிக்கவும்.
       openMemberEditList();
 
     }else{
@@ -1145,7 +1198,6 @@ async function deletePayment(memberId,month,year){
     if(result.success){
       await loadData();
 
-      // Delete செய்த பிறகும் அதே உறுப்பினரின் history காட்டப்படும்.
       renderPaymentManagementPage(memberId);
 
     }else{
