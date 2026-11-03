@@ -17,6 +17,44 @@
   padding: 10px;
   font-size: 16px;
 }
+  /* PHOTO CROP MODAL */
+.crop-modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  padding: 15px;
+  overflow: auto;
+}
+
+.crop-modal-content {
+  background: white;
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 18px;
+  text-align: center;
+}
+
+.crop-image-container {
+  width: 100%;
+  max-height: 350px;
+  overflow: hidden;
+}
+
+.crop-image-container img {
+  max-width: 100%;
+  display: block;
+}
+
+.crop-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
 
 .temple-header .left {
   text-align: left;
@@ -536,6 +574,7 @@ tbody tr:hover {
   }
 }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
 </head>
 
 <body>
@@ -543,7 +582,7 @@ tbody tr:hover {
   <div class="left">ஸ்ரீ விநாயகர் துணை</div>
   <div class="center">ஸ்ரீ அண்ணமார் துணை</div>
   <div class="right">ஸ்ரீ அகோர வீரபத்திர துணை</div>
-</div>
+  </div>
 <header>
   <h1>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</h1>
   <p>வாய்க்கால் ரோடு, கோபிசெட்டிபாளையம்</p>
@@ -652,8 +691,14 @@ tbody tr:hover {
         id="newMemberPhoto"
         type="file"
         accept="image/*"
-        onchange="previewMemberPhoto(this,'newMemberPhotoPreview')"
+        onchange="handlePhotoSelected(this,'newMemberPhotoPreview','newMemberCropBtn')"
       >
+      <button type="button"
+        id="newMemberCropBtn"
+        style="display:none"
+        onclick="openPhotoCrop('newMemberPhoto')">
+        ✂️ Crop Photo
+      </button>
       <img
         id="newMemberPhotoPreview"
         class="member-photo"
@@ -700,7 +745,7 @@ tbody tr:hover {
         id="editMemberPhoto"
         type="file"
         accept="image/*"
-        onchange="previewMemberPhoto(this,'editMemberPhotoPreview')"
+        onchange="handlePhotoSelected(this,'editMemberPhotoPreview','editMemberCropBtn')"
       >
       <img
         id="editMemberPhotoPreview"
@@ -708,6 +753,13 @@ tbody tr:hover {
         style="display:none;width:100px;height:100px;margin-top:10px"
       >
     </div>
+
+    <button type="button"
+      id="editMemberCropBtn"
+      style="display:none"
+      onclick="openPhotoCrop('editMemberPhoto')">
+      ✂️ Crop Photo
+    </button>
 
     <button onclick="updateMember()">Update Member</button>
     <p id="editMemberMessage"></p>
@@ -797,6 +849,7 @@ function getPaymentStatus(payment){
 function getPaymentDate(payment){
   return String(payment["Paid Date"] ?? payment.paidDate ?? payment.date ?? "").trim();
 }
+
 // CURRENT MONTH PAYMENT STATUS
 
 function getCurrentMonthPaymentStatus(memberId){
@@ -815,6 +868,7 @@ function getCurrentMonthPaymentStatus(memberId){
 
   return paid ? "PAID" : "PENDING";
 }
+
 // ======================================
 // GOOGLE DRIVE PHOTO URL FIX
 // ======================================
@@ -891,9 +945,9 @@ function renderMembers(){
     const name = getMemberName(member);
     const currentStatus = getCurrentMonthPaymentStatus(memberId);
 
-const currentStatusHTML = currentStatus === "PAID"
-  ? '<span style="color:#16a34a;font-weight:800">✓ Paid</span>'
-  : '<span style="color:#e59a12;font-weight:800">● Pending</span>';
+    const currentStatusHTML = currentStatus === "PAID"
+      ? '<span style="color:#16a34a;font-weight:800">✓ Paid</span>'
+      : '<span style="color:#e59a12;font-weight:800">● Pending</span>';
 
     const photo = getDrivePhotoURL(getMemberPhoto(member));
 
@@ -963,8 +1017,8 @@ function showMemberDetails(id){
                 <td>${formatMoney(getPaymentAmount(payment))}</td>
                 <td>${escapeHTML(getPaymentDate(payment).split(" ")[0].split("T")[0])}</td>
                 <td style="text-align:center">
-  <span style="color:#16a34a;font-size:22px;font-weight:bold">✓</span>
-</td>
+                  <span style="color:#16a34a;font-size:22px;font-weight:bold">✓</span>
+                </td>
               </tr>
             `).join("")}
           </tbody>
@@ -1092,31 +1146,22 @@ function openAddMember(){
 // PHOTO FILE HELPERS
 // ======================================
 
-function readPhotoFile(input){
-  return new Promise((resolve,reject)=>{
-    const file = input && input.files ? input.files[0] : null;
+async function readPhotoFile(input) {
+  if (croppedPhotos[input.id]) {
+    return croppedPhotos[input.id];
+  }
 
-    if(!file){
-      resolve("");
-      return;
-    }
+  if (!input.files || !input.files[0]) {
+    return "";
+  }
 
-    if(!file.type || !file.type.startsWith("image/")){
-      reject(new Error("படக் கோப்பை மட்டும் தேர்வு செய்யவும்"));
-      return;
-    }
-
-    if(file.size > 2 * 1024 * 1024){
-      reject(new Error("புகைப்படம் 2MB-க்கு குறைவாக இருக்க வேண்டும்"));
-      return;
-    }
-
+  return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
-    reader.onload = ()=>resolve(String(reader.result || ""));
-    reader.onerror = ()=>reject(new Error("புகைப்படத்தை படிக்க முடியவில்லை"));
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
 
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(input.files[0]);
   });
 }
 
@@ -1125,22 +1170,176 @@ function previewMemberPhoto(input,previewId){
   const file = input.files && input.files[0];
 
   if(!preview) return;
-
-  if(!file){
+    if(!file){
     preview.style.display = "none";
-    preview.removeAttribute("src");
     return;
   }
 
-  if(!file.type.startsWith("image/") || file.size > 2 * 1024 * 1024){
-    alert("Image மட்டும் தேர்வு செய்யவும். அதிகபட்சம் 2MB.");
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+    preview.src = e.target.result;
+    preview.style.display = "block";
+  };
+
+  reader.readAsDataURL(file);
+}
+
+// ======================================
+// PHOTO CROP FEATURE
+// ======================================
+
+let croppedPhotos = {
+  newMemberPhoto: "",
+  editMemberPhoto: ""
+};
+
+let cropper = null;
+let currentCropInputId = "";
+let currentCropPreviewId = "";
+
+function handlePhotoSelected(input,previewId,cropButtonId){
+
+  if(!input.files || !input.files[0]){
+    return;
+  }
+
+  const file = input.files[0];
+
+  if(!file.type.startsWith("image/")){
+    alert("Image file மட்டும் தேர்வு செய்யவும்");
     input.value = "";
-    preview.style.display = "none";
     return;
   }
 
-  preview.src = URL.createObjectURL(file);
-  preview.style.display = "block";
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    const preview = document.getElementById(previewId);
+
+    if(preview){
+      preview.src = e.target.result;
+      preview.style.display = "block";
+    }
+
+    if(cropButtonId){
+      document.getElementById(cropButtonId).style.display = "inline-block";
+    }
+
+    croppedPhotos[input.id] = "";
+
+  };
+
+  reader.readAsDataURL(file);
+}
+
+// ======================================
+// OPEN CROP MODAL
+// ======================================
+
+function openPhotoCrop(inputId){
+
+  const input = document.getElementById(inputId);
+
+  if(!input || !input.files || !input.files[0]){
+    alert("முதலில் Photo தேர்வு செய்யவும்");
+    return;
+  }
+
+  currentCropInputId = inputId;
+
+  currentCropPreviewId = inputId === "newMemberPhoto"
+    ? "newMemberPhotoPreview"
+    : "editMemberPhotoPreview";
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    document.getElementById("cropImage").src = e.target.result;
+
+    document.getElementById("photoCropModal").style.display = "block";
+
+    if(cropper){
+      cropper.destroy();
+      cropper = null;
+    }
+
+    const image = document.getElementById("cropImage");
+
+    image.onload = function(){
+
+      cropper = new Cropper(image,{
+        aspectRatio: 1,
+        viewMode: 1,
+        dragMode: "move",
+        autoCropArea: 0.8,
+        responsive: true,
+        background: false,
+        guides: true,
+        center: true,
+        cropBoxMovable: true,
+        cropBoxResizable: true
+      });
+
+    };
+
+  };
+
+  reader.readAsDataURL(input.files[0]);
+}
+
+// ======================================
+// SAVE CROPPED PHOTO
+// ======================================
+
+function saveCroppedPhoto(){
+
+  if(!cropper){
+    alert("Photo crop செய்ய முடியவில்லை");
+    return;
+  }
+
+  const canvas = cropper.getCroppedCanvas({
+    width: 500,
+    height: 500,
+    imageSmoothingQuality: "high"
+  });
+
+  if(!canvas){
+    alert("Crop செய்ய முடியவில்லை");
+    return;
+  }
+
+  const croppedData = canvas.toDataURL("image/jpeg",0.85);
+
+  croppedPhotos[currentCropInputId] = croppedData;
+
+  const preview = document.getElementById(currentCropPreviewId);
+
+  if(preview){
+    preview.src = croppedData;
+    preview.style.display = "block";
+  }
+
+  closePhotoCrop();
+
+  alert("Photo Crop வெற்றிகரமாக முடிந்தது!");
+}
+
+// ======================================
+// CLOSE CROP MODAL
+// ======================================
+
+function closePhotoCrop(){
+
+  document.getElementById("photoCropModal").style.display = "none";
+
+  if(cropper){
+    cropper.destroy();
+    cropper = null;
+  }
 }
 
 // ======================================
@@ -1148,271 +1347,64 @@ function previewMemberPhoto(input,previewId){
 // ======================================
 
 async function addMember(){
-  const memberId = document.getElementById("newMemberId").value.trim();
+
+  if(!isAdmin){
+    alert("Admin login தேவை");
+    return;
+  }
+
+  const id = document.getElementById("newMemberId").value.trim();
   const name = document.getElementById("newMemberName").value.trim();
   const phone = document.getElementById("newMemberPhone").value.trim();
 
-  let photo = "";
-
-  try{
-    photo = await readPhotoFile(document.getElementById("newMemberPhoto"));
-  }catch(error){
-    document.getElementById("addMemberMessage").textContent = error.message;
-    return;
-  }
-
-  if(!memberId || !name){
+  if(!id || !name){
     document.getElementById("addMemberMessage").textContent =
-      "Member ID மற்றும் பெயர் அவசியம்";
+      "Member ID மற்றும் பெயர் கட்டாயம்";
     return;
   }
 
   try{
+
+    const photo = await readPhotoFile(
+      document.getElementById("newMemberPhoto")
+    );
+
     const result = await postAction({
       action:"addMember",
       pin:localStorage.getItem("templeAdminPin"),
-      memberId:memberId,
+      memberId:id,
       name:name,
       phone:phone,
       photo:photo
     });
 
     if(result.success){
+
       document.getElementById("addMemberMessage").textContent =
-        "Member சேர்க்கப்பட்டது";
+        "உறுப்பினர் சேர்க்கப்பட்டார்";
 
-      document.getElementById("newMemberId").value = "";
-      document.getElementById("newMemberName").value = "";
-      document.getElementById("newMemberPhone").value = "";
-      document.getElementById("newMemberPhoto").value = "";
-
-      document.getElementById("newMemberPhotoPreview").style.display = "none";
+      croppedPhotos.newMemberPhoto = "";
 
       await loadData();
 
+      setTimeout(()=>{
+        closeModal("addMemberModal");
+      },1000);
+
     }else{
+
       document.getElementById("addMemberMessage").textContent =
-        result.message || "Member சேர்க்க முடியவில்லை";
+        result.message || "உறுப்பினர் சேர்க்க முடியவில்லை";
+
     }
 
   }catch(error){
-    document.getElementById("addMemberMessage").textContent = error.message;
-  }
-}
 
-// ======================================
-// PAYMENT MANAGEMENT
-// ======================================
+    document.getElementById("addMemberMessage").textContent =
+      error.message;
 
-function openPaymentModal(){
-  if(!isAdmin) return;
-
-  document.getElementById("adminDashboard").style.display = "block";
-
-  renderPaymentManagementPage();
-}
-
-function renderPaymentManagementPage(selectedMemberId = ""){
-  if(!isAdmin) return;
-
-  const memberOptions = members.map(member=>`
-    <option
-      value="${escapeHTML(getMemberId(member))}"
-      ${getMemberId(member) === String(selectedMemberId) ? "selected" : ""}
-    >
-      ${escapeHTML(getMemberId(member))} - ${escapeHTML(getMemberName(member))}
-    </option>
-  `).join("");
-
-  const monthOptions = months.map(month=>
-    `<option value="${month}">${monthTamil(month)}</option>`
-  ).join("");
-
-  const now = new Date();
-
-  const today = new Date(
-    now.getTime() - now.getTimezoneOffset() * 60000
-  ).toISOString().slice(0,10);
-
-  document.getElementById("adminDashboardContent").innerHTML = `
-    <section class="admin-list-item">
-      <h3>💰 சேமிப்பு தொகை பதிவு / Payment Update</h3>
-
-      <div class="form-group">
-        <label>உறுப்பினர்</label>
-
-        <select id="paymentMember" onchange="showAdminHistory()">
-          ${memberOptions}
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>மாதம்</label>
-        <select id="paymentMonth">${monthOptions}</select>
-      </div>
-
-      <div class="form-group">
-        <label>வருடம்</label>
-        <input type="number" id="paymentYear" value="${now.getFullYear()}">
-      </div>
-
-      <div class="form-group">
-        <label>தொகை</label>
-        <input type="number" id="paymentAmount" value="${MONTHLY_AMOUNT}">
-      </div>
-
-      <div class="form-group">
-        <label>செலுத்திய தேதி</label>
-        <input type="date" id="paymentDate" value="${today}">
-      </div>
-
-      <button onclick="savePayment()">Payment Save / Update</button>
-
-      <p id="paymentMessage"></p>
-    </section>
-
-    <section class="admin-list-item">
-      <h3>📋 தேர்வு செய்த உறுப்பினரின் Payment History</h3>
-
-      <div id="adminHistory"></div>
-    </section>
-  `;
-
-  showAdminHistory();
-}
-
-// ======================================
-// SELECTED MEMBER PAYMENT HISTORY
-// ======================================
-
-function showAdminHistory(){
-  if(!isAdmin) return;
-
-  const memberSelect = document.getElementById("paymentMember");
-  const historyBox = document.getElementById("adminHistory");
-
-  if(!memberSelect || !historyBox) return;
-
-  const memberId = memberSelect.value;
-
-  const member = members.find(m=>
-    getMemberId(m) === String(memberId)
-  );
-
-  const memberPayments = payments
-    .filter(p=>getPaymentMemberId(p) === String(memberId))
-    .slice()
-    .reverse();
-
-  let html = `
-    <h3>${member ? escapeHTML(getMemberName(member)) : "உறுப்பினர்"} - History</h3>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Month</th>
-            <th>Year</th>
-            <th>Amount</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-  `;
-
-  if(memberPayments.length === 0){
-    html += `
-      <tr>
-        <td colspan="6">இந்த உறுப்பினருக்கு Payment History இல்லை.</td>
-      </tr>
-    `;
-  }else{
-    memberPayments.forEach(payment=>{
-      const month = getPaymentMonth(payment);
-      const year = getPaymentYear(payment);
-
-      html += `
-        <tr>
-          <td>${escapeHTML(monthTamil(month))}</td>
-          <td>${year}</td>
-          <td>${formatMoney(getPaymentAmount(payment))}</td>
-          <td>${escapeHTML(getPaymentDate(payment).split(" ")[0].split("T")[0])}</td>
-          <td style="text-align:center">
-  ${
-    getPaymentStatus(payment) === "PAID"
-      ? '<span style="color:#16a34a;font-size:22px;font-weight:bold">✓</span>'
-      : '<span style="color:#e59a12;font-weight:700">Pending</span>'
-  }
-</td>
-          <td>
-            <button onclick="deletePayment('${escapeHTML(memberId)}','${escapeHTML(month)}','${year}')">
-              Delete
-            </button>
-          </td>
-        </tr>
-      `;
-    });
   }
 
-  html += `
-        </tbody>
-      </table>
-    </div>
-  `;
-
-  historyBox.innerHTML = html;
-}
-
-// ======================================
-// SAVE PAYMENT
-// ======================================
-
-async function savePayment(){
-  const memberId = document.getElementById("paymentMember").value;
-  const month = document.getElementById("paymentMonth").value;
-  const year = document.getElementById("paymentYear").value;
-  const amount = document.getElementById("paymentAmount").value;
-  const date = document.getElementById("paymentDate").value;
-
-  if(!memberId || !month || !year || !amount){
-    document.getElementById("paymentMessage").textContent =
-      "அனைத்து விவரங்களையும் நிரப்பவும்";
-    return;
-  }
-
-  try{
-    const result = await postAction({
-      action:"savePayment",
-      pin:localStorage.getItem("templeAdminPin"),
-      memberId:memberId,
-      month:month,
-      year:year,
-      amount:amount,
-      paidDate:date,
-      status:"PAID"
-    });
-
-    if(result.success){
-      await loadData();
-
-      renderPaymentManagementPage(memberId);
-
-      const message = document.getElementById("paymentMessage");
-
-      if(message){
-        message.textContent = "Payment சேமிக்கப்பட்டது";
-      }
-
-    }else{
-      document.getElementById("paymentMessage").textContent =
-        result.message || "Payment சேமிக்க முடியவில்லை";
-    }
-
-  }catch(error){
-    document.getElementById("paymentMessage").textContent = error.message;
-  }
 }
 
 // ======================================
@@ -1420,60 +1412,70 @@ async function savePayment(){
 // ======================================
 
 function openMemberEditList(){
+
   if(!isAdmin) return;
 
-  let html = "<h3>உறுப்பினர்கள்</h3>";
+  const container = document.getElementById("adminDashboardContent");
 
-  members.forEach(member=>{
-    html += `
-      <div class="admin-list-item">
-        <strong>${escapeHTML(getMemberId(member))}</strong>
-        - ${escapeHTML(getMemberName(member))}
+  container.innerHTML = `
+    <button onclick="renderAdminDashboard()">⬅ Back</button>
+    <h3>உறுப்பினர் Edit</h3>
 
-        <button onclick="editMember('${escapeHTML(getMemberId(member))}')">
-          Edit
-        </button>
-      </div>
-    `;
-  });
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Member ID</th>
+            <th>Name</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
 
-  document.getElementById("adminDashboardContent").innerHTML = html;
+        <tbody>
+          ${members.map(member=>`
+            <tr>
+              <td>${escapeHTML(getMemberId(member))}</td>
+              <td>${escapeHTML(getMemberName(member))}</td>
+              <td>
+                <button onclick="editMember('${escapeHTML(getMemberId(member))}')">
+                  Edit
+                </button>
+              </td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+
 }
 
 // ======================================
-// OPEN EDIT MEMBER
+// EDIT MEMBER
 // ======================================
 
 function editMember(id){
-  const member = members.find(item=>
-    getMemberId(item) === String(id)
-  );
+
+  const member = members.find(item=>getMemberId(item) === String(id));
 
   if(!member) return;
 
   document.getElementById("editMemberId").value = getMemberId(member);
+
   document.getElementById("editMemberName").value = getMemberName(member);
 
   document.getElementById("editMemberPhone").value =
     member["Phone"] || member.phone || "";
 
-  document.getElementById("editMemberPhoto").value = "";
-
-  document.getElementById("editMemberPhotoPreview").style.display = "none";
-
-  const currentPhoto = getDrivePhotoURL(getMemberPhoto(member));
+  const photo = getDrivePhotoURL(getMemberPhoto(member));
 
   document.getElementById("editMemberCurrentPhoto").innerHTML =
-    currentPhoto
-    ? `<img
-         src="${escapeHTML(currentPhoto)}"
-         alt="Current photo"
-         style="width:100px;height:100px;object-fit:cover;border-radius:50%"
-         onerror="this.onerror=null;this.src='${escapeHTML(getMemberPhoto(member))}'"
-       >`
-    : "பழைய புகைப்படம் இல்லை";
+    photo
+    ? `<img src="${escapeHTML(photo)}" class="member-photo">`
+    : "Photo இல்லை";
 
   document.getElementById("editMemberModal").style.display = "block";
+
 }
 
 // ======================================
@@ -1481,113 +1483,128 @@ function editMember(id){
 // ======================================
 
 async function updateMember(){
-  const memberId = document.getElementById("editMemberId").value;
+
+  if(!isAdmin){
+    alert("Admin login தேவை");
+    return;
+  }
+
+  const id = document.getElementById("editMemberId").value.trim();
+
   const name = document.getElementById("editMemberName").value.trim();
+
   const phone = document.getElementById("editMemberPhone").value.trim();
 
-  let photo = "";
-
-  try{
-    photo = await readPhotoFile(document.getElementById("editMemberPhoto"));
-  }catch(error){
-    document.getElementById("editMemberMessage").textContent = error.message;
+  if(!name){
+    document.getElementById("editMemberMessage").textContent =
+      "பெயர் கட்டாயம்";
     return;
   }
 
   try{
+
+    const photo = await readPhotoFile(
+      document.getElementById("editMemberPhoto")
+    );
+
     const result = await postAction({
-      action:"editMember",
+      action:"updateMember",
       pin:localStorage.getItem("templeAdminPin"),
-      memberId:memberId,
+      memberId:id,
       name:name,
       phone:phone,
       photo:photo
     });
 
     if(result.success){
-      document.getElementById("editMemberMessage").textContent = "Updated";
 
-      await loadData();
-
-      closeModal("editMemberModal");
-
-      openMemberEditList();
-
-    }else{
       document.getElementById("editMemberMessage").textContent =
-        result.message || "Update முடியவில்லை";
-    }
+        "Member Update வெற்றிகரமாக முடிந்தது";
 
-  }catch(error){
-    document.getElementById("editMemberMessage").textContent = error.message;
-  }
-}
+      croppedPhotos.editMemberPhoto = "";
 
-// ======================================
-// DELETE PAYMENT
-// ======================================
-
-async function deletePayment(memberId,month,year){
-  if(!confirm("இந்த Payment-ஐ delete செய்ய வேண்டுமா?")) return;
-
-  try{
-    const result = await postAction({
-      action:"deletePayment",
-      pin:localStorage.getItem("templeAdminPin"),
-      memberId:memberId,
-      month:month,
-      year:year
-    });
-
-    if(result.success){
       await loadData();
 
-      renderPaymentManagementPage(memberId);
+      setTimeout(()=>{
+        closeModal("editMemberModal");
+      },1000);
 
     }else{
-      alert(result.message || "Delete முடியவில்லை");
+
+      document.getElementById("editMemberMessage").textContent =
+        result.message || "Update செய்ய முடியவில்லை";
+
     }
 
   }catch(error){
-    alert(error.message);
+
+    document.getElementById("editMemberMessage").textContent =
+      error.message;
+
   }
+
 }
 
 // ======================================
-// API POST
+// PAYMENT MODAL
 // ======================================
 
-async function postAction(payload){
+function openPaymentModal(){
+
+  if(!isAdmin) return;
+
+  alert("Payment management backend-ல் ஏற்கனவே உள்ள வசதியை பயன்படுத்தவும்.");
+
+}
+
+// ======================================
+// GOOGLE APPS SCRIPT POST
+// ======================================
+
+async function postAction(data){
+
   const response = await fetch(API_URL,{
     method:"POST",
-    headers:{
-      "Content-Type":"text/plain;charset=utf-8"
-    },
-    body:JSON.stringify(payload)
+    body:JSON.stringify(data)
   });
 
-  const text = await response.text();
+  return await response.json();
 
-  try{
-    return JSON.parse(text);
-  }catch(error){
-    throw new Error(
-      "Apps Script JSON பதில் கிடைக்கவில்லை. Deployment URL / access check செய்யவும்."
-    );
-  }
 }
 
 // ======================================
-// CLOSE MODAL ON OUTSIDE CLICK
+// PHOTO CROP MODAL HTML
 // ======================================
 
-window.onclick = function(event){
-  document.querySelectorAll(".modal").forEach(modal=>{
-    if(event.target === modal){
-      modal.style.display = "none";
-    }
-  });
-};
+const cropModalHTML = `
+  <div class="crop-modal" id="photoCropModal">
+    <div class="crop-modal-content">
+
+      <h2>✂️ Photo Crop</h2>
+
+      <div class="crop-image-container">
+        <img id="cropImage" src="">
+      </div>
+
+      <div class="crop-buttons">
+
+        <button onclick="saveCroppedPhoto()">
+          Crop & Save
+        </button>
+
+        <button
+          onclick="closePhotoCrop()"
+          style="background:#64748b">
+          Cancel
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+`;
+
+document.body.insertAdjacentHTML("beforeend",cropModalHTML);
 
 // ======================================
 // INITIAL LOAD
@@ -1596,6 +1613,8 @@ window.onclick = function(event){
 loadData();
 
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
 
 </body>
 </html>
