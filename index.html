@@ -771,7 +771,24 @@ function getPaymentStatus(payment){
 function getPaymentDate(payment){
   return String(payment["Paid Date"] ?? payment.paidDate ?? payment.date ?? "").trim();
 }
+// CURRENT MONTH PAYMENT STATUS
 
+function getCurrentMonthPaymentStatus(memberId){
+
+  const now = new Date();
+
+  const currentMonth = months[now.getMonth()];
+  const currentYear = now.getFullYear();
+
+  const paid = payments.some(payment =>
+    getPaymentMemberId(payment) === String(memberId) &&
+    getPaymentMonth(payment) === currentMonth &&
+    getPaymentYear(payment) === currentYear &&
+    getPaymentStatus(payment) === "PAID"
+  );
+
+  return paid ? "PAID" : "PENDING";
+}
 // ======================================
 // GOOGLE DRIVE PHOTO URL FIX
 // ======================================
@@ -846,6 +863,11 @@ function renderMembers(){
   container.innerHTML = filtered.map(member=>{
     const memberId = getMemberId(member);
     const name = getMemberName(member);
+    const currentStatus = getCurrentMonthPaymentStatus(memberId);
+
+const currentStatusHTML = currentStatus === "PAID"
+  ? '<span style="color:#16a34a;font-weight:800">✓ Paid</span>'
+  : '<span style="color:#e59a12;font-weight:800">● Pending</span>';
 
     const photo = getDrivePhotoURL(getMemberPhoto(member));
 
@@ -863,6 +885,7 @@ function renderMembers(){
         ${photoHTML}
         <h3>${escapeHTML(name)}</h3>
         <p>${escapeHTML(memberId)}</p>
+        <p>${currentStatusHTML}</p>
       </div>
     `;
   }).join("");
