@@ -1250,11 +1250,11 @@ async function adminLogin() {
 function renderAdminDashboard() {
   document.getElementById("adminDashboardContent").innerHTML = `
     <div class="admin-list-item">
-      <button type="button" onclick="openAddMember()">➕ உறுப்பினரைச் சேர்க்க</button>
+      <button onclick="openAddMember()">➕ உறுப்பினரைச் சேர்க்க</button>
 
-      <button type="button" onclick="openMemberEditList()">✏️ உறுப்பினர் விவரங்களைத் திருத்த</button>
+      <button onclick="openMemberEditList()">✏️ உறுப்பினர் விவரங்களைத் திருத்த</button>
 
-      <button type="button" onclick="openPaymentModal()">💰 பணம் / வரலாறு</button>
+      <button onclick="openPaymentModal()">💰 பணம் / வரலாறு</button>
     </div>
 
     <div class="admin-list-item">
@@ -1345,22 +1345,11 @@ async function addMember() {
 // ================================
 
 function openMemberEditList() {
-  try {
-    if (!isAdmin) {
-      alert("முதலில் Admin login செய்யவும்.");
-      return;
-    }
+  if (!isAdmin) return;
 
-    const container = document.getElementById("adminDashboardContent");
-    if (!container) {
-      alert("Admin dashboard பகுதி கிடைக்கவில்லை. பக்கத்தை refresh செய்யவும்.");
-      return;
-    }
+  const container = document.getElementById("adminDashboardContent");
 
-    // members data பாதுகாப்பாக array ஆக இருக்கிறதா என்று சரிபார்க்கவும்
-    const memberList = Array.isArray(members) ? members : [];
-
-    container.innerHTML = `
+  container.innerHTML = `
     <button onclick="renderAdminDashboard()">⬅ திரும்ப</button>
 
     <h3>உறுப்பினர் விவரங்களைத் திருத்த</h3>
@@ -1376,7 +1365,7 @@ function openMemberEditList() {
         </thead>
 
         <tbody>
-          ${memberList.map(member => `
+          ${members.map(member => `
             <tr>
               <td>${escapeHTML(getMemberId(member))}</td>
               <td>${escapeHTML(getMemberName(member))}</td>
@@ -1391,14 +1380,8 @@ function openMemberEditList() {
       </table>
     </div>
   `;
-  } catch (error) {
-    console.error("openMemberEditList error:", error);
-    alert("உறுப்பினர் பட்டியலை திறக்க முடியவில்லை: " + (error.message || error));
-  }
 }
 
-// Inline onclick-ல் function எப்போதும் கிடைக்க global-ஆக இணைக்கவும்
-window.openMemberEditList = openMemberEditList;
 
 // ================================
 // EDIT MEMBER
@@ -1640,6 +1623,7 @@ function renderPaymentHistory() {
             <th>தொகை</th>
             <th>தேதி</th>
             <th>நிலை</th>
+            <th>செயல்</th>
           </tr>
         </thead>
 
@@ -1652,9 +1636,11 @@ function renderPaymentHistory() {
               <td>${formatMoney(getPaymentAmount(p))}</td>
               <td>${escapeHTML(getPaymentDate(p))}</td>
               <td>
-                ${getPaymentStatus(p) === "PAID"
-                  ? "செலுத்தப்பட்டது"
-                  : "நிலுவை"}
+                ${getPaymentStatus(p) === "PAID" ? "செலுத்தப்பட்டது" : "நிலுவை"}
+              </td>
+              <td>
+                <button type="button" onclick="editPaymentRecord('${escapeHTML(getPaymentMemberId(p))}','${escapeHTML(getPaymentMonth(p))}',${Number(getPaymentYear(p))})">✏️ திருத்த</button>
+                <button type="button" onclick="deletePaymentRecord('${escapeHTML(getPaymentMemberId(p))}','${escapeHTML(getPaymentMonth(p))}',${Number(getPaymentYear(p))})">🗑️ நீக்கு</button>
               </td>
             </tr>
           `).join("")}
