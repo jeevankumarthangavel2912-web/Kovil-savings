@@ -454,6 +454,45 @@ th {
 
   .stats-grid { grid-template-columns: 1fr; }
 }
+  
+/* Member details photo */
+.member-detail-photo {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+  margin: 20px auto;
+  cursor: zoom-in;
+  box-shadow: 0 8px 25px #155b8b30;
+}
+
+/* Full-size photo viewer */
+.photo-viewer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(0,0,0,.90);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.photo-viewer img {
+  max-width: 95%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.photo-viewer-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 22px;
+}
+
 </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
@@ -787,27 +826,32 @@ function closeModal(id) {
   const modal = document.getElementById(id);
   if (modal) modal.style.display = "none";
 }
-
+ 
 function getDrivePhotoURL(photo) {
   if (!photo) return "";
+
+  photo = String(photo).trim();
 
   if (photo.startsWith("data:image/")) {
     return photo;
   }
 
-  if (photo.startsWith("http")) {
-    return photo;
-  }
-
+  // Google Drive URL-ல் இருந்து File ID எடுக்கவும்
   const match = photo.match(/[-\w]{25,}/);
 
   if (match) {
     return "https://drive.google.com/thumbnail?id=" +
-      encodeURIComponent(match[0]) + "&sz=w500";
+      encodeURIComponent(match[0]) + "&sz=w1000";
+  }
+
+  // சாதாரண image URL
+  if (photo.startsWith("http")) {
+    return photo;
   }
 
   return "";
 }
+
 
 // ================================
 // DATA LOAD
@@ -993,6 +1037,18 @@ function renderMembers() {
   }).join("");
 }
 
+function openPhotoViewer(photo) {
+  if (!photo) return;
+
+  document.getElementById("largeMemberPhoto").src = photo;
+  document.getElementById("photoViewer").style.display = "flex";
+}
+
+function closePhotoViewer() {
+  document.getElementById("photoViewer").style.display = "none";
+  document.getElementById("largeMemberPhoto").src = "";
+}
+
 
 // ================================
 // MEMBER DETAILS
@@ -1040,9 +1096,14 @@ function showMemberDetails(id) {
     <p>தொலைபேசி: ${escapeHTML(getMemberPhone(member))}</p>
 
     ${
-      photo
-        ? `<img class="member-photo" src="${escapeHTML(photo)}">`
-        : ""
+     
+photo
+  ? `<img class="member-detail-photo"
+       src="${escapeHTML(photo)}"
+       onclick="openPhotoViewer('${escapeHTML(photo)}')"
+       onerror="this.style.display='none'">`
+  : ""
+
     }
 
     <div class="member-summary">
@@ -1386,6 +1447,17 @@ async function updateMember() {
     message.textContent = error.message || "பிழை ஏற்பட்டது";
   }
 }
+
+<div id="photoViewer" class="photo-viewer"
+     onclick="closePhotoViewer()">
+
+  <button class="photo-viewer-close"
+          onclick="closePhotoViewer()">✕</button>
+
+  <img id="largeMemberPhoto" src=""
+       onclick="event.stopPropagation()">
+
+</div>
 
 
 // ================================
