@@ -1250,11 +1250,11 @@ async function adminLogin() {
 function renderAdminDashboard() {
   document.getElementById("adminDashboardContent").innerHTML = `
     <div class="admin-list-item">
-      <button onclick="openAddMember()">➕ உறுப்பினரைச் சேர்க்க</button>
+      <button type="button" onclick="openAddMember()">➕ உறுப்பினரைச் சேர்க்க</button>
 
-      <button onclick="openMemberEditList()">✏️ உறுப்பினர் விவரங்களைத் திருத்த</button>
+      <button type="button" onclick="openMemberEditList()">✏️ உறுப்பினர் விவரங்களைத் திருத்த</button>
 
-      <button onclick="openPaymentModal()">💰 பணம் / வரலாறு</button>
+      <button type="button" onclick="openPaymentModal()">💰 பணம் / வரலாறு</button>
     </div>
 
     <div class="admin-list-item">
@@ -1345,11 +1345,22 @@ async function addMember() {
 // ================================
 
 function openMemberEditList() {
-  if (!isAdmin) return;
+  try {
+    if (!isAdmin) {
+      alert("முதலில் Admin login செய்யவும்.");
+      return;
+    }
 
-  const container = document.getElementById("adminDashboardContent");
+    const container = document.getElementById("adminDashboardContent");
+    if (!container) {
+      alert("Admin dashboard பகுதி கிடைக்கவில்லை. பக்கத்தை refresh செய்யவும்.");
+      return;
+    }
 
-  container.innerHTML = `
+    // members data பாதுகாப்பாக array ஆக இருக்கிறதா என்று சரிபார்க்கவும்
+    const memberList = Array.isArray(members) ? members : [];
+
+    container.innerHTML = `
     <button onclick="renderAdminDashboard()">⬅ திரும்ப</button>
 
     <h3>உறுப்பினர் விவரங்களைத் திருத்த</h3>
@@ -1365,7 +1376,7 @@ function openMemberEditList() {
         </thead>
 
         <tbody>
-          ${members.map(member => `
+          ${memberList.map(member => `
             <tr>
               <td>${escapeHTML(getMemberId(member))}</td>
               <td>${escapeHTML(getMemberName(member))}</td>
@@ -1374,18 +1385,20 @@ function openMemberEditList() {
                   திருத்த
                 </button>
               </td>
-              <td>
-                <button type="button" onclick="editPayment('${escapeHTML(getPaymentMemberId(p))}','${escapeHTML(getPaymentMonth(p))}',${getPaymentYear(p)})">✏️ Edit</button>
-                <button type="button" onclick="deletePayment('${escapeHTML(getPaymentMemberId(p))}','${escapeHTML(getPaymentMonth(p))}',${getPaymentYear(p)})">🗑️ Delete</button>
-              </td>
             </tr>
           `).join("")}
         </tbody>
       </table>
     </div>
   `;
+  } catch (error) {
+    console.error("openMemberEditList error:", error);
+    alert("உறுப்பினர் பட்டியலை திறக்க முடியவில்லை: " + (error.message || error));
+  }
 }
 
+// Inline onclick-ல் function எப்போதும் கிடைக்க global-ஆக இணைக்கவும்
+window.openMemberEditList = openMemberEditList;
 
 // ================================
 // EDIT MEMBER
@@ -1627,7 +1640,6 @@ function renderPaymentHistory() {
             <th>தொகை</th>
             <th>தேதி</th>
             <th>நிலை</th>
-            <th>செயல்</th>
           </tr>
         </thead>
 
@@ -1643,10 +1655,6 @@ function renderPaymentHistory() {
                 ${getPaymentStatus(p) === "PAID"
                   ? "செலுத்தப்பட்டது"
                   : "நிலுவை"}
-              </td>
-              <td>
-                <button type="button" onclick="editPayment('${escapeHTML(getPaymentMemberId(p))}','${escapeHTML(getPaymentMonth(p))}',${getPaymentYear(p)})">✏️ Edit</button>
-                <button type="button" onclick="deletePayment('${escapeHTML(getPaymentMemberId(p))}','${escapeHTML(getPaymentMonth(p))}',${getPaymentYear(p)})">🗑️ Delete</button>
               </td>
             </tr>
           `).join("")}
@@ -1680,7 +1688,6 @@ function showPaymentHistory(memberId) {
             <th>தொகை</th>
             <th>தேதி</th>
             <th>நிலை</th>
-            <th>செயல்</th>
           </tr>
         </thead>
 
@@ -1704,34 +1711,6 @@ function showPaymentHistory(memberId) {
   `;
 }
 
-
-// =====================================
-// EDIT / DELETE PAYMENT
-// =====================================
-async function editPayment(memberId, month, year) {
-  const p = payments.find(x => getPaymentMemberId(x) === String(memberId) && getPaymentMonth(x) === String(month) && getPaymentYear(x) === Number(year));
-  if (!p) return alert("Payment கிடைக்கவில்லை");
-  const amount = prompt("தொகை (₹):", getPaymentAmount(p));
-  if (amount === null) return;
-  const paidDate = prompt("Payment தேதி (YYYY-MM-DD):", getPaymentDate(p));
-  if (paidDate === null) return;
-  const status = prompt("நிலை: PAID அல்லது PENDING", getPaymentStatus(p));
-  if (status === null) return;
-  const normalizedStatus = status.trim().toUpperCase();
-  if (!Number(amount) || Number(amount) <= 0 || !paidDate.trim() || !["PAID","PENDING"].includes(normalizedStatus)) return alert("தொகை / தேதி / நிலை சரிபார்க்கவும்");
-  try {
-    const result = await postAction({action:"editPayment", pin:adminPinValue, memberId, month, year, amount:Number(amount), paidDate:paidDate.trim(), status:normalizedStatus});
-    if (result.success) { await loadData(); renderPaymentHistory(); } else alert(result.message || "Update முடியவில்லை");
-  } catch(e) { alert(e.message); }
-}
-
-async function deletePayment(memberId, month, year) {
-  if (!confirm(`உறுப்பினர் ${memberId} - ${month} ${year} payment-ஐ நிரந்தரமாக delete செய்யவா?`)) return;
-  try {
-    const result = await postAction({action:"deletePayment", pin:adminPinValue, memberId, month, year});
-    if (result.success) { await loadData(); renderPaymentHistory(); } else alert(result.message || "Delete முடியவில்லை");
-  } catch(e) { alert(e.message); }
-}
 
 // ================================
 // PHOTO FILE HELPERS
