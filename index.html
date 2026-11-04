@@ -1518,7 +1518,6 @@ async function submitPayment() {
   const amount = Number(document.getElementById("payAmount").value);
   const paidDate = document.getElementById("payDate").value;
   const status = document.getElementById("payStatus").value;
-
   const message = document.getElementById("paymentMessage");
 
   if (!memberId || !month || !year || !amount || amount <= 0 || !paidDate) {
@@ -1544,13 +1543,49 @@ async function submitPayment() {
       message.textContent = "பணம் வெற்றிகரமாக சேமிக்கப்பட்டது";
 
       await loadData();
-
       showPaymentHistory(memberId);
 
+      // WhatsApp receipt link appears only for PAID payments
+      if (status === "PAID") {
+        const member = members.find(
+          m => getMemberId(m) === String(memberId)
+        );
+
+        if (member && getMemberPhone(member)) {
+          let phone = getMemberPhone(member).replace(/\D/g, "");
+
+          // Add India country code if missing
+          if (phone.length === 10) {
+            phone = "91" + phone;
+          }
+
+          const receipt =
+            "🙏 மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்\n\n" +
+            "வணக்கம் " + getMemberName(member) + " அவர்களே!\n\n" +
+            "உங்களுடைய " + monthTamil(month) + " " + year +
+            " மாத கோவில் சேமிப்பு தொகை " +
+            formatMoney(amount) + " வெற்றிகரமாக பெறப்பட்டது.\n\n" +
+            "Payment Date: " + paidDate + "\n\n" +
+            "நன்றி! 🙏\nகோவில் நிர்வாகம்";
+
+          const whatsappURL =
+            "https://wa.me/" + phone +
+            "?text=" + encodeURIComponent(receipt);
+
+          message.innerHTML =
+            "பணம் வெற்றிகரமாக சேமிக்கப்பட்டது.<br><br>" +
+            '<a href="' + whatsappURL +
+            '" target="_blank" rel="noopener">' +
+            '<button type="button">📱 WhatsApp Receipt அனுப்ப</button>' +
+            '</a>';
+        } else {
+          message.textContent =
+            "Payment save ஆனது. Member phone number இல்லை.";
+        }
+      }
     } else {
       message.textContent = result.message || "பணம் சேமிக்க முடியவில்லை";
     }
-
   } catch (error) {
     message.textContent = error.message || "பிழை ஏற்பட்டது";
   }
