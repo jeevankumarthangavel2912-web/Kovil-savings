@@ -1650,6 +1650,59 @@ function renderPaymentHistory() {
   `;
 }
 
+
+// PAYMENT EDIT / DELETE ACTIONS
+async function editPaymentRecord(memberId, month, year) {
+  try {
+    const record = payments.find(p =>
+      getPaymentMemberId(p) === String(memberId) &&
+      getPaymentMonth(p) === String(month) &&
+      Number(getPaymentYear(p)) === Number(year)
+    );
+    if (!record) return alert("Payment record கிடைக்கவில்லை");
+
+    const oldAmount = getPaymentAmount(record);
+    const oldDate = getPaymentDate(record);
+    const oldStatus = getPaymentStatus(record);
+
+    const amountInput = prompt("புதிய தொகையை உள்ளிடவும்:", oldAmount);
+    if (amountInput === null) return;
+    const amount = Number(amountInput);
+    if (!Number.isFinite(amount) || amount <= 0) return alert("சரியான தொகையை உள்ளிடவும்");
+
+    const dateInput = prompt("Payment தேதி (YYYY-MM-DD):", oldDate || "");
+    if (dateInput === null) return;
+    const statusInput = prompt("நிலை: PAID அல்லது PENDING", oldStatus || "PAID");
+    if (statusInput === null) return;
+    const status = statusInput.trim().toUpperCase();
+    if (!["PAID", "PENDING"].includes(status)) return alert("PAID அல்லது PENDING மட்டும் உள்ளிடவும்");
+
+    const result = await postAction({
+      action: "editPayment", pin: adminPinValue,
+      memberId, month, year, amount, paidDate: dateInput.trim(), status
+    });
+    alert(result.message || (result.success ? "Payment update ஆனது" : "Update செய்ய முடியவில்லை"));
+    if (result.success) await loadData();
+    renderPaymentHistory();
+  } catch (err) {
+    alert("Payment edit error: " + (err.message || err));
+  }
+}
+
+async function deletePaymentRecord(memberId, month, year) {
+  if (!confirm(`${memberId} - ${month} ${year} payment-ஐ நீக்கவா?`)) return;
+  try {
+    const result = await postAction({
+      action: "deletePayment", pin: adminPinValue, memberId, month, year
+    });
+    alert(result.message || (result.success ? "Payment நீக்கப்பட்டது" : "Delete செய்ய முடியவில்லை"));
+    if (result.success) await loadData();
+    renderPaymentHistory();
+  } catch (err) {
+    alert("Payment delete error: " + (err.message || err));
+  }
+}
+
 function showPaymentHistory(memberId) {
   const list = payments.filter(p =>
     getPaymentMemberId(p) === String(memberId)
