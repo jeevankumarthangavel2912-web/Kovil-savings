@@ -3,1405 +3,480 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</title>
 
 <style>
   .temple-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  text-align: center;
-  font-weight: bold;
-  color: #1e40af;
-  padding: 10px;
-  font-size: 16px;
-}
-
-/* PHOTO CROP MODAL */
-.crop-modal {
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  inset: 0;
-  background: rgba(0,0,0,.75);
-  padding: 15px;
-  overflow: auto;
-}
-
-.crop-modal-content {
-  background: white;
-  max-width: 500px;
-  margin: 30px auto;
-  padding: 20px;
-  border-radius: 18px;
-  text-align: center;
-}
-
-.crop-image-container {
-  width: 100%;
-  max-height: 350px;
-  overflow: hidden;
-}
-
-.crop-image-container img {
-  max-width: 100%;
-  display: block;
-}
-
-.crop-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
-  flex-wrap: wrap;
-}
-
-.temple-header .left {
-  text-align: left;
-}
-
-.temple-header .center {
-  text-align: center;
-}
-
-.temple-header .right {
-  text-align: right;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;500;600;700;800&display=swap');
-
-:root {
-  --wine: #174b78;
-  --wine2: #258cc8;
-  --gold: #76d7f4;
-  --cream: #f1fbff;
-  --ink: #102b43;
-  --muted: #64849b;
-  --line: #d9edf8;
-  --shadow: 0 14px 38px rgba(15,91,143,.12);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: 'Manrope','Noto Sans Tamil',sans-serif;
-  background: radial-gradient(circle at top left,#e5f8ff 0,#f6fcff 42%,#eaf5ff 100%);
-  color: var(--ink);
-  min-height: 100vh;
-}
-
-header {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(125deg,#0b3157 0%,#126ca4 48%,#55c7e8 100%);
-  color: #fff;
-  text-align: center;
-  padding: 38px 18px 34px;
-  box-shadow: 0 10px 30px #0b315725;
-}
-
-header:before,
-header:after {
-  content: "";
-  position: absolute;
-  border: 1px solid #ffffff30;
-  border-radius: 50%;
-  width: 260px;
-  height: 260px;
-  top: -145px;
-}
-
-header:before {
-  left: -70px;
-}
-
-header:after {
-  right: -70px;
-}
-
-header h1 {
-  position: relative;
-  margin: 0 0 10px;
-  font-size: clamp(23px,4vw,36px);
-  font-weight: 800;
-  letter-spacing: .2px;
-  text-shadow: 0 2px 10px #0002;
-}
-
-header p {
-  position: relative;
-  margin: 5px 0;
-  color: #e1f7ff;
-  font-size: 14px;
-}
-
-.container {
-  max-width: 1250px;
-  margin: 0 auto;
-  padding: 28px 22px 45px;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3,minmax(0,1fr));
-  gap: 18px;
-  margin-bottom: 25px;
-}
-
-.stat-card {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(145deg,#ffffff,#f2fbff);
-  padding: 24px 20px;
-  border: 1px solid #fff;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: var(--shadow);
-  transition: transform .25s,box-shadow .25s;
-}
-
-.stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 42px #155b8b18;
-}
-
-.stat-card:after {
-  content: "";
-  position: absolute;
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  right: -28px;
-  top: -35px;
-  background: #a9e7ff4a;
-}
-
-.stat-card h3 {
-  position: relative;
-  margin: 0 0 10px;
-  color: var(--wine);
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.stat-card p {
-  position: relative;
-  font-size: clamp(22px,3vw,30px);
-  font-weight: 800;
-  margin: 0;
-  color: #14334b;
-}
-
-.search-box {
-  width: 100%;
-  padding: 16px 18px;
-  border: 1px solid #cce7f5;
-  border-radius: 15px;
-  font-size: 16px;
-  margin: 0 0 22px;
-  background: #fafdff;
-  box-shadow: 0 5px 18px #155b8b08;
-  outline: none;
-  transition: border .2s,box-shadow .2s;
-}
-
-.search-box:focus {
-  border-color: #38a9df;
-  box-shadow: 0 0 0 4px #48b9ed22;
-}
-
-.members {
-  display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
-  gap: 18px;
-}
-
-.member {
-  position: relative;
-  background: linear-gradient(160deg,#ffffff 0%,#f2fbff 100%);
-  padding: 22px 16px 20px;
-  border: 1px solid #dceff8;
-  border-radius: 20px;
-  box-shadow: 0 8px 24px #155b8b0c;
-  text-align: center;
-  cursor: pointer;
-  transition: transform .25s,box-shadow .25s,border-color .25s;
-  overflow: hidden;
-}
-
-.member:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 4px;
-  background: linear-gradient(90deg,#1686c4,#8be7ff,#1686c4);
-  opacity: .8;
-}
-
-.member:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 35px #155b8b20;
-  border-color: #8ddcf7;
-}
-
-.member-photo {
-  width: 145px;
-  height: 145px;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-  margin: 0 auto 14px;
-  border: 5px solid #fff;
-  outline: 2px solid #5bc8ee;
-  background: #dff6ff;
-  box-shadow: 0 8px 20px #155b8b20;
-}
-
-.member-photo-placeholder {
-  width: 145px;
-  height: 145px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 14px;
-  background: linear-gradient(135deg,#dff6ff,#bcecff);
-  font-size: 48px;
-  border: 5px solid #fff;
-  outline: 2px solid #5bc8ee;
-}
-
-.member h3 {
-  margin: 8px 0 0;
-  font-size: 17px;
-  font-weight: 800;
-  color: var(--wine);
-  overflow-wrap: anywhere;
-}
-
-.member p {
-  margin: 8px 0 0;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-button {
-  background: linear-gradient(135deg,var(--wine),var(--wine2));
-  color: white;
-  border: 0;
-  border-radius: 11px;
-  padding: 12px 18px;
-  cursor: pointer;
-  font-size: 14px;
-  font-family: inherit;
-  font-weight: 700;
-  box-shadow: 0 5px 14px #126ca422;
-  transition: transform .2s,filter .2s,box-shadow .2s;
-}
-
-button:hover {
-  filter: brightness(1.08);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 18px #126ca430;
-}
-
-button:active {
-  transform: translateY(0);
-}
-
-.admin-button {
-  display: block;
-  margin: 30px auto 0;
-  padding: 14px 28px;
-  border-radius: 13px;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  inset: 0;
-  overflow: auto;
-  background: rgba(5,30,52,.62);
-  backdrop-filter: blur(7px);
-  padding: 20px;
-}
-
-.modal-content {
-  background: linear-gradient(145deg,#fafdff,#fff5e8);
-  max-width: 760px;
-  margin: 35px auto;
-  padding: 28px;
-  border: 1px solid #fff;
-  border-radius: 24px;
-  position: relative;
-  box-shadow: 0 25px 80px #0003;
-  animation: modalIn .25s ease-out;
-}
-
-@keyframes modalIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px) scale(.985);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.close-btn {
-  float: right;
-  padding: 8px 13px;
-  border-radius: 9px;
-  background: #dceff8;
-  color: #174b78;
-  box-shadow: none;
-}
-
-.close-btn:hover {
-  background: #bde8f7;
-}
-
-.form-group {
-  margin: 16px 0;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 700;
-  color: #164c70;
-  font-size: 14px;
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 13px 14px;
-  border: 1px solid #cce6f3;
-  border-radius: 11px;
-  font-size: 16px;
-  background: #fff;
-  outline: none;
-  font-family: inherit;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  border-color: #38a9df;
-  box-shadow: 0 0 0 3px #d9a44120;
-}
-
-.admin-list-item {
-  background: #fafdff;
-  border: 1px solid #d9edf8;
-  padding: 20px;
-  border-radius: 17px;
-  margin: 16px 0;
-  box-shadow: 0 7px 20px #5b321a08;
-}
-
-.admin-list-item h3 {
-  color: var(--wine);
-  margin-top: 0;
-}
-
-.table-wrap {
-  width: 100%;
-  overflow-x: auto;
-  border-radius: 12px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  min-width: 550px;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-th,td {
-  border: 1px solid #f0e1d1;
-  padding: 12px;
-  text-align: left;
-  font-size: 14px;
-}
-
-th {
-  background: linear-gradient(135deg,#dff5ff,#bceaff);
-  color: #174b78;
-  font-weight: 800;
-}
-
-tbody tr:nth-child(even) {
-  background: #f5fcff;
-}
-
-tbody tr:hover {
-  background: #e7f8ff;
-}
-
-#paymentMessage,
-#addMemberMessage,
-#editMemberMessage {
-  color: #1678a8;
-  font-weight: 700;
-}
-
-/* Member detail total summary */
-.member-summary {
-  display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 12px;
-  margin: 20px 0 24px;
-}
-
-.member-summary-card {
-  padding: 17px 14px;
-  border-radius: 16px;
-  background: linear-gradient(135deg,#dff6ff,#f8fdff);
-  border: 1px solid #bfe8f7;
-  text-align: center;
-}
-
-.member-summary-card span {
-  display: block;
-  color: #4b7894;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 7px;
-}
-
-.member-summary-card strong {
-  display: block;
-  color: #145b88;
-  font-size: 24px;
-  font-weight: 800;
-}
-
-@media(max-width:950px) {
-  .members {
-    grid-template-columns: repeat(3,minmax(0,1fr));
-  }
-}
-
-@media(max-width:650px) {
-  .container {
-    padding: 16px 12px 30px;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    align-items:center;
+    text-align:center;
+    font-weight:bold;
+    color:#1e40af;
+    padding:10px;
+    font-size:16px;
   }
 
-  .members {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-    gap: 11px;
+  .crop-modal {
+    display:none;
+    position:fixed;
+    z-index:2000;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    padding:15px;
+    overflow:auto;
   }
 
-  .member {
-    padding: 15px 10px;
-    border-radius: 16px;
+  .crop-modal-content {
+    background:white;
+    max-width:500px;
+    margin:30px auto;
+    padding:20px;
+    border-radius:18px;
+    text-align:center;
   }
 
-  .member-photo,
-  .member-photo-placeholder {
-    width: 112px;
-    height: 112px;
+  .crop-image-container {
+    width:100%;
+    max-height:350px;
+    overflow:hidden;
   }
 
-  .member h3 {
-    font-size: 14px;
+  .crop-image-container img {
+    max-width:100%;
+    display:block;
   }
 
-  .member p {
-    font-size: 12px;
+  .crop-buttons {
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:15px;
+    flex-wrap:wrap;
+  }
+
+  .temple-header .left { text-align:left; }
+  .temple-header .center { text-align:center; }
+  .temple-header .right { text-align:right; }
+
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --wine:#174b78;
+    --wine2:#258cc8;
+    --gold:#76d7f4;
+    --cream:#f1fbff;
+    --ink:#102b43;
+    --muted:#64849b;
+    --line:#d9edf8;
+    --shadow:0 14px 38px rgba(15,91,143,.12);
+  }
+
+  * { box-sizing:border-box; }
+
+  body {
+    margin:0;
+    font-family:'Manrope','Noto Sans Tamil',sans-serif;
+    background:radial-gradient(circle at top left,#e5f8ff 0,#f6fcff 42%,#eaf5ff 100%);
+    color:var(--ink);
+    min-height:100vh;
   }
 
   header {
-    padding: 28px 12px;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(125deg,#0b3157 0%,#126ca4 48%,#55c7e8 100%);
+    color:#fff;
+    text-align:center;
+    padding:38px 18px 34px;
+    box-shadow:0 10px 30px #0b315725;
   }
 
+  header:before, header:after {
+    content:"";
+    position:absolute;
+    border:1px solid #ffffff30;
+    border-radius:50%;
+    width:260px;
+    height:260px;
+    top:-145px;
+  }
+
+  header:before { left:-70px; }
+  header:after { right:-70px; }
+
   header h1 {
-    font-size: 22px;
+    position:relative;
+    margin:0 0 10px;
+    font-size:clamp(23px,4vw,36px);
+    font-weight:800;
+    letter-spacing:.2px;
+    text-shadow:0 2px 10px #0002;
+  }
+
+  header p {
+    position:relative;
+    margin:5px 0;
+    color:#e1f7ff;
+    font-size:14px;
+  }
+
+  .container {
+    max-width:1250px;
+    margin:0 auto;
+    padding:28px 22px 45px;
   }
 
   .stats-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:18px;
+    margin-bottom:25px;
   }
 
   .stat-card {
-    padding: 17px 10px;
-    border-radius: 15px;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(145deg,#ffffff,#f2fbff);
+    padding:24px 20px;
+    border:1px solid #fff;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:var(--shadow);
+    transition:transform .25s,box-shadow .25s;
+  }
+
+  .stat-card:hover {
+    transform:translateY(-4px);
+    box-shadow:0 18px 42px #155b8b18;
+  }
+
+  .stat-card:after {
+    content:"";
+    position:absolute;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    right:-28px;
+    top:-35px;
+    background:#a9e7ff4a;
   }
 
   .stat-card h3 {
-    font-size: 13px;
+    position:relative;
+    margin:0 0 10px;
+    color:var(--wine);
+    font-size:15px;
+    font-weight:700;
   }
 
   .stat-card p {
-    font-size: 21px;
+    position:relative;
+    font-size:clamp(22px,3vw,30px);
+    font-weight:800;
+    margin:0;
+    color:#14334b;
+  }
+
+  .search-box {
+    width:100%;
+    padding:16px 18px;
+    border:1px solid #cce7f5;
+    border-radius:15px;
+    font-size:16px;
+    margin:0 0 22px;
+    background:#fafdff;
+    box-shadow:0 5px 18px #155b8b08;
+    outline:none;
+    transition:border .2s,box-shadow .2s;
+  }
+
+  .search-box:focus {
+    border-color:#38a9df;
+    box-shadow:0 0 0 4px #48b9ed22;
+  }
+
+  .members {
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:18px;
+  }
+
+  .member {
+    position:relative;
+    background:linear-gradient(160deg,#ffffff 0%,#f2fbff 100%);
+    padding:22px 16px 20px;
+    border:1px solid #dceff8;
+    border-radius:20px;
+    box-shadow:0 8px 24px #155b8b0c;
+    text-align:center;
+    cursor:pointer;
+    transition:transform .25s,box-shadow .25s,border-color .25s;
+    overflow:hidden;
+  }
+
+  .member:before {
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    height:4px;
+    background:linear-gradient(90deg,#1686c4,#8be7ff,#1686c4);
+    opacity:.8;
+  }
+
+  .member:hover {
+    transform:translateY(-6px);
+    box-shadow:0 18px 35px #155b8b20;
+    border-color:#8ddcf7;
+  }
+
+  .member-photo {
+    width:145px;
+    height:145px;
+    object-fit:cover;
+    border-radius:50%;
+    display:block;
+    margin:0 auto 14px;
+    border:5px solid #fff;
+    outline:2px solid #5bc8ee;
+    background:#dff6ff;
+    box-shadow:0 8px 20px #155b8b20;
+  }
+
+  .member-photo-placeholder {
+    width:145px;
+    height:145px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 14px;
+    background:linear-gradient(135deg,#dff6ff,#bcecff);
+    font-size:48px;
+    border:5px solid #fff;
+    outline:2px solid #5bc8ee;
+  }
+
+  .member h3 {
+    margin:8px 0 0;
+    font-size:17px;
+    font-weight:800;
+    color:var(--wine);
+    overflow-wrap:anywhere;
+  }
+
+  .member p {
+    margin:8px 0 0;
+    color:var(--muted);
+    font-size:13px;
+  }
+
+  button {
+    background:linear-gradient(135deg,var(--wine),var(--wine2));
+    color:white;
+    border:0;
+    border-radius:11px;
+    padding:12px 18px;
+    cursor:pointer;
+    font-size:14px;
+    font-family:inherit;
+    font-weight:700;
+    box-shadow:0 5px 14px #126ca422;
+    transition:transform .2s,filter .2s,box-shadow .2s;
+  }
+
+  button:hover {
+    filter:brightness(1.08);
+    transform:translateY(-1px);
+    box-shadow:0 8px 18px #126ca430;
+  }
+
+  button:active { transform:translateY(0); }
+
+  .admin-button {
+    display:block;
+    margin:30px auto 0;
+    padding:14px 28px;
+    border-radius:13px;
   }
 
   .modal {
-    padding: 9px;
+    display:none;
+    position:fixed;
+    z-index:1000;
+    inset:0;
+    overflow:auto;
+    background:rgba(5,30,52,.62);
+    backdrop-filter:blur(7px);
+    padding:20px;
   }
 
   .modal-content {
-    padding: 17px;
-    margin: 12px auto;
-    border-radius: 18px;
+    background:linear-gradient(145deg,#fafdff,#fff5e8);
+    max-width:760px;
+    margin:35px auto;
+    padding:28px;
+    border:1px solid #fff;
+    border-radius:24px;
+    position:relative;
+    box-shadow:0 25px 80px #0003;
+    animation:modalIn .25s ease-out;
+  }
+
+  @keyframes modalIn {
+    from { opacity:0; transform:translateY(12px) scale(.985); }
+    to { opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  .close-btn {
+    float:right;
+    padding:8px 13px;
+    border-radius:9px;
+    background:#dceff8;
+    color:#174b78;
+    box-shadow:none;
+  }
+
+  .close-btn:hover { background:#bde8f7; }
+
+  .form-group { margin:16px 0; }
+
+  .form-group label {
+    display:block;
+    margin-bottom:8px;
+    font-weight:700;
+    color:#164c70;
+    font-size:14px;
+  }
+
+  .form-group input,
+  .form-group select {
+    width:100%;
+    padding:13px 14px;
+    border:1px solid #cce6f3;
+    border-radius:11px;
+    font-size:16px;
+    background:#fff;
+    outline:none;
+    font-family:inherit;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color:#38a9df;
+    box-shadow:0 0 0 3px #d9a44120;
+  }
+
+  .admin-list-item {
+    background:#fafdff;
+    border:1px solid #d9edf8;
+    padding:20px;
+    border-radius:17px;
+    margin:16px 0;
+    box-shadow:0 7px 20px #5b321a08;
+  }
+
+  .admin-list-item h3 {
+    color:var(--wine);
+    margin-top:0;
+  }
+
+  .table-wrap {
+    width:100%;
+    overflow-x:auto;
+    border-radius:12px;
+  }
+
+  table {
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    min-width:550px;
+    border-radius:12px;
+    overflow:hidden;
+  }
+
+  th,td {
+    border:1px solid #f0e1d1;
+    padding:12px;
+    text-align:left;
+    font-size:14px;
+  }
+
+  th {
+    background:linear-gradient(135deg,#dff5ff,#bceaff);
+    color:#174b78;
+    font-weight:800;
+  }
+
+  tbody tr:nth-child(even) { background:#f5fcff; }
+  tbody tr:hover { background:#e7f8ff; }
+
+  #paymentMessage,
+  #addMemberMessage,
+  #editMemberMessage {
+    color:#1678a8;
+    font-weight:700;
+  }
+
+  .member-summary {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+    margin:20px 0 24px;
+  }
+
+  .member-summary-card {
+    padding:17px 14px;
+    border-radius:16px;
+    background:linear-gradient(135deg,#dff6ff,#f8fdff);
+    border:1px solid #bfe8f7;
+    text-align:center;
+  }
+
+  .member-summary-card span {
+    display:block;
+    color:#4b7894;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:7px;
   }
 
   .member-summary-card strong {
-    font-size: 20px;
-  }
-}
-
-@media(max-width:380px) {
-  .member-photo,
-  .member-photo-placeholder {
-    width: 92px;
-    height: 92px;
+    display:block;
+    color:#145b88;
+    font-size:24px;
+    font-weight:800;
   }
 
-  .stats-grid {
-    grid-template-columns: 1fr;
+  @media(max-width:950px) {
+    .members { grid-template-columns:repeat(3,minmax(0,1fr)); }
   }
-}
+
+  @media(max-width:650px) {
+    .container { padding:16px 12px 30px; }
+    .members { grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; }
+    .member { padding:15px 10px; border-radius:16px; }
+    .member-photo,.member-photo-placeholder { width:112px; height:112px; }
+    .member h3 { font-size:14px; }
+    .member p { font-size:12px; }
+    header { padding:28px 12px; }
+    header h1 { font-size:22px; }
+    .stats-grid { grid-template-columns:1fr 1fr; gap:10px; }
+    .stat-card { padding:17px 10px; border-radius:15px; }
+    .stat-card h3 { font-size:13px; }
+    .stat-card p { font-size:21px; }
+    .modal { padding:9px; }
+    .modal-content { padding:17px; margin:12px auto; border-radius:18px; }
+    .member-summary-card strong { font-size:20px; }
+  }
+
+  @media(max-width:380px) {
+    .member-photo,.member-photo-placeholder { width:92px; height:92px; }
+    .stats-grid { grid-template-columns:1fr; }
+  }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
 </head>
-<body>
-
-<header>
-  <h1>மஹா முனி அண்ணமார் சுவாமி திருக்கோவில்</h1>
-  <p>உறுப்பினர் சேமிப்பு மற்றும் Payment மேலாண்மை</p>
-</header>
-
-<div class="container">
-
-  <div class="stats-grid">
-    <div class="stat-card">
-      <h3>மொத்த உறுப்பினர்கள்</h3>
-      <p id="totalMembers">0</p>
-    </div>
-
-    <div class="stat-card">
-      <h3>மொத்த சேமிப்பு</h3>
-      <p id="totalAmount">₹0</p>
-    </div>
-
-    <div class="stat-card">
-      <h3>மொத்த Payment</h3>
-      <p id="totalPayments">0</p>
-    </div>
-  </div>
-
-  <input
-    type="text"
-    id="searchInput"
-    class="search-box"
-    placeholder="உறுப்பினர் பெயர் அல்லது ID தேடவும்..."
-    oninput="renderMembers()"
-  >
-
-  <div id="membersList" class="members"></div>
-
-  <button class="admin-button" onclick="openAdminLogin()">
-    Admin Login
-  </button>
-
-</div>
-
-<!-- MEMBER DETAILS MODAL -->
-<div id="memberModal" class="modal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('memberModal')">✕</button>
-    <div id="memberDetails"></div>
-  </div>
-</div>
-
-<!-- ADMIN LOGIN MODAL -->
-<div id="adminLoginModal" class="modal">
-  <div class="modal-content" style="max-width:400px">
-    <button class="close-btn" onclick="closeModal('adminLoginModal')">✕</button>
-
-    <h2>Admin Login</h2>
-
-    <div class="form-group">
-      <label>Admin PIN</label>
-      <input type="password" id="adminPin" placeholder="Enter Admin PIN">
-    </div>
-
-    <p id="loginMessage"></p>
-
-    <button onclick="adminLogin()">Login</button>
-  </div>
-</div>
-
-<!-- ADMIN DASHBOARD -->
-<div id="adminDashboard" class="modal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('adminDashboard')">✕</button>
-
-    <h2>Admin Dashboard</h2>
-
-    <div id="adminDashboardContent"></div>
-  </div>
-</div>
-
-<!-- ADD MEMBER MODAL -->
-<div id="addMemberModal" class="modal">
-  <div class="modal-content" style="max-width:500px">
-    <button class="close-btn" onclick="closeModal('addMemberModal')">✕</button>
-
-    <h2>புதிய உறுப்பினர் சேர்க்க</h2>
-
-    <div class="form-group">
-      <label>Member ID</label>
-      <input id="newMemberId" type="text">
-    </div>
-
-    <div class="form-group">
-      <label>பெயர்</label>
-      <input id="newMemberName" type="text">
-    </div>
-
-    <div class="form-group">
-      <label>Phone</label>
-      <input id="newMemberPhone" type="text">
-    </div>
-
-    <div class="form-group">
-      <label>Photo</label>
-      <input
-        type="file"
-        id="newMemberPhoto"
-        accept="image/*"
-        onchange="handlePhotoSelected(this,'newMemberPhotoPreview','newMemberCropButton')"
-      >
-
-      <img
-        id="newMemberPhotoPreview"
-        style="display:none;width:120px;height:120px;object-fit:cover;border-radius:50%;margin-top:10px"
-      >
-
-      <button
-        id="newMemberCropButton"
-        style="display:none"
-        onclick="openPhotoCrop('newMemberPhoto')"
-      >
-        ✂️ Crop Photo
-      </button>
-    </div>
-
-    <p id="addMemberMessage"></p>
-
-    <button onclick="addMember()">Add Member</button>
-  </div>
-</div>
-
-<!-- EDIT MEMBER MODAL -->
-<div id="editMemberModal" class="modal">
-  <div class="modal-content" style="max-width:500px">
-    <button class="close-btn" onclick="closeModal('editMemberModal')">✕</button>
-
-    <h2>Edit Member</h2>
-
-    <div class="form-group">
-      <label>Member ID</label>
-      <input id="editMemberId" type="text" readonly>
-    </div>
-
-    <div class="form-group">
-      <label>பெயர்</label>
-      <input id="editMemberName" type="text">
-    </div>
-
-    <div class="form-group">
-      <label>Phone</label>
-      <input id="editMemberPhone" type="text">
-    </div>
-
-    <div id="editMemberCurrentPhoto"></div>
-
-    <div class="form-group">
-      <label>புதிய Photo</label>
-      <input
-        type="file"
-        id="editMemberPhoto"
-        accept="image/*"
-        onchange="handlePhotoSelected(this,'editMemberPhotoPreview','editMemberCropButton')"
-      >
-
-      <img
-        id="editMemberPhotoPreview"
-        style="display:none;width:120px;height:120px;object-fit:cover;border-radius:50%;margin-top:10px"
-      >
-
-      <button
-        id="editMemberCropButton"
-        style="display:none"
-        onclick="openPhotoCrop('editMemberPhoto')"
-      >
-        ✂️ Crop Photo
-      </button>
-    </div>
-
-    <p id="editMemberMessage"></p>
-
-    <button onclick="updateMember()">Update Member</button>
-  </div>
-</div>
-
-<!-- PAYMENT MODAL -->
-<div id="paymentModal" class="modal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal('paymentModal')">✕</button>
-
-    <h2>Payment Update / History</h2>
-
-    <div class="form-group">
-      <label>Member</label>
-      <select id="payMemberId">
-        <option value="">உறுப்பினரை தேர்வு செய்யவும்</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Month</label>
-      <select id="payMonth">
-        <option value="">மாதத்தை தேர்வு செய்யவும்</option>
-        <option value="January">January</option>
-        <option value="February">February</option>
-        <option value="March">March</option>
-        <option value="April">April</option>
-        <option value="May">May</option>
-        <option value="June">June</option>
-        <option value="July">July</option>
-        <option value="August">August</option>
-        <option value="September">September</option>
-        <option value="October">October</option>
-        <option value="November">November</option>
-        <option value="December">December</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Year</label>
-      <input id="payYear" type="number">
-    </div>
-
-    <div class="form-group">
-      <label>Amount</label>
-      <input id="payAmount" type="number" min="1">
-    </div>
-
-    <div class="form-group">
-      <label>Paid Date</label>
-      <input id="payDate" type="date">
-    </div>
-
-    <div class="form-group">
-      <label>Status</label>
-      <select id="payStatus">
-        <option value="Paid">Paid</option>
-        <option value="Pending">Pending</option>
-      </select>
-    </div>
-
-    <p id="paymentMessage"></p>
-
-    <button onclick="submitPayment()">Save Payment</button>
-
-    <hr>
-
-    <h3>Payment History</h3>
-
-    <input
-      class="search-box"
-      id="paymentSearch"
-      placeholder="Member ID தேடவும்"
-      oninput="renderPaymentHistory()"
-    >
-
-    <div id="paymentHistory"></div>
-  </div>
-</div>
-<script>
-
-// ======================================
-// PHOTO FILE HELPERS
-// ======================================
-
-async function readPhotoFile(input) {
-  if (croppedPhotos[input.id]) {
-    return croppedPhotos[input.id];
-  }
-
-  if (!input.files || !input.files[0]) {
-    return "";
-  }
-
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-
-    reader.readAsDataURL(input.files[0]);
-  });
-}
-
-function previewMemberPhoto(input, previewId) {
-  const preview = document.getElementById(previewId);
-  const file = input.files && input.files[0];
-
-  if (!preview) return;
-
-  if (!file) {
-    preview.style.display = "none";
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = function(e) {
-    preview.src = e.target.result;
-    preview.style.display = "block";
-  };
-
-  reader.readAsDataURL(file);
-}
-
-// ======================================
-// PHOTO CROP FEATURE
-// ======================================
-
-let croppedPhotos = {
-  newMemberPhoto: "",
-  editMemberPhoto: ""
-};
-
-let cropper = null;
-let currentCropInputId = "";
-let currentCropPreviewId = "";
-
-function handlePhotoSelected(input, previewId, cropButtonId) {
-  if (!input.files || !input.files[0]) {
-    return;
-  }
-
-  const file = input.files[0];
-
-  if (!file.type.startsWith("image/")) {
-    alert("Image file மட்டும் தேர்வு செய்யவும்");
-    input.value = "";
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = function(e) {
-    const preview = document.getElementById(previewId);
-
-    if (preview) {
-      preview.src = e.target.result;
-      preview.style.display = "block";
-    }
-
-    if (cropButtonId) {
-      document.getElementById(cropButtonId).style.display = "inline-block";
-    }
-
-    croppedPhotos[input.id] = "";
-  };
-
-  reader.readAsDataURL(file);
-}
-
-// ======================================
-// OPEN CROP MODAL
-// ======================================
-
-function openPhotoCrop(inputId) {
-  const input = document.getElementById(inputId);
-
-  if (!input || !input.files || !input.files[0]) {
-    alert("முதலில் Photo தேர்வு செய்யவும்");
-    return;
-  }
-
-  currentCropInputId = inputId;
-
-  currentCropPreviewId = inputId === "newMemberPhoto"
-    ? "newMemberPhotoPreview"
-    : "editMemberPhotoPreview";
-
-  const reader = new FileReader();
-
-  reader.onload = function(e) {
-    document.getElementById("cropImage").src = e.target.result;
-
-    document.getElementById("photoCropModal").style.display = "block";
-
-    if (cropper) {
-      cropper.destroy();
-      cropper = null;
-    }
-
-    const image = document.getElementById("cropImage");
-
-    image.onload = function() {
-      cropper = new Cropper(image, {
-        aspectRatio: 1,
-        viewMode: 1,
-        dragMode: "move",
-        autoCropArea: 0.8,
-        responsive: true,
-        background: false,
-        guides: true,
-        center: true,
-        cropBoxMovable: true,
-        cropBoxResizable: true
-      });
-    };
-  };
-
-  reader.readAsDataURL(input.files[0]);
-}
-
-// ======================================
-// SAVE CROPPED PHOTO
-// ======================================
-
-function saveCroppedPhoto() {
-  if (!cropper) {
-    alert("Photo crop செய்ய முடியவில்லை");
-    return;
-  }
-
-  const canvas = cropper.getCroppedCanvas({
-    width: 500,
-    height: 500,
-    imageSmoothingQuality: "high"
-  });
-
-  if (!canvas) {
-    alert("Crop செய்ய முடியவில்லை");
-    return;
-  }
-
-  const croppedData = canvas.toDataURL("image/jpeg", 0.85);
-
-  croppedPhotos[currentCropInputId] = croppedData;
-
-  const preview = document.getElementById(currentCropPreviewId);
-
-  if (preview) {
-    preview.src = croppedData;
-    preview.style.display = "block";
-  }
-
-  closePhotoCrop();
-
-  alert("Photo Crop வெற்றிகரமாக முடிந்தது!");
-}
-
-// ======================================
-// CLOSE CROP MODAL
-// ======================================
-
-function closePhotoCrop() {
-  document.getElementById("photoCropModal").style.display = "none";
-
-  if (cropper) {
-    cropper.destroy();
-    cropper = null;
-  }
-}
-
-// ======================================
-// ADD MEMBER
-// ======================================
-
-async function addMember() {
-  if (!isAdmin) {
-    alert("Admin login தேவை");
-    return;
-  }
-
-  const id = document.getElementById("newMemberId").value.trim();
-  const name = document.getElementById("newMemberName").value.trim();
-  const phone = document.getElementById("newMemberPhone").value.trim();
-
-  if (!id || !name) {
-    document.getElementById("addMemberMessage").textContent =
-      "Member ID மற்றும் பெயர் கட்டாயம்";
-    return;
-  }
-
-  try {
-    const photo = await readPhotoFile(
-      document.getElementById("newMemberPhoto")
-    );
-
-    const result = await postAction({
-      action: "addMember",
-      pin: localStorage.getItem("templeAdminPin"),
-      memberId: id,
-      name: name,
-      phone: phone,
-      photo: photo
-    });
-
-    if (result.success) {
-      document.getElementById("addMemberMessage").textContent =
-        "உறுப்பினர் சேர்க்கப்பட்டார்";
-
-      croppedPhotos.newMemberPhoto = "";
-
-      await loadData();
-
-      setTimeout(() => {
-        closeModal("addMemberModal");
-      }, 1000);
-
-    } else {
-      document.getElementById("addMemberMessage").textContent =
-        result.message || "உறுப்பினர் சேர்க்க முடியவில்லை";
-    }
-
-  } catch (error) {
-    document.getElementById("addMemberMessage").textContent =
-      error.message;
-  }
-}
-
-// ======================================
-// EDIT MEMBER LIST
-// ======================================
-
-function openMemberEditList() {
-  if (!isAdmin) return;
-
-  const container = document.getElementById("adminDashboardContent");
-
-  container.innerHTML = `
-    <button onclick="renderAdminDashboard()">⬅ Back</button>
-    <h3>உறுப்பினர் Edit</h3>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Member ID</th>
-            <th>Name</th>
-            <th>Edit</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          ${members.map(member => `
-            <tr>
-              <td>${escapeHTML(getMemberId(member))}</td>
-              <td>${escapeHTML(getMemberName(member))}</td>
-              <td>
-                <button onclick="editMember('${escapeHTML(getMemberId(member))}')">
-                  Edit
-                </button>
-              </td>
-            </tr>
-          `).join("")}
-        </tbody>
-      </table>
-    </div>
-  `;
-}
-
-// ======================================
-// EDIT MEMBER
-// ======================================
-
-function editMember(id) {
-  const member = members.find(item => getMemberId(item) === String(id));
-
-  if (!member) return;
-
-  document.getElementById("editMemberId").value = getMemberId(member);
-
-  document.getElementById("editMemberName").value = getMemberName(member);
-
-  document.getElementById("editMemberPhone").value =
-    member["Phone"] || member.phone || "";
-
-  const photo = getDrivePhotoURL(getMemberPhoto(member));
-
-  document.getElementById("editMemberCurrentPhoto").innerHTML =
-    photo
-      ? `<img src="${escapeHTML(photo)}" class="member-photo">`
-      : "Photo இல்லை";
-
-  document.getElementById("editMemberModal").style.display = "block";
-}
-
-// ======================================
-// UPDATE MEMBER
-// ======================================
-
-async function updateMember() {
-  if (!isAdmin) {
-    alert("Admin login தேவை");
-    return;
-  }
-
-  const id = document.getElementById("editMemberId").value.trim();
-  const name = document.getElementById("editMemberName").value.trim();
-  const phone = document.getElementById("editMemberPhone").value.trim();
-
-  if (!name) {
-    document.getElementById("editMemberMessage").textContent =
-      "பெயர் கட்டாயம்";
-    return;
-  }
-
-  try {
-    const photo = await readPhotoFile(
-      document.getElementById("editMemberPhoto")
-    );
-
-    const result = await postAction({
-      action: "editMember",
-      pin: localStorage.getItem("templeAdminPin"),
-      memberId: id,
-      name: name,
-      phone: phone,
-      photo: photo
-    });
-
-    if (result.success) {
-      document.getElementById("editMemberMessage").textContent =
-        "Member Update வெற்றிகரமாக முடிந்தது";
-
-      croppedPhotos.editMemberPhoto = "";
-
-      await loadData();
-
-      setTimeout(() => {
-        closeModal("editMemberModal");
-      }, 1000);
-
-    } else {
-      document.getElementById("editMemberMessage").textContent =
-        result.message || "Update செய்ய முடியவில்லை";
-    }
-
-  } catch (error) {
-    document.getElementById("editMemberMessage").textContent =
-      error.message;
-  }
-}
-
-// ======================================
-// PAYMENT MODAL
-// ======================================
-
-function openPaymentModal() {
-  if (!isAdmin) {
-    alert("Admin login தேவை");
-    return;
-  }
-
-  const select = document.getElementById("paymentMemberId");
-
-  select.innerHTML =
-    '<option value="">உறுப்பினரை தேர்வு செய்யவும்</option>' +
-    members.map(member => `
-      <option value="${escapeHTML(getMemberId(member))}">
-        ${escapeHTML(getMemberId(member))} - ${escapeHTML(getMemberName(member))}
-      </option>
-    `).join("");
-
-  const now = new Date();
-
-  document.getElementById("paymentYear").value = now.getFullYear();
-  document.getElementById("paymentMonth").value = months[now.getMonth()];
-  document.getElementById("paymentPaidDate").value =
-    now.toISOString().split("T")[0];
-
-  document.getElementById("paymentMessage").textContent = "";
-  document.getElementById("paymentHistoryList").innerHTML = "";
-
-  document.getElementById("paymentModal").style.display = "block";
-}
-
-// ======================================
-// SAVE PAYMENT
-// ======================================
-
-async function submitPayment() {
-  if (!isAdmin) {
-    alert("Admin login தேவை");
-    return;
-  }
-
-  const memberId = document.getElementById("paymentMemberId").value;
-  const month = document.getElementById("paymentMonth").value;
-  const year = Number(document.getElementById("paymentYear").value);
-  const amount = Number(document.getElementById("paymentAmount").value);
-  const paidDate = document.getElementById("paymentPaidDate").value;
-  const status = document.getElementById("paymentStatus").value;
-
-  const message = document.getElementById("paymentMessage");
-
-  if (!memberId || !month || !year || !amount || amount <= 0 || !paidDate) {
-    message.textContent = "அனைத்து விவரங்களையும் சரியாக நிரப்பவும்";
-    return;
-  }
-
-  message.textContent = "Saving...";
-
-  try {
-    const result = await postAction({
-      action: "savePayment",
-      pin: localStorage.getItem("templeAdminPin"),
-      memberId: memberId,
-      month: month,
-      year: year,
-      amount: amount,
-      paidDate: paidDate,
-      status: status
-    });
-
-    if (result.success) {
-      message.textContent = "Payment வெற்றிகரமாக சேமிக்கப்பட்டது";
-
-      await loadData();
-
-      showPaymentHistory(memberId);
-
-    } else {
-      message.textContent =
-        result.message || "Payment save செய்ய முடியவில்லை";
-    }
-
-  } catch (error) {
-    message.textContent =
-      error.message || "Payment save செய்ய முடியவில்லை";
-  }
-}
-
-// ======================================
-// PAYMENT HISTORY
-// ======================================
-
-function showPaymentHistory(memberId) {
-  const list = payments
-    .filter(p => getPaymentMemberId(p) === String(memberId))
-    .slice()
-    .reverse();
-
-  const target = document.getElementById("paymentHistoryList");
-
-  if (!list.length) {
-    target.innerHTML = "<p>Payment history இல்லை</p>";
-    return;
-  }
-
-  target.innerHTML = `
-    <h3>Payment History</h3>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Month</th>
-            <th>Year</th>
-            <th>Amount</th>
-            <th>Date</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          ${list.map(p => `
-            <tr>
-              <td>${escapeHTML(monthTamil(getPaymentMonth(p)))}</td>
-              <td>${getPaymentYear(p)}</td>
-              <td>${formatMoney(getPaymentAmount(p))}</td>
-              <td>${escapeHTML(getPaymentDate(p))}</td>
-              <td>${escapeHTML(getPaymentStatus(p))}</td>
-            </tr>
-          `).join("")}
-        </tbody>
-      </table>
-    </div>
-  `;
-}
-
-// ======================================
-// GOOGLE APPS SCRIPT POST
-// ======================================
-
-async function postAction(data) {
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8"
-    },
-    body: JSON.stringify(data)
-  });
-
-  return await response.json();
-}
-
-// ======================================
-// PHOTO CROP MODAL HTML
-// ======================================
-
-const cropModalHTML = `
-  <div class="crop-modal" id="photoCropModal">
-    <div class="crop-modal-content">
-
-      <h2>✂️ Photo Crop</h2>
-
-      <div class="crop-image-container">
-        <img id="cropImage" src="">
-      </div>
-
-      <div class="crop-buttons">
-        <button onclick="saveCroppedPhoto()">
-          Crop & Save
-        </button>
-
-        <button
-          onclick="closePhotoCrop()"
-          style="background:#64748b">
-          Cancel
-        </button>
-      </div>
-
-    </div>
-  </div>
-`;
-
-document.body.insertAdjacentHTML("beforeend", cropModalHTML);
-
-// ======================================
-// INITIAL LOAD
-// ======================================
-
-loadData();
-
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
-
-</body>
-</html>
