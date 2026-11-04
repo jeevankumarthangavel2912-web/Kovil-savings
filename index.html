@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ta">
 <head>
+
+  
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -731,7 +733,16 @@ th {
     <div id="paymentHistory"></div>
   </div>
 </div>
+<div id="photoViewer" class="photo-viewer"
+     onclick="closePhotoViewer()">
 
+  <button class="photo-viewer-close"
+          onclick="closePhotoViewer()">✕</button>
+
+  <img id="largeMemberPhoto" src=""
+       onclick="event.stopPropagation()">
+
+</div>
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbyzCU0XMNuB2w6gt3V0Du6Xxr9Su8Hztb-MUN-DA0MhF7cTvQaAe_LajvHXXJGe3DY/exec";
 
@@ -1448,16 +1459,7 @@ async function updateMember() {
   }
 }
 
-<div id="photoViewer" class="photo-viewer"
-     onclick="closePhotoViewer()">
 
-  <button class="photo-viewer-close"
-          onclick="closePhotoViewer()">✕</button>
-
-  <img id="largeMemberPhoto" src=""
-       onclick="event.stopPropagation()">
-
-</div>
 
 
 // ================================
