@@ -801,6 +801,8 @@ function getMemberPhoto(m) {
   return String(m["Photo"] ?? m.photo ?? "");
 }
 
+function getPaymentId(p) { return String(p["Payment ID"] ?? p.paymentId ?? ""); }
+
 function getPaymentMemberId(p) {
   return String(p["Member ID"] ?? p.memberId ?? "");
 }
@@ -1639,8 +1641,8 @@ function renderPaymentHistory() {
                 ${getPaymentStatus(p) === "PAID" ? "செலுத்தப்பட்டது" : "நிலுவை"}
               </td>
               <td>
-                <button type="button" onclick="editPaymentRecord('${escapeHTML(getPaymentMemberId(p))}','${escapeHTML(getPaymentMonth(p))}',${Number(getPaymentYear(p))})">✏️ திருத்த</button>
-                <button type="button" onclick="deletePaymentRecord('${escapeHTML(getPaymentMemberId(p))}','${escapeHTML(getPaymentMonth(p))}',${Number(getPaymentYear(p))})">🗑️ நீக்கு</button>
+                <button type="button" onclick="editPaymentRecord('${escapeHTML(getPaymentMemberId(p))}','${escapeHTML(getPaymentMonth(p))}',${Number(getPaymentYear(p))},'${escapeHTML(getPaymentId(p))}')">✏️ திருத்த</button>
+                <button type="button" onclick="deletePaymentRecord('${escapeHTML(getPaymentMemberId(p))}','${escapeHTML(getPaymentMonth(p))}',${Number(getPaymentYear(p))},'${escapeHTML(getPaymentId(p))}')">🗑️ நீக்கு</button>
               </td>
             </tr>
           `).join("")}
@@ -1674,7 +1676,7 @@ function closePaymentEditPopup() {
   if (popup) popup.style.display = "none";
   paymentEditCurrent = null;
 }
-function editPaymentRecord(memberId, month, year) {
+function editPaymentRecord(memberId, month, year, paymentId) {
   const record = payments.find(p =>
     getPaymentMemberId(p) === String(memberId) &&
     getPaymentMonth(p) === String(month) &&
@@ -1682,7 +1684,7 @@ function editPaymentRecord(memberId, month, year) {
   );
   if (!record) return alert("Payment record கிடைக்கவில்லை");
   ensurePaymentEditModal();
-  paymentEditCurrent = {memberId, month, year};
+  paymentEditCurrent = {paymentId: paymentId || getPaymentId(record), memberId, month, year};
   document.getElementById("paymentEditAmount").value = getPaymentAmount(record) || "";
   document.getElementById("paymentEditDate").value = String(getPaymentDate(record) || "").slice(0,10);
   document.getElementById("paymentEditStatus").value = getPaymentStatus(record) === "PENDING" ? "PENDING" : "PAID";
@@ -1703,11 +1705,11 @@ async function savePaymentEditPopup() {
     if (typeof renderPaymentHistory === "function") renderPaymentHistory();
   } catch (err) { alert("Payment edit error: " + (err.message || err)); }
 }
-async function deletePaymentRecord(memberId, month, year) {
+async function deletePaymentRecord(memberId, month, year, paymentId) {
   // Explicit Yes/No confirmation. Confirming permanently deletes this payment.
   if (!window.confirm(`இந்த payment-ஐ நிரந்தரமாக நீக்க வேண்டுமா?\\n\\nஉறுப்பினர்: ${memberId}\\nமாதம்: ${month} ${year}\\n\\nYes = நிரந்தரமாக நீக்கு / No = Cancel`)) return;
   try {
-    const result = await postAction({action:"deletePayment", pin:adminPinValue, memberId, month, year});
+    const result = await postAction({action:"deletePayment", pin:adminPinValue, paymentId, memberId, month, year});
     if (!result.success) return alert(result.message || "Delete செய்ய முடியவில்லை");
     alert("Payment நிரந்தரமாக நீக்கப்பட்டது");
     await loadData();
