@@ -1651,56 +1651,68 @@ function renderPaymentHistory() {
 }
 
 
-// PAYMENT EDIT / DELETE ACTIONS
-async function editPaymentRecord(memberId, month, year) {
-  try {
-    const record = payments.find(p =>
-      getPaymentMemberId(p) === String(memberId) &&
-      getPaymentMonth(p) === String(month) &&
-      Number(getPaymentYear(p)) === Number(year)
-    );
-    if (!record) return alert("Payment record கிடைக்கவில்லை");
-
-    const oldAmount = getPaymentAmount(record);
-    const oldDate = getPaymentDate(record);
-    const oldStatus = getPaymentStatus(record);
-
-    const amountInput = prompt("புதிய தொகையை உள்ளிடவும்:", oldAmount);
-    if (amountInput === null) return;
-    const amount = Number(amountInput);
-    if (!Number.isFinite(amount) || amount <= 0) return alert("சரியான தொகையை உள்ளிடவும்");
-
-    const dateInput = prompt("Payment தேதி (YYYY-MM-DD):", oldDate || "");
-    if (dateInput === null) return;
-    const statusInput = prompt("நிலை: PAID அல்லது PENDING", oldStatus || "PAID");
-    if (statusInput === null) return;
-    const status = statusInput.trim().toUpperCase();
-    if (!["PAID", "PENDING"].includes(status)) return alert("PAID அல்லது PENDING மட்டும் உள்ளிடவும்");
-
-    const result = await postAction({
-      action: "editPayment", pin: adminPinValue,
-      memberId, month, year, amount, paidDate: dateInput.trim(), status
-    });
-    alert(result.message || (result.success ? "Payment update ஆனது" : "Update செய்ய முடியவில்லை"));
-    if (result.success) await loadData();
-    renderPaymentHistory();
-  } catch (err) {
-    alert("Payment edit error: " + (err.message || err));
-  }
+// PAYMENT EDIT / DELETE ACTIONS — modal editor
+function ensurePaymentEditModal() {
+  if (document.getElementById("paymentEditPopup")) return;
+  document.body.insertAdjacentHTML("beforeend", `
+    <div id="paymentEditPopup" class="modal" style="display:none;position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,.65);overflow:auto;padding:20px;">
+      <div class="modal-content" style="background:#fff;color:#222;max-width:430px;margin:8vh auto;padding:24px;border-radius:14px;">
+        <h3>✏️ Payment விவரங்களைத் திருத்த</h3>
+        <label>தொகை</label><input id="paymentEditAmount" type="number" min="1" step="0.01" style="width:100%;box-sizing:border-box;margin:8px 0 14px;padding:10px;">
+        <label>Payment தேதி</label><input id="paymentEditDate" type="date" style="width:100%;box-sizing:border-box;margin:8px 0 14px;padding:10px;">
+        <label>நிலை</label><select id="paymentEditStatus" style="width:100%;box-sizing:border-box;margin:8px 0 18px;padding:10px;"><option value="PAID">செலுத்தப்பட்டது (PAID)</option><option value="PENDING">நிலுவை (PENDING)</option></select>
+        <div style="display:flex;gap:10px;justify-content:flex-end;">
+          <button type="button" onclick="closePaymentEditPopup()">Cancel</button>
+          <button type="button" onclick="savePaymentEditPopup()">Save Changes</button>
+        </div>
+      </div>
+    </div>`);
 }
-
-async function deletePaymentRecord(memberId, month, year) {
-  if (!confirm(`${memberId} - ${month} ${year} payment-ஐ நீக்கவா?`)) return;
+let paymentEditCurrent = null;
+function closePaymentEditPopup() {
+  const popup = document.getElementById("paymentEditPopup");
+  if (popup) popup.style.display = "none";
+  paymentEditCurrent = null;
+}
+function editPaymentRecord(memberId, month, year) {
+  const record = payments.find(p =>
+    getPaymentMemberId(p) === String(memberId) &&
+    getPaymentMonth(p) === String(month) &&
+    Number(getPaymentYear(p)) === Number(year)
+  );
+  if (!record) return alert("Payment record கிடைக்கவில்லை");
+  ensurePaymentEditModal();
+  paymentEditCurrent = {memberId, month, year};
+  document.getElementById("paymentEditAmount").value = getPaymentAmount(record) || "";
+  document.getElementById("paymentEditDate").value = String(getPaymentDate(record) || "").slice(0,10);
+  document.getElementById("paymentEditStatus").value = getPaymentStatus(record) === "PENDING" ? "PENDING" : "PAID";
+  document.getElementById("paymentEditPopup").style.display = "block";
+}
+async function savePaymentEditPopup() {
+  if (!paymentEditCurrent) return;
+  const amount = Number(document.getElementById("paymentEditAmount").value);
+  const paidDate = document.getElementById("paymentEditDate").value;
+  const status = document.getElementById("paymentEditStatus").value;
+  if (!Number.isFinite(amount) || amount <= 0) return alert("சரியான தொகையை உள்ளிடவும்");
   try {
-    const result = await postAction({
-      action: "deletePayment", pin: adminPinValue, memberId, month, year
-    });
-    alert(result.message || (result.success ? "Payment நீக்கப்பட்டது" : "Delete செய்ய முடியவில்லை"));
-    if (result.success) await loadData();
-    renderPaymentHistory();
-  } catch (err) {
-    alert("Payment delete error: " + (err.message || err));
-  }
+    const result = await postAction({...paymentEditCurrent, action:"editPayment", pin:adminPinValue, amount, paidDate, status});
+    if (!result.success) return alert(result.message || "Update செய்ய முடியவில்லை");
+    closePaymentEditPopup();
+    alert(result.message || "Payment update ஆனது");
+    await loadData();
+    if (typeof renderPaymentHistory === "function") renderPaymentHistory();
+  } catch (err) { alert("Payment edit error: " + (err.message || err)); }
+}
+async function deletePaymentRecord(memberId, month, year) {
+  // Explicit Yes/No confirmation. Confirming permanently deletes this payment.
+  if (!window.confirm(`இந்த payment-ஐ நிரந்தரமாக நீக்க வேண்டுமா?\\n\\nஉறுப்பினர்: ${memberId}\\nமாதம்: ${month} ${year}\\n\\nYes = நிரந்தரமாக நீக்கு / No = Cancel`)) return;
+  try {
+    const result = await postAction({action:"deletePayment", pin:adminPinValue, memberId, month, year});
+    if (!result.success) return alert(result.message || "Delete செய்ய முடியவில்லை");
+    alert("Payment நிரந்தரமாக நீக்கப்பட்டது");
+    await loadData();
+    if (typeof renderPaymentHistory === "function") renderPaymentHistory();
+  } catch (err) { alert("Payment delete error: " + (err.message || err)); }
 }
 
 function showPaymentHistory(memberId) {
